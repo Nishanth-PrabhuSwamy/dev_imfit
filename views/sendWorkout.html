@@ -203,13 +203,12 @@
         total_workout = response.total_workout;
         var l = 0;
           for(var i=1;i<=response.total_workout;i++){
+
             setLen = 'setLen'+i;
             var workout = 'workout'+i;
             var notes='notes'+i;
             var set1 = 'set'+i+1;
             var set2 = 'set'+i+2;
-            var maxset = 'set'+i+response[setLen];
-            var max_val = response[maxset];
 
             var set_incr = response[set2] - response[set1];
             var setLen1,setLen2,setLen3,setLen4,setLen5,setLen6,setLen7,setLen8 = 0;
@@ -243,10 +242,35 @@
             var rep1 = 'rep'+i+1;
             var rep2 = 'rep'+i+2;
             var rep_decr = response[rep1] - response[rep2];
-            maxset = 'rep'+i+'1';
-            var max_rep = response[maxset];
+            var maxset = '';
+            var maxrep ='';
+            var max_rep = 0;
+            var max_val = 0;
+            var wk_type = "wk_type"+i;
+            for(var m=1;m<=response[setLen]+1;m++)
+            {
+                maxrep = 'rep'+i+''+m;
+                maxset = 'set'+i+''+m;
+                if(parseInt(response[maxrep]) > parseInt(max_rep))
+                {
+
+                  console.log("maxrep: ",response[maxrep])
+                  console.log("max_rep: ",max_rep)
+                  max_rep = response[maxrep];
+                  console.log("updated max_rep: ",max_rep)
+
+                }
+                if(parseInt(response[maxset]) > parseInt(max_val))
+                {
+
+                  console.log("maxset: ",response[maxset])
+                  console.log("max_val: ",max_val)
+                  max_val = response[maxset];
+                  console.log("updated max_val: ",max_val)
+                }
+            }
+
             var link = 'link'+i;
-            console.log(response[setLen]);
 
 
           $("#workouts").append('<div class="list-group">'+
@@ -259,7 +283,7 @@
             }
           }
           $("#workouts").append('<a class="list-group-item"> Workout Notes: <input style="height:30px;width:250px"  value="'+ response[notes] +'" id="'+notes+'"></a>'+
-          '<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+          '<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select>&nbsp;&nbsp;'+ response[wk_type] +'</p>'+
           '<p><br/>Max Weight For This Workout: <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
           '<p><br/>Max Reps For This Workout: <input type="number" id= "max_reps'+i+'" min="1" max="50" required>&nbsp;&nbsp;'+ max_rep +'</p>'+
           '<div>');
@@ -304,7 +328,7 @@
               '<option value="85">35</option>'+
               '<option value="87.5">37.5</option>'+
               '<option value="90">90</option>'+
-           '</select>&nbsp;&nbsp;'+ set_incr +
+           '</select>&nbsp;&nbsp;'+ Math.abs(set_incr) +
          '</p>'+
 
          '<p> Reps Decrease Per Set :'+
@@ -315,13 +339,12 @@
             '<option value="3">3</option>'+
             '<option value="4">4</option>'+
             '<option value="5">5</option>'+
-           '</select>&nbsp;&nbsp;'+ rep_decr +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+           '</select>&nbsp;&nbsp;'+ Math.abs(rep_decr) +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
          '</p></div>');
             for(var j=1;j<=response[setLen];j++){
               var rep = 'rep'+i+j;
               l = j;
               myObject[setLen]=response[setLen];
-            console.log(response[rep]);
 
             var set = 'set'+i+j;
             var type = 'type'+i+j;
