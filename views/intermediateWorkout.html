@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+  <style type="text/css">
+  #bootstrapSelectForm .selectContainer .form-control-feedback {
+      /* Adjust feedback icon position */
+      right: -15px;
+  }
+  </style>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Enter Client Workout Routine</title>
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+      <div class="header">
+           <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
+      </div>
+
+      <nav class="navbar navbar-default navbar-static-top" style="margin:0px">
+        <div class="container-fluid">
+                 <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+          </div>
+
+           <div class="collapse navbar-collapse navbar-right" id="example-navbar">
+            <ul class="nav navbar-nav">
+                        <li><a href="/"> <span class="glyphicon glyphicon-home"> </span>  TeamIMFIT </a></li>
+                        <li><a href="/"> <span class="glyphicon glyphicon-star"> </span>  About Us </a></li>
+                        <li><a href="/subscription"> <span class="glyphicon glyphicon-list"> </span>  Subscription </a></li>
+                        <li><a href="/logout"> <span class="glyphicon glyphicon-log-out"> </span> Logout </a></li></ul>
+      </nav>
+   </br></br>
+
+ <p> Week: </p>
+   <select class="form-control" id="week" name="week" required>
+      <option value="1">Week One</option>
+      <option value="2">Week Two</option>
+      <option value="3">Week Three</option>
+      <option value="4">Week Four</option>
+      <option value="5">Week Five</option>
+      <option value="6">Week Six</option>
+      <option value="7">Week Seven</option>
+      <option value="8">Week Eight</option>
+      <option value="10">Week Ten</option>
+      <option value="11">Week Eleven</option>
+      <option value="12">Week Twelve</option>
+      <option value="13">Week Thirteen</option>
+      <option value="14">Week Fourteen</option>
+      <option value="15">Week Fifteen</option>
+      <option value="16">Week Sixteen</option>
+      <option value="17">Week Seventeen</option>
+      <option value="18">Week Eighteen</option>
+      <option value="19">Week Nineteen</option>
+      <option value="20">Week Twenty</option>
+  </select></br>
+<p> Day: </p>
+  <select class="form-control" id="day" name="day" required>
+    <option value="Monday">Monday</option>
+    <option value="Tuesday">Tuesday</option>
+    <option value="Wednesday">Wednesday</option>
+    <option value="Thursday">Thursday</option>
+    <option value="Friday">Friday</option>
+    <option value="Saturday">Saturday</option>
+    <option value="Sunday">Sunday</option>
+ </select>
+ </br>
+ </br>
+ </br>
+ <p> Primary Muscle: </p>
+   <select class="form-control" id="primary" name="primary" required>
+      <option value="Quads">Quads</option>
+      <option value="Glutes">Glutes</option>
+      <option value="Hamstrings">Hamstrings</option>
+      <option value="Chest">Chest</option>
+      <option value="Lats">Lats</option>
+      <option value="Back">Back</option>
+      <option value="Traps">Traps</option>
+      <option value="Deltoids">Deltoids</option>
+      <option value="Core">Core</option>
+      <option value="Forearms">Forearms</option>
+      <option value="Biceps">Biceps</option>
+      <option value="Triceps">Triceps</option>
+       <option value="Calves">Calves</option>
+       <option value="Core">Core</option>
+  </select>
+  </br>
+   <p> Secondary Muscle: </p>
+     <select class="form-control" id="secondary" name="secondary" required>
+        <option value="None">None</option>
+        <option value="Quads">Quads</option>
+        <option value="Glutes">Glutes</option>
+        <option value="Hamstrings">Hamstrings</option>
+        <option value="Chest">Chest</option>
+        <option value="Lats">Lats</option>
+        <option value="Back">Back</option>
+        <option value="Traps">Traps</option>
+        <option value="Deltoids">Deltoids</option>
+        <option value="Core">Core</option>
+        <option value="Forearms">Forearms</option>
+        <option value="Biceps">Biceps</option>
+        <option value="Triceps">Triceps</option>
+        <option value="Calves">Calves</option>
+        <option value="Core">Core</option>
+    </select>
+    </br>
+    <p> Tertiary Muscle: </p>
+      <select class="form-control" id="tertiary" name="tertiary" required>
+         <option value="None">None</option>
+         <option value="Quads">Quads</option>
+         <option value="Glutes">Glutes</option>
+         <option value="Hamstrings">Hamstrings</option>
+         <option value="Chest">Chest</option>
+         <option value="Lats">Lats</option>
+         <option value="Back">Back</option>
+         <option value="Traps">Traps</option>
+         <option value="Deltoids">Deltoids</option>
+         <option value="Core">Core</option>
+         <option value="Forearms">Forearms</option>
+         <option value="Biceps">Biceps</option>
+         <option value="Triceps">Triceps</option>
+         <option value="Calves">Calves</option>
+         <option value="Core">Core</option>
+     </select>
+     </br>
+     <p> Quaternary Muscle: </p>
+       <select class="form-control" id="quaternary" name="quaternary" required>
+          <option value="None">None</option>
+          <option value="Quads">Quads</option>
+          <option value="Glutes">Glutes</option>
+          <option value="Hamstrings">Hamstrings</option>
+          <option value="Chest">Chest</option>
+          <option value="Lats">Lats</option>
+          <option value="Back">Back</option>
+          <option value="Traps">Traps</option>
+          <option value="Deltoids">Deltoids</option>
+          <option value="Core">Core</option>
+          <option value="Forearms">Forearms</option>
+          <option value="Biceps">Biceps</option>
+          <option value="Triceps">Triceps</option>
+          <option value="Calves">Calves</option>
+          <option value="Core">Core</option>
+      </select>
+      </br>
+
+ <div class="workouts">
+ </div>
+
+ <p> Set Per Workout: </p>
+ <select class="form-control" id="setCount" name="setCount" required>
+ <option value="1"> One</option>
+ <option value="2"> Two</option>
+ <option value="3"> Three</option>
+ <option value="4"> Four</option>
+ <option value="5"> Five</option>
+ <option value="6"> Six</option>
+ </select>
+ </br>
+
+ <button type="button" class="btn btn-danger" aria-label="Left Align" name="addWorkout">
+   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Workout
+ </button>
+ <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout">
+   <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout
+ </button> <br/>
+ </div>
+ <br/>
+ <button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:90px">Submit</button>
+
+
+<script>
+$(document).ready(function(){
+  var workout=0;
+  var set=0;
+  var setLen1,setLen2,setLen3,setLen4,setLen5,setLen6,setLen7,setLen8 = 0;
+
+    $("button[name=addWorkout]").click(function(){
+      workout=workout+1;
+      set=0;
+
+        $(".workouts").append('<br/><div class="workout'+workout+'"><br/> '+
+        '<a class="list-group-item active"> Enter  Workouts </a> '+
+       '<p> <br/>Weight Increase Per Set :'+
+         '<select id="increment'+workout+'" name="increment'+workout+'" required>'+
+            '<option value="0">0</option>'+
+            '<option value="2.5">2.5</option>'+
+            '<option value="5">5</option>'+
+            '<option value="7.5">7.5</option>'+
+            '<option value="10">10</option>'+
+            '<option value="12.5">12.5</option>'+
+            '<option value="15">15</option>'+
+            '<option value="17.5">17.5</option>'+
+            '<option value="20">20</option>'+
+            '<option value="22.5">22.5</option>'+
+            '<option value="25">25</option>'+
+            '<option value="27.5">27.5</option>'+
+            '<option value="30">30</option>'+
+            '<option value="32.5">32.5</option>'+
+            '<option value="35">35</option>'+
+            '<option value="37.5">37.5</option>'+
+            '<option value="40">40</option>'+
+            '<option value="42.5">42.5</option>'+
+            '<option value="45">45</option>'+
+         '</select>'+
+       '</p>'+
+       '<p> Reps Decrease Per Set :'+
+         '<select id="decrement'+workout+'" name="decrement'+workout+'" required>'+
+            '<option value="0">0</option>'+
+            '<option value="1">1</option>'+
+            '<option value="2">2</option>'+
+            '<option value="3">3</option>'+
+            '<option value="4">4</option>'+
+         '</select></br><button id="update'+workout+'" class="btn-primary">Update Values</button>'+
+       '</p>'+
+       ' </br> <p style="color:red;"> Workout '+workout+': </br><input type="text" id= "workout_name'+workout+'" name= "workout_name'+workout+'" required> </p>');
+       if(workout == 1){
+         $(".workout1").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes1" required> <br/>'+
+         '<br/><div class="set1"></div></div>')
+          setLen1 = $("#setCount").val();
+         for(k = 0; k < setLen1; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set1").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight1'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit1'+curr+'" name="unit1'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type1'+curr+'" name="type'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep1'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update1").click(function(){
+            var init_weight_1 = $("#weight11").val();
+            var init_reps_1=$("#rep11").val();
+            var init_type=$("#type11").val();
+            var init_unit=$("#unit11").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight1"+l).val(parseFloat(init_weight_1)+(parseFloat(incr)*count));
+               $("#rep1"+l).val(parseFloat(init_reps_1)-(parseFloat(decr)*count));
+               $("#type1"+l).val(init_type);
+               $("#unit1"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 2){
+         $(".workout2").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes2" required> <br/>'+
+         '<div class="set2"></div></div>')
+          setLen2 = $("#setCount").val();
+         for(k = 0; k < setLen2; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set2").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight2'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit2'+curr+'" name="unit2'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type2'+curr+'" name="type2'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep2'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update2").click(function(){
+            var init_weight_2 = $("#weight21").val();
+            var init_reps_2=$("#rep21").val();
+            var init_type=$("#type21").val();
+            var init_unit=$("#unit21").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight2"+l).val(parseFloat(init_weight_2)+(parseFloat(incr)*count));
+               $("#rep2"+l).val(parseFloat(init_reps_2)-(parseFloat(decr)*count));
+               $("#type2"+l).val(init_type);
+               $("#unit2"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 3){
+         $(".workout3").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes3" required> <br/>'+
+         '<div class="set3"></div></div>')
+          setLen3 = $("#setCount").val();
+         for(k = 0; k < setLen3; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set3").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight3'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit3'+curr+'" name="unit3'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type3'+curr+'" name=type3'+curr+' " required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep3'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update3").click(function(){
+            var init_weight_3 = $("#weight31").val();
+            var init_reps_3=$("#rep31").val();
+            var init_type=$("#type31").val();
+            var init_unit=$("#unit31").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight3"+l).val(parseFloat(init_weight_3)+(parseFloat(incr)*count));
+               $("#rep3"+l).val(parseFloat(init_reps_3)-(parseFloat(decr)*count));
+               $("#type3"+l).val(init_type);
+               $("#unit3"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 4){
+         $(".workout4").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes4" required> <br/>'+
+         '<div class="set4"></div></div>')
+          setLen4 = $("#setCount").val();
+         for(k = 0; k < setLen4; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set4").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight4'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit4'+curr+'" name="unit4'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type4'+curr+'" name="type4'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep4'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update4").click(function(){
+            var init_weight_4 = $("#weight41").val();
+            var init_reps_4=$("#rep41").val();
+            var init_type=$("#type41").val();
+            var init_unit=$("#unit41").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight4"+l).val(parseFloat(init_weight_4)+(parseFloat(incr)*count));
+               $("#rep4"+l).val(parseFloat(init_reps_4)-(parseFloat(decr)*count));
+               $("#type4"+l).val(init_type);
+               $("#unit4"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 5){
+         $(".workout5").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes5" required> <br/>'+
+         '<div class="set5"></div></div>')
+          setLen5 = $("#setCount").val();
+         for(k = 0; k < setLen5; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set5").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight5'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit5'+curr+'" name="unit5'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type5'+curr+'" name="type5'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep5'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update5").click(function(){
+            var init_weight_5 = $("#weight51").val();
+            var init_reps_5=$("#rep51").val();
+            var init_type=$("#type51").val();
+            var init_unit=$("#unit51").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight5"+l).val(parseFloat(init_weight_5)+(parseFloat(incr)*count));
+               $("#rep5"+l).val(parseFloat(init_reps_5)-(parseFloat(decr)*count));
+               $("#type5"+l).val(init_type);
+               $("#unit5"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 6){
+         $(".workout6").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes6" required> <br/>'+
+         '<div class="set6"></div></div>')
+          setLen6 = $("#setCount").val();
+         for(k = 0; k < setLen6; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set6").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight6'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit6'+curr+'" name="unit6'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type6'+curr+'" name="type6'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep6'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update6").click(function(){
+            var init_weight_6 = $("#weight61").val();
+            var init_reps_6=$("#rep61").val();
+            var init_type=$("#type61").val();
+            var init_unit=$("#unit61").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight6"+l).val(parseFloat(init_weight_6)+(parseFloat(incr)*count));
+               $("#rep6"+l).val(parseFloat(init_reps_6)-(parseFloat(decr)*count));
+               $("#type6"+l).val(init_type);
+               $("#unit6"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 7){
+         $(".workout7").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes7" required> <br/>'+
+         '<div class="set7"></div></div>')
+          setLen7 = $("#setCount").val();
+         for(k = 0; k < setLen7; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set7").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight7'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit7'+curr+'" name="unit7'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type7'+curr+'" name="type7'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep7'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update7").click(function(){
+            var init_weight_7 = $("#weight71").val();
+            var init_reps_7=$("#rep71").val();
+            var init_type=$("#type71").val();
+            var init_unit=$("#unit71").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight7"+l).val(parseFloat(init_weight_7)+(parseFloat(incr)*count));
+               $("#rep7"+l).val(parseFloat(init_reps_7)-(parseFloat(decr)*count));
+               $("#type7"+l).val(init_type);
+               $("#unit7"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+       if(workout == 8){
+         $(".workout8").append('<p> Notes About Grip/ Variation:</p>'+
+         '<input type="text" id="notes8" required> <br/>'+
+         '<div class="set8"></div></div>')
+         setLen8 = $("#setCount").val();
+         for(k = 0; k < setLen8; k++) {
+           var curr = k+1;
+           var p=workout;
+           set = curr;
+            $(".set8").append('<div class="list-group">'+
+                         '<a class="list-group-item"> Set: '+ curr +' </a>'+
+                         '<a class="list-group-item"> Weight: </br><input type="number" id= "weight8'+curr+'" min="1" max="400" required>'+
+                          ' <select id= "unit8'+curr+'" name="unit8'+curr+'" required>'+
+                                '<option value="Lbs">Lbs</option>'+
+                                '<option value="Kgs">Kgs</option>'+
+                             '</select>'+
+                             '<select id="type8'+curr+'" name="type8'+curr+'" required>'+
+                                '<option value="Pin">Pin</option>'+
+                                '<option value="Dumbbell">Dumbbell</option>'+
+                                '<option value="Plates">Plates</option>'+
+                                '<option value="Plates Per Side">Plates Per Side</option>'+
+                             '</select>'+
+                           '</a>'+
+                         '<a class="list-group-item"> Reps: </br><input type="number" id="rep8'+curr+'" min="1" max="25" required >'+
+                         '</a>'+
+                        ' </br>');
+          }
+          $("#update8").click(function(){
+            var init_weight_8 = $("#weight81").val();
+            var init_reps_8=$("#rep81").val();
+            var init_type=$("#type81").val();
+            var init_unit=$("#unit81").val();
+            var incr = $("#increment"+workout).val();
+            var decr = $("#decrement"+workout).val();
+            var count = 1;
+            for(l=2;l<=set;l++){
+
+               $("#weight8"+l).val(parseFloat(init_weight_8)+(parseFloat(incr)*count));
+               $("#rep8"+l).val(parseFloat(init_reps_8)-(parseFloat(decr)*count));
+               $("#type8"+l).val(init_type);
+               $("#unit8"+l).val(init_unit);
+               count=count+1;
+            }
+          })
+       }
+
+  });
+
+
+    $("button[name=removeWorkout]").click(function(){
+     $("div").remove(".workout"+workout);
+     workout=workout-1;
+  });
+
+ $("#submit").click(function(){
+  var myObject = {};
+  myObject['total_workout']=workout;
+  myObject['week'] = $("#week").val();
+  myObject['day'] = $("#day").val();
+  myObject['primary'] = $("#primary").val();
+  myObject['secondary'] = $("#secondary").val();
+  myObject['tertiary'] = $("#tertiary").val();
+  myObject['quaternary'] = $("#quaternary").val();
+  for(l=1;l<=workout;l++)
+  {
+    myObject["workout"+l] =  $("#workout_name"+l).val();
+    myObject["notes"+l]=$("#notes"+l).val()
+    var setLen= 0;
+
+    if(l==1){
+      setLen = setLen1;
+      myObject['setLen1']=setLen1;
+
+    }
+    else if (l==2) {
+      setLen = setLen2;
+      myObject['setLen2']=setLen2;
+    }
+    else if (l==3) {
+      setLen = setLen3;
+      myObject['setLen3']=setLen3;
+    }
+    else if (l==4) {
+      setLen = setLen4;
+      myObject['setLen4']=setLen4;
+    }
+    else if (l==5) {
+      setLen = setLen5;
+      myObject['setLen5']=setLen5;
+    }
+    else if (l==6) {
+      setLen = setLen6;
+      myObject['setLen6']=setLen6;
+    }
+    else if (l==7) {
+      setLen = setLen7;
+      myObject['setLen7']=setLen7;
+    }
+    else if (l==8) {
+      setLen = setLen8;
+      myObject['setLen8']=setLen8;
+    }
+
+    for(k=1;k<=setLen;k++)
+    {
+      var st="set"+l+""+k;
+      var ut="unit"+l+""+k;
+      var tp="type"+l+""+k;
+      var rp="rep"+l+""+k;
+      myObject[st] =  $("#weight"+l+k).val();
+      myObject[ut] =  $("#unit"+l+k).val();
+      myObject[tp] =  $("#type"+l+k).val();
+      myObject[rp] =  $("#rep"+l+k).val();
+    }
+  }
+  console.log(JSON.stringify(myObject));
+  $.ajax({
+    type: "POST",
+    url: '/recieveWorkout',
+    data: myObject,
+    dataType: JSON,
+    success: function (response){
+
+      var property = document.getElementById("submit");
+      //property.style.backgroundColor = "#0000ff";
+      $("#submit").removeClass("btn-warning btn-block").addClass("btn-info");
+    },
+    error: function(response){
+      var property = document.getElementById("submit");
+      //property.style.backgroundColor = "#0000a0";
+      $("#submit").removeClass("btn-warning btn-block").addClass("btn-info");
+    }
+  });
+  });
+
+});
+</script>
+</body>
+</html>

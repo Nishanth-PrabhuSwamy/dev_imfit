@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+  <style type="text/css">
+  #bootstrapSelectForm .selectContainer .form-control-feedback {
+      /* Adjust feedback icon position */
+      right: -15px;
+  }
+  </style>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Enter Client Workout Routine</title>
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+
+.highlight{
+ background-color : #FF0000 !important;
+ background-image :none !important;
+ font-weight:bold !important;
+
+}
+.highlight_resp{
+ background-color : #0000FF !important;
+ background-image :none !important;
+ font-weight:bold !important;
+
+}
+
+</style>
+<script type="text/javascript">
+var d = [];
+var resp = [];
+
+function main_function(){
+function convert_date(today){
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+var ret_date;
+
+  ret_date = mm+'-'+dd+'-'+yyyy;
+
+  return ret_date;
+}
+
+
+$('#datepicker').datepicker({
+    beforeShowDay: function(date){
+
+        if ($.inArray(convert_date(date),resp) > -1) {
+          return [true,"highlight_resp",""];
+        }
+        else if($.inArray( convert_date(date), d )>-1)
+        {
+
+            return [true,"highlight",""];
+        }
+        else {
+          return[true,"",""];
+        }
+
+
+      }
+   });
+}
+
+
+ function getWorkoutDates(){
+   $.ajax({
+     type: "GET",
+     url: '/getWorkoutDates',
+     success: function (response){
+       for(var i = 0; i <response.length;i++){
+         d[i] = response[i].date;
+       }
+       console.log("resp 1: ",JSON.stringify(d));
+       getResponseDates();
+
+     },
+     error: function(response){
+       alert("Failure to load");
+     }
+   })
+ }
+
+ function getResponseDates(){
+   $.ajax({
+     type: "GET",
+     url: '/getResponseDates',
+     success: function (response){
+       for(var i = 0; i <response.length;i++){
+         resp[i] = response[i].date;
+       }
+       main_function();
+
+     },
+     error: function(response){
+       alert("Failure to load");
+     }
+   })
+ }
+
+ $(document).ready(function(){
+   getWorkoutDates();
+});
+
+</script>
+</head>
+<body>
+<input type='text' id='datepicker' /></body>
+</html>

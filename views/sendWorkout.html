@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+  <style type="text/css">
+  #bootstrapSelectForm .selectContainer .form-control-feedback {
+      /* Adjust feedback icon position */
+      right: -15px;
+  }
+  </style>
+
+
+  <style>
+
+  .highlight{
+   background-color : #FF0000 !important;
+   background-image :none !important;
+   font-weight:bold !important;
+
+  }
+  .highlight_resp{
+   background-color : #0000FF !important;
+   background-image :none !important;
+   font-weight:bold !important;
+
+  }
+
+  </style>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Enter Client Workout Routine</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+      <div class="header">
+           <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
+      </div>
+
+      <nav class="navbar navbar-default navbar-static-top" style="margin:0px" id="navbar">
+        <div class="container-fluid">
+                 <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+          </div>
+
+           <div class="collapse navbar-collapse navbar-right" id="example-navbar">
+            <ul class="nav navbar-nav">
+                        <li><a href="/"> <span class="glyphicon glyphicon-home"> </span>  TeamIMFIT </a></li>
+              <li><a href="/"> <span class="glyphicon glyphicon-star"> </span>  About Us </a></li>
+                        <li><a href="/subscription"> <span class="glyphicon glyphicon-list"> </span>  Subscription </a></li>
+                          <li><a href="/logout"> <span class="glyphicon glyphicon-log-out"> </span> Logout </a></li>
+      </nav>
+   </br></br>
+
+<br/>
+ <p> Template Id:
+<input type="number" id="template_id" min="1" max="500" style:"width=15px">
+  </br></p>
+
+   <button type="button" class="btn btn-danger" aria-label="Left Align" id="getWorkout">
+     <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get Template
+   </button>
+
+ <div class="workouts" id="workouts">
+ </div>
+ <p><br/><br/>Date:
+   <br/><input type="text" id="datepicker"></p>
+
+ </div>
+ <br/>
+
+ <script>
+ var date;
+ var d = [];
+ var resp = [];
+
+ function main_function(){
+ function convert_date(today){
+   $("#navbar").hide();
+ var dd = today.getDate();
+ var mm = today.getMonth()+1; //January is 0!
+ var yyyy = today.getFullYear();
+ var ret_date;
+
+   ret_date = mm+'-'+dd+'-'+yyyy;
+
+   return ret_date;
+ }
+
+   $( "#datepicker" ).datepicker({
+     dateFormat: 'mm-dd-yy',
+     beforeShowDay: function(date){
+         if ($.inArray(convert_date(date),resp) > -1) {
+           return [true,"highlight_resp",""];
+         }
+         else if($.inArray( convert_date(date), d )>-1)
+         {
+
+             return [true,"highlight",""];
+         }
+         else {
+           return[true,"",""];
+         }
+       },
+       onSelect: function(dateText, inst) {
+           var date_real = $(this).datepicker('getDate'),
+               day  = date_real.getDate(),
+               month = date_real.getMonth() + 1,
+               year =  date_real.getFullYear();
+           date = month + '-' + day + '-' + year;
+           $("#navbar").show();
+         }
+     });
+}
+
+
+
+  function getWorkoutDates(){
+    $.ajax({
+      type: "GET",
+      url: '/getWorkoutDates',
+      success: function (response){
+        for(var i = 0; i <response.length;i++){
+          d[i] = response[i].date;
+        }
+        console.log("d: ",JSON.stringify(d));
+        getResponseDates();
+
+      },
+      error: function(response){
+        alert("Failure to load");
+      }
+    })
+  }
+
+  function getResponseDates(){
+    $.ajax({
+      type: "GET",
+      url: '/getResponseDates',
+      success: function (response){
+        for(var i = 0; i <response.length;i++){
+          resp[i] = response[i].date;
+        }
+        console.log("resp: ",JSON.stringify(resp));
+      },
+      error: function(response){
+        alert("Failure to load");
+      }
+    })
+  }
+
+
+ $(document).ready(function(){
+   main_function();
+   getWorkoutDates();
+   var total_workout =0;
+   var setLen = 0;
+   var myObject = {};
+
+ $("#getWorkout").click(function(){
+   var week,day,id;
+   $("#workouts").empty();
+   id = $("#template_id").val();
+   week = $("#week").val();
+   day = $("#day").val();
+
+   $.ajax({
+        url: '/getTemplate',
+        type: 'POST',
+        data: { id:id} ,
+        success: function (response) {
+          console.log(response);
+          myObject = response;
+
+          $("#workouts").append('<div class="list-group">'+
+          '<br/><a class="list-group-item"> Primary Muscle: <input id="primary" value="'+ response['primary'] +'"</a>'+
+          '<a class="list-group-item"> Secondary Muscle: <input id="secondary" value="'+ response['secondary'] +'"/a>'+
+          '<a class="list-group-item"> Tertiary Muscle: <input id="tertiary" value="'+ response['tertiary']  +'"</a>'+
+          '<a class="list-group-item"> Quaternary Muscle: <input id="quaternary" value="'+ response['quaternary']  +'"</a>'
+        );
+        total_workout = response.total_workout;
+        var l = 0;
+          for(var i=1;i<=response.total_workout;i++){
+            setLen = 'setLen'+i;
+            var workout = 'workout'+i;
+            var notes='notes'+i;
+            var set1 = 'set'+i+1;
+            var set2 = 'set'+i+2;
+            var maxset = 'set'+i+response[setLen];
+            var max_val = response[maxset];
+
+            var set_incr = response[set2] - response[set1];
+            var setLen1,setLen2,setLen3,setLen4,setLen5,setLen6,setLen7,setLen8 = 0;
+
+            if(response['setLen1']>=0){
+                setLen1 = response['setLen1'];
+            }
+            if(response['setLen2']>=0){
+                setLen2 = response['setLen2'];
+            }
+            if(response['setLen3']>=0){
+                setLen3 = response['setLen3'];
+            }
+            if(response['setLen4']>=0){
+                setLen4 = response['setLen4'];
+            }
+            if(response['setLen5']>=0){
+                setLen5 = response['setLen5'];
+            }
+            if(response['setLen6']>=0){
+                setLen6 = response['setLen6'];
+            }
+            if(response['setLen7']>=0){
+                setLen7 = response['setLen7'];
+            }
+            if(response['setLen8']>=0){
+                setLen8 = response['setLen8'];
+            }
+
+
+            var rep1 = 'rep'+i+1;
+            var rep2 = 'rep'+i+2;
+            var rep_decr = response[rep1] - response[rep2];
+            maxset = 'rep'+i+'1';
+            var max_rep = response[maxset];
+            var link = 'link'+i;
+            console.log(response[setLen]);
+
+
+          $("#workouts").append('<div class="list-group">'+
+          '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px"  value="'+ response[workout]+'" id="'+workout+'"></a>');
+
+          if(response.hasOwnProperty(link)){
+            if(response[link]!== '' ){
+            myObject[link]=response[link];
+            $("#workouts").append('<iframe width="275" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe>');
+            }
+          }
+          $("#workouts").append('<a class="list-group-item"> Workout Notes: <input style="height:30px;width:250px"  value="'+ response[notes] +'" id="'+notes+'"></a>'+
+          '<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+          '<p><br/>Max Weight For This Workout: <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
+          '<p><br/>Max Reps For This Workout: <input type="number" id= "max_reps'+i+'" min="1" max="50" required>&nbsp;&nbsp;'+ max_rep +'</p>'+
+          '<div>');
+
+          $(".workouts").append('<br/><div class="workout'+i+'"><br/> '+
+          '<p> <br/>Weight Increase Per Set :'+
+           '<select id="increment'+i+'" name="increment'+i+'" required>'+
+           '<option value="0">0</option>'+
+              '<option value="2.5">2.5</option>'+
+              '<option value="5">5</option>'+
+              '<option value="7.5">7.5</option>'+
+              '<option value="10">10</option>'+
+              '<option value="12.5">12.5</option>'+
+              '<option value="15">15</option>'+
+              '<option value="17.5">17.5</option>'+
+              '<option value="20">20</option>'+
+              '<option value="22.5">22.5</option>'+
+              '<option value="25">25</option>'+
+              '<option value="27.5">27.5</option>'+
+              '<option value="30">30</option>'+
+              '<option value="32.5">32.5</option>'+
+              '<option value="35">35</option>'+
+              '<option value="37.5">37.5</option>'+
+              '<option value="40">40</option>'+
+              '<option value="42.5">42.5</option>'+
+              '<option value="45">45</option>'+
+              '<option value="47.5">47.5</option>'+
+              '<option value="50">50</option>'+
+              '<option value="52.5">52.5</option>'+
+              '<option value="55">55</option>'+
+              '<option value="57.5">57.5</option>'+
+              '<option value="60">60</option>'+
+              '<option value="62.5">62.5</option>'+
+              '<option value="65">65</option>'+
+              '<option value="67.5">67.5</option>'+
+              '<option value="70">70</option>'+
+              '<option value="72.5">22.5</option>'+
+              '<option value="75">25</option>'+
+              '<option value="77.5">27.5</option>'+
+              '<option value="80">30</option>'+
+              '<option value="82.5">32.5</option>'+
+              '<option value="85">35</option>'+
+              '<option value="87.5">37.5</option>'+
+              '<option value="90">90</option>'+
+           '</select>&nbsp;&nbsp;'+ set_incr +
+         '</p>'+
+
+         '<p> Reps Decrease Per Set :'+
+           '<select id="decrement'+i+'" name="decrement'+i+'" required>'+
+           '<option value="0">0</option>'+
+            '<option value="1">1</option>'+
+            '<option value="2">2</option>'+
+            '<option value="3">3</option>'+
+            '<option value="4">4</option>'+
+            '<option value="5">5</option>'+
+           '</select>&nbsp;&nbsp;'+ rep_decr +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+         '</p></div>');
+            for(var j=1;j<=response[setLen];j++){
+              var rep = 'rep'+i+j;
+              l = j;
+              myObject[setLen]=response[setLen];
+            console.log(response[rep]);
+
+            var set = 'set'+i+j;
+            var type = 'type'+i+j;
+            var unit = 'unit'+i+j;
+            var rep = 'rep'+i+j;
+            var bk1 = 'bk'+i+j+'1';
+            var bk2 = 'bk'+i+j+'2';
+            var bk3 = 'bk'+i+j+'3';
+            var bk4 = 'bk'+i+j+'4';
+            var comm = 'comment'+i+j;
+            var difficulty = 'difficulty'+i+j;
+
+            $("#workouts").append('<div class="list-group">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
+          );
+        }
+
+        $("#update1").click(function(){
+          var init_weight_1 = $("#max_val1").val();
+          var init_reps_1=$("#max_reps1").val();
+          var init_type=$("#type11").val();
+          var init_unit=$("#unit11").val();
+          var incr = $("#increment1").val();
+          var decr = $("#decrement1").val();
+          var wk_type=$("#wk_type1").val();
+          var count = setLen1-1;
+
+          for(l=1;l<=setLen1;l++){
+
+
+            if(wk_type=="maxout")
+            {
+               $("#set1"+l).val(parseFloat(init_weight_1)-(parseFloat(incr)*count));
+               $("#rep1"+l).val(parseFloat(init_reps_1)-(parseFloat(decr)*(l-1)));
+               $("#type1"+l).val(init_type);
+               $("#unit1"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set1"+(setLen1-l+1)).val(parseFloat(init_weight_1) - (parseFloat(incr)*count));
+               $("#rep1"+(setLen1-l+1)).val(parseFloat(init_reps_1) - (parseFloat(decr)*(l-1)));
+               $("#type1"+l).val(init_type);
+               $("#unit1"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update2").click(function(){
+          var init_weight_2 = $("#max_val2").val();
+          var init_reps_2=$("#max_reps2").val();
+          var init_type=$("#type21").val();
+          var init_unit=$("#unit21").val();
+          var incr = $("#increment2").val();
+          var decr = $("#decrement2").val();
+          var wk_type=$("#wk_type2").val();
+          var count = setLen2-1;;
+          for(l=1;l<=setLen1;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set2"+l).val(parseFloat(init_weight_2)-(parseFloat(incr)*count));
+               $("#rep2"+l).val(parseFloat(init_reps_2)-(parseFloat(decr)*(l-1)));
+               $("#type2"+l).val(init_type);
+               $("#unit2"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set2"+(setLen2-l+1)).val(parseFloat(init_weight_2) - (parseFloat(incr)*count));
+               $("#rep2"+(setLen2-l+1)).val(parseFloat(init_reps_2) - (parseFloat(decr)*(l-1)));
+               $("#type2"+l).val(init_type);
+               $("#unit2"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update3").click(function(){
+          var init_weight_3 = $("#max_val3").val();
+          var init_reps_3=$("#max_reps3").val();
+          var init_type=$("#type31").val();
+          var init_unit=$("#unit31").val();
+          var incr = $("#increment3").val();
+          var decr = $("#decrement3").val();
+          var count = setLen3-1;
+          var wk_type=$("#wk_type3").val();
+          for(l=1;l<=setLen3;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set3"+l).val(parseFloat(init_weight_3)-(parseFloat(incr)*count));
+               $("#rep3"+l).val(parseFloat(init_reps_3)-(parseFloat(decr)*(l-1)));
+               $("#type3"+l).val(init_type);
+               $("#unit3"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set3"+(setLen3-l+1)).val(parseFloat(init_weight_3) - (parseFloat(incr)*count));
+               $("#rep3"+(setLen3-l+1)).val(parseFloat(init_reps_3) - (parseFloat(decr)*(l-1)));
+               $("#type3"+l).val(init_type);
+               $("#unit3"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update4").click(function(){
+          var init_weight_4 = $("#max_val4").val();
+          var init_reps_4=$("#max_reps4").val();
+          var init_type=$("#type41").val();
+          var init_unit=$("#unit41").val();
+          var incr = $("#increment4").val();
+          var decr = $("#decrement4").val();
+          var count = setLen4-1;
+          var wk_type=$("#wk_type4").val();
+          for(l=1;l<=setLen4;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set4"+l).val(parseFloat(init_weight_4)-(parseFloat(incr)*count));
+               $("#rep4"+l).val(parseFloat(init_reps_4)-(parseFloat(decr)*(l-1)));
+               $("#type4"+l).val(init_type);
+               $("#unit4"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set4"+(setLen4-l+1)).val(parseFloat(init_weight_4) - (parseFloat(incr)*count));
+               $("#rep4"+(setLen4-l+1)).val(parseFloat(init_reps_4) - (parseFloat(decr)*(l-1)));
+               $("#type4"+l).val(init_type);
+               $("#unit4"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update5").click(function(){
+          var init_weight_5 = $("#max_val5").val();
+          var init_reps_5=$("#max_reps5").val();
+          var init_type=$("#type51").val();
+          var init_unit=$("#unit51").val();
+          var incr = $("#increment5").val();
+          var wk_type=$("#wk_type5").val();
+          var decr = $("#decrement5").val();
+          var count = setLen5-1;;
+          for(l=1;l<=setLen5;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set5"+l).val(parseFloat(init_weight_5)-(parseFloat(incr)*count));
+               $("#rep5"+l).val(parseFloat(init_reps_5)-(parseFloat(decr)*(l-1)));
+               $("#type5"+l).val(init_type);
+               $("#unit5"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set5"+(setLen5-l+1)).val(parseFloat(init_weight_5) - (parseFloat(incr)*count));
+               $("#rep5"+(setLen5-l+1)).val(parseFloat(init_reps_5) - (parseFloat(decr)*(l-1)));
+               $("#type5"+l).val(init_type);
+               $("#unit5"+l).val(init_unit);
+             }
+             count=count-1;
+
+          }
+        })
+
+        $("#update6").click(function(){
+          var init_weight_6 = $("#max_val6").val();
+          var init_reps_6=$("#max_reps6").val();
+          var init_type=$("#type61").val();
+          var init_unit=$("#unit61").val();
+          var incr = $("#increment6").val();
+          var wk_type=$("#wk_type6").val();
+          var decr = $("#decrement6").val();
+          var count = setLen6-1;;
+          for(l=1;l<=setLen6;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set6"+l).val(parseFloat(init_weight_6)-(parseFloat(incr)*count));
+               $("#rep6"+l).val(parseFloat(init_reps_6)-(parseFloat(decr)*(l-1)));
+               $("#type6"+l).val(init_type);
+               $("#unit6"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set6"+(setLen6-l+1)).val(parseFloat(init_weight_6) - (parseFloat(incr)*count));
+               $("#rep6"+(setLen6-l+1)).val(parseFloat(init_reps_6) - (parseFloat(decr)*(l-1)));
+               $("#type6"+l).val(init_type);
+               $("#unit6"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update7").click(function(){
+          var init_weight_7 = $("#max_val7").val();
+          var init_reps_7=$("#max_reps7").val();
+          var init_type=$("#type71").val();
+          var init_unit=$("#unit71").val();
+          var incr = $("#increment7").val();
+          var wk_type=$("#wk_type7").val();
+          var decr = $("#decrement7").val();
+          var count = setLen7-1;;
+          for(l=1;l<=setLen7;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set7"+l).val(parseFloat(init_weight_7)-(parseFloat(incr)*count));
+               $("#rep7"+l).val(parseFloat(init_reps_7)-(parseFloat(decr)*(l-1)));
+               $("#type7"+l).val(init_type);
+               $("#unit7"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#weight7"+(setLen7-l+1)).val(parseFloat(init_weight_7) - (parseFloat(incr)*count));
+               $("#rep7"+(setLen7-l+1)).val(parseFloat(init_reps_7) - (parseFloat(decr)*(l-1)));
+               $("#type7"+l).val(init_type);
+               $("#unit7"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update8").click(function(){
+          var init_weight_8 = $("#max_val8").val();
+          var init_reps_8=$("#max_reps8").val();
+          var init_type=$("#type81").val();
+          var init_unit=$("#unit81").val();
+          var incr = $("#increment8").val();
+          var decr = $("#decrement8").val();
+          var wk_type=$("#wk_type8").val();
+          var count = setLen8-1;;
+          for(l=1;l<=setLen8;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set8"+l).val(parseFloat(init_weight_8)-(parseFloat(incr)*count));
+               $("#rep8"+l).val(parseFloat(init_reps_8)-(parseFloat(decr)*(l-1)));
+               $("#type8"+l).val(init_type);
+               $("#unit8"+l).val(init_unit);
+             }
+
+
+             else if (wk_type=="dropset") {
+               $("#set8"+(setLen8-l+1)).val(parseFloat(init_weight_8) - (parseFloat(incr)*count));
+               $("#rep8"+(setLen8-l+1)).val(parseFloat(init_reps_8) - (parseFloat(decr)*(l-1)));
+               $("#type8"+l).val(init_type);
+               $("#unit8"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+    }
+
+
+
+        $("#workouts").append('<button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:150px">Send Workout</button>');
+
+        $("#submit").click(function(){
+
+
+          function guid() {
+           function s4() {
+             return Math.floor((1 + Math.random()) * 0x10000)
+               .toString(16)
+               .substring(1);
+           }
+           return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+             s4() + '-' + s4() + s4() + s4();
+          }
+
+          var week,day;
+          week = $("#week_dest").val();
+          day = $("#day_dest").val();
+
+          myObject['_id'] = guid();
+          myObject['date']=date;
+          myObject['primary'] = $("#primary").val();
+          myObject['secondary'] = $("#secondary").val();
+          myObject['tertiary'] = $("#tertiary").val();
+          myObject['quaternary'] = $("quaternary").val();
+
+          for(var i=1;i<=response.total_workout;i++){
+            setLen = 'setLen'+i;
+            var workout = 'workout'+i;
+            var notes='notes'+i;
+
+            myObject[workout]=$("#workout"+i).val();
+            myObject[notes]=$("#notes"+i).val();
+
+            for(var j=1;j<=response[setLen];j++){
+
+            var set = 'set'+i+""+j;
+            var rep = 'rep'+i+""+j;
+            var type = 'type'+i+""+j;
+            var unit = 'unit'+i+""+j;
+
+            myObject[set]=$("#set"+i+j).val();
+            myObject[rep]=$("#rep"+i+j).val();
+            myObject[type]=$("#type"+i+j).val();
+            myObject[unit]=$("#unit"+i+j).val();
+            }
+          }
+
+
+          console.log(JSON.stringify(myObject));
+          $.ajax({
+            type: "POST",
+            url: '/recieveWorkout',
+            data: myObject,
+            dataType: JSON,
+            success: function (response){
+
+              var property = document.getElementById("submit");
+              $("#submit").removeClass("btn-danger").addClass("btn-info");
+            },
+            error: function(response){
+              var property = document.getElementById("submit");
+              $("#submit").removeClass("btn-danger").addClass("btn-info");
+
+            }
+          })
+        });
+
+
+        },
+        error: function () {
+            //your error code
+        }
+    });
+
+  });
+
+ });
+
+ </script>
+
+</body>
+</html>

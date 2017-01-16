@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+  <style type="text/css">
+  #bootstrapSelectForm .selectContainer .form-control-feedback {
+      /* Adjust feedback icon position */
+      right: -15px;
+  }
+  </style>
+
+  <style>
+
+  .highlight{
+   background-color : #FF0000 !important;
+   background-image :none !important;
+   font-weight:bold !important;
+
+  }
+  .highlight_resp{
+   background-color : #0000FF !important;
+   background-image :none !important;
+   font-weight:bold !important;
+
+  }
+
+  </style>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Enter Client Workout Routine</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+      <div class="header">
+           <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
+      </div>
+
+      <nav class="navbar navbar-default navbar-static-top" style="margin:0px" id="navbar">
+        <div class="container-fluid">
+                 <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+          </div>
+
+           <div class="collapse navbar-collapse navbar-right" id="example-navbar">
+            <ul class="nav navbar-nav">
+                        <li><a href="/"> <span class="glyphicon glyphicon-home"> </span>  TeamIMFIT </a></li>
+              <li><a href="/"> <span class="glyphicon glyphicon-star"> </span>  About Us </a></li>
+                        <li><a href="/subscription"> <span class="glyphicon glyphicon-list"> </span>  Subscription </a></li>
+                          <li><a href="/logout"> <span class="glyphicon glyphicon-log-out"> </span> Logout </a></li>
+    </div>
+   </nav>
+   </br></br>
+
+
+   <br/><button type="button" class="btn btn-danger" aria-label="Left Align" id="getWorkout">
+     <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get Workout
+   </button>
+
+ <div class="workouts" id="workouts">
+ </div>
+
+ <p><br/><br/><br/>Date:
+ <br/> <input type="text" id="datepicker"></p>
+
+ </div>
+ <br/>
+
+ <script>
+
+ var date;
+ var d = [];
+ var resp = [];
+
+ function main_function(){
+ function convert_date(today){
+   $("#navbar").hide();
+ var dd = today.getDate();
+ var mm = today.getMonth()+1; //January is 0!
+ var yyyy = today.getFullYear();
+ var ret_date;
+
+   ret_date = mm+'-'+dd+'-'+yyyy;
+
+   return ret_date;
+ }
+
+   $( "#datepicker" ).datepicker({
+     dateFormat: 'mm-dd-yy',
+     beforeShowDay: function(date){
+         if ($.inArray(convert_date(date),resp) > -1) {
+           return [true,"highlight_resp",""];
+         }
+         else if($.inArray( convert_date(date), d )>-1)
+         {
+
+             return [true,"highlight",""];
+         }
+         else {
+           return[true,"",""];
+         }
+       },
+       onSelect: function(dateText, inst) {
+           var date_real = $(this).datepicker('getDate'),
+               day  = date_real.getDate(),
+               month = date_real.getMonth() + 1,
+               year =  date_real.getFullYear();
+           date = month + '-' + day + '-' + year;
+           $("#navbar").show();
+         }
+     });
+}
+
+
+  function getWorkoutDates(){
+    $.ajax({
+      type: "GET",
+      url: '/getClientWorkoutDates',
+      success: function (response){
+        for(var i = 0; i <response.length;i++){
+          d[i] = response[i].date;
+        }
+        console.log("d: ",JSON.stringify(d));
+        getResponseDates();
+
+      },
+      error: function(response){
+        alert("Failure To Load");
+      }
+    })
+  }
+
+  function getResponseDates(){
+    $.ajax({
+      type: "GET",
+      url: '/getResponseDates',
+      success: function (response){
+        for(var i = 0; i <response.length;i++){
+          resp[i] = response[i].date;
+        }
+        console.log("resp: ",JSON.stringify(resp));
+      },
+      error: function(response){
+        alert("Failure To Load");
+      }
+    })
+  }
+
+
+ $(document).ready(function(){
+
+   main_function();
+   getWorkoutDates();
+   var total_workout =0;
+   var setLen = 0;
+   var myObject = {};
+   var primary, secondary, tertiary = '';
+ $("#getWorkout").click(function(){
+   $("#workouts").empty();
+
+   $.ajax({
+        url: '/workoutDetails',
+        type: 'POST',
+        data: { date: date} ,
+        success: function (response) {
+          console.log(response);
+          $("#workouts").append('<div class="list-group">'+
+          '<br/><a class="list-group-item"> Primary Muscle: '+ response['primary'] +'</a>'+
+          '<a class="list-group-item"> Secondary Muscle: '+ response['secondary'] +'</a>'+
+          '<a class="list-group-item"> Tertiary Muscle: '+ response['tertiary']  +'</a>'+
+          '<a class="list-group-item"> Quaternary Muscle: '+ response['quaternary']  +'</a>'
+        );
+        myObject['primary'] = response['primary'];
+        myObject['secondary'] = response['secondary'];
+        myObject['tertiary'] = response['tertiary'];
+        myObject['quaternary'] = response['quaternary'];
+        total_workout = response.total_workout;
+        var l = 0;
+          for(var i=1;i<=response.total_workout;i++){
+            setLen = 'setLen'+i;
+            var workout = 'workout'+i;
+            var notes='notes'+i;
+            var link = 'link'+i;
+            console.log(response[setLen]);
+
+          $("#workouts").append('<div class="list-group">'+
+          '<br/><a class="list-group-item active"> '+ response[workout]  +'</a>'+
+          '<a class="list-group-item"> Workout Notes: '+ response[notes]  +'</a><div>');
+
+
+          if(response.hasOwnProperty(link)){
+            if(response[link]!== ''){
+            myObject[link]=response[link];
+            $("#workouts").append('<iframe width="275" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe>');
+            }
+          }
+
+          myObject[workout] = response[workout];
+          myObject[notes] = response[notes];
+            for(var j=1;j<=response[setLen];j++){
+              var rep = 'rep'+i+j;
+              l = j;
+              myObject[setLen]=response[setLen];
+            console.log(response[rep]);
+
+            var set = 'set'+i+j;
+            var type = 'type'+i+j;
+            var unit = 'unit'+i+j;
+            var rep = 'rep'+i+j;
+            var bk1 = 'bk'+i+j+'1';
+            var bk2 = 'bk'+i+j+'2';
+            var bk3 = 'bk'+i+j+'3';
+            var bk4 = 'bk'+i+j+'4';
+            var comm = 'comment'+i+j;
+            var difficulty = 'difficulty'+i+j;
+
+            myObject[set] = response[set];
+            myObject[unit] = response[unit];
+            myObject[type] = response[type];
+            myObject[rep] = response[rep];
+            $("#workouts").append('<div class="list-group">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: '+ response[set]  +' '+ response[unit] +' '+ response[type]  +'</a>'+
+            '<a class="list-group-item"> Reps: '+ response[rep]  +'</a>'+
+            '<a class="list-group-item"> Rep Breakdown: '+'&nbsp;&nbsp;&nbsp;<input type="number" id="'+bk1+'" style="width: 30px;"  required >'+
+            '&nbsp;&nbsp;<input type="number" id="'+bk2+'" style="width: 30px;"  required >'+
+            '&nbsp;&nbsp;<input type="number" id="'+bk3+'" style="width: 30px;"  required >'+
+            '&nbsp;&nbsp;<input type="number" id="'+bk4+'" style="width: 30px;"  required ><br/><br/>'+
+            'Workout Difficulty:<br/><br/> <select class="form-control" id="'+difficulty+'" required>'+
+               '<option value="Very easy">Very Easy</option>'+
+              ' <option value="Easy">Easy</option>'+
+              ' <option value="Perfect">Perfect</option>'+
+              ' <option value="Difficult">Difficult</option>'+
+              ' <option value="Very Difficult">Very Difficult</option>'+
+              ' <option value="Impossible">Impossible</option>'+
+           '</select><br/>'+
+            'Feedback/ Weight Used:<input type="text" id="'+comm+'" required ></a><div>'
+          );
+        }
+        }
+        $("#workouts").append('<button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:90px">Submit</button>');
+        $("#submit").click(function(){
+          myObject['date']=date;
+          myObject['total_workout'] = response.total_workout;
+          for(var i=1;i<=response.total_workout;i++){
+            setLen = 'setLen'+i;
+            myObject[setLen] = response[setLen];
+            for(var j=1;j<=response[setLen];j++){
+            var bk1 = 'bk'+i+j+'1';
+            var bk2 = 'bk'+i+j+'2';
+            var bk3 = 'bk'+i+j+'3';
+            var bk4 = 'bk'+i+j+'4';
+            var comm = 'comment'+i+j;
+            var difficulty = 'difficulty'+i+j;
+
+            myObject[bk1]=$("#bk"+i+j+'1').val();
+            myObject[bk2]=$("#bk"+i+j+'2').val();
+            myObject[bk3]=$("#bk"+i+j+'3').val();
+            myObject[bk4]=$("#bk"+i+j+'4').val();
+            myObject[comm]=$("#comment"+i+j).val();
+            myObject[difficulty]=$("#difficulty"+i+j).val();
+            }
+          }
+
+
+          console.log(JSON.stringify(myObject));
+          $.ajax({
+            type: "POST",
+            url: '/submitFeedback',
+            data: myObject,
+            dataType: JSON,
+            success: function (response){
+
+              var property = document.getElementById("submit");
+              //property.style.backgroundColor = "#0000ff";
+              $("#submit").removeClass("btn-danger").addClass("btn-info");
+            },
+            error: function(response){
+
+              var property = document.getElementById("submit");
+              //property.style.backgroundColor = "#0000a0";
+              $("#submit").removeClass("btn-danger").addClass("btn-info");
+
+            }
+          });
+
+        });
+        },
+        error: function () {
+            //your error code
+        }
+    });
+
+  });
+
+
+ });
+ </script>
+</body>
+</html>
