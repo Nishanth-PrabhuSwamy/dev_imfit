@@ -1,5 +1,5 @@
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://Nishanth_Prabhuswamy:Avenger101@ds025973.mlab.com:25973/team_imfit', ['users','trainer','client','athlete','workout','client_feedback','IntermediateWorkout_Template','latest_workout','workout_dates','response_dates','sent_dates']);
+var db = mongojs('mongodb://Nishanth_Prabhuswamy:Avenger101@ds111489.mlab.com:11489/dev_imfit', ['users','trainer','client','athlete','workout','client_feedback','IntermediateWorkout_Template','latest_workout','workout_dates','response_dates','sent_dates']);
 
 function validateTrainer(callback,email,password,membership)
 {
