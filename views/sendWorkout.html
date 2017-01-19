@@ -204,6 +204,72 @@
         var l = 0;
           for(var i=1;i<=response.total_workout;i++){
 
+            setLen = 'setLen'+i;
+            
+            var workout = 'workout'+i;
+            var notes='notes'+i;
+            var set1 = 'set'+i+1;
+            var set2 = 'set'+i+2;
+
+            var set_incr = response[set2] - response[set1];
+            var setLen1,setLen2,setLen3,setLen4,setLen5,setLen6,setLen7,setLen8 = 0;
+
+            if(response['setLen1']>=0){
+                setLen1 = response['setLen1'];
+            }
+            if(response['setLen2']>=0){
+                setLen2 = response['setLen2'];
+            }
+            if(response['setLen3']>=0){
+                setLen3 = response['setLen3'];
+            }
+            if(response['setLen4']>=0){
+                setLen4 = response['setLen4'];
+            }
+            if(response['setLen5']>=0){
+                setLen5 = response['setLen5'];
+            }
+            if(response['setLen6']>=0){
+                setLen6 = response['setLen6'];
+            }
+            if(response['setLen7']>=0){
+                setLen7 = response['setLen7'];
+            }
+            if(response['setLen8']>=0){
+                setLen8 = response['setLen8'];
+            }
+
+
+            var rep1 = 'rep'+i+1;
+            var rep2 = 'rep'+i+2;
+            var rep_decr = response[rep1] - response[rep2];
+            var maxset = '';
+            var maxrep ='';
+            var max_rep = 0;
+            var max_val = 0;
+            var wk_type = "wk_type"+i;
+            for(var m=1;m<=response[setLen]+1;m++)
+            {
+                maxrep = 'rep'+i+''+m;
+                maxset = 'set'+i+''+m;
+                if(parseInt(response[maxrep]) > parseInt(max_rep))
+                {
+
+                  console.log("maxrep: ",response[maxrep])
+                  console.log("max_rep: ",max_rep)
+                  max_rep = response[maxrep];
+                  console.log("updated max_rep: ",max_rep)
+
+                }
+                if(parseInt(response[maxset]) > parseInt(max_val))
+                {
+
+                  console.log("maxset: ",response[maxset])
+                  console.log("max_val: ",max_val)
+                  max_val = response[maxset];
+                  console.log("updated max_val: ",max_val)
+                }
+            }
 
             var link = 'link'+i;
 
