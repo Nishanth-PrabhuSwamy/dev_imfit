@@ -7,6 +7,7 @@ exports.selectWorkout = function(req,res){
 
 exports.workoutDetails = function(req,res){
   var date = req.body.date;
+  console.log(req.session.ClientEmail);
   objectControl.workoutDetails(function(err,results)
   {
     if(err || results === null)
