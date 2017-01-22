@@ -195,7 +195,8 @@
           myObject = response;
 
           $("#workouts").append('<div class="list-group">'+
-          '<br/><a class="list-group-item"> Primary Muscle: <input id="primary" value="'+ response['primary'] +'"</a>'+
+          '<br/><a class="list-group-item"> Workout Skill Level: <input id="skill" value="'+ response['skill'] +'"</a>'+
+          '<a class="list-group-item"> Primary Muscle: <input id="primary" value="'+ response['primary'] +'"</a>'+
           '<a class="list-group-item"> Secondary Muscle: <input id="secondary" value="'+ response['secondary'] +'"/a>'+
           '<a class="list-group-item"> Tertiary Muscle: <input id="tertiary" value="'+ response['tertiary']  +'"</a>'+
           '<a class="list-group-item"> Quaternary Muscle: <input id="quaternary" value="'+ response['quaternary']  +'"</a>'
@@ -205,7 +206,7 @@
           for(var i=1;i<=response.total_workout;i++){
 
             setLen = 'setLen'+i;
-            
+
             var workout = 'workout'+i;
             var notes='notes'+i;
             var set1 = 'set'+i+1;
@@ -626,6 +627,7 @@
 
           myObject['_id'] = guid();
           myObject['date']=date;
+          myObject['skill'] = $("#skill").val();
           myObject['primary'] = $("#primary").val();
           myObject['secondary'] = $("#secondary").val();
           myObject['tertiary'] = $("#tertiary").val();

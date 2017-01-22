@@ -54,6 +54,13 @@
       </nav>
    </br></br>
 
+   <p> Workout Skill Level: </p>
+     <select class="form-control" id="skill" name="skill" required>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+    </select>
+
  <p> Primary Muscle: </p>
    <select class="form-control" id="primary" name="primary" required>
       <option value="Quads">Quads</option>
@@ -687,6 +694,7 @@ function main_function(){
     myObject['total_workout']=workout;
 
     myObject['id']=parseInt(template_id);
+    myObject['skill'] = $('#skill').val();
     myObject['primary'] = $("#primary").val();
     myObject['secondary'] = $("#secondary").val();
     myObject['tertiary'] = $("#tertiary").val();
