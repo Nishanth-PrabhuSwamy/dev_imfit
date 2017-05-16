@@ -147,6 +147,7 @@
       <td>Secondary Muscle</td>
       <td>Tertiary Muscle</td>
       <td>Quaternary Muscle</td>
+      <td>Video ?</td>
       </tr>
       </table>
   </div>
@@ -161,23 +162,22 @@
    var secondary = $("#secondary").val();
    var tertiary = $("#tertiary").val();
    var quaternary = $("#quaternary").val();
-
+   var video = '';
    $.ajax({
         url: '/loadTemplates',
         type: 'GET',
         success: function (response) {
           $.each(response, function(i, iter) {
-            if(iter.skill){
-            if(iter.skill == skill && (iter.primary == primary || iter.secondary == secondary)){
-            $('#myTable tr:last').after('<tr><td>'+iter.id+'</td><td>'+iter.skill+'</td><td>'+iter.primary+'</td><td>'+iter.secondary+'</td><td>'+
-                          +iter.tertiary+'</td><td>'+iter.quaternary+'</td></tr>');
-              }
+            if(iter.link1 || iter.link2 || iter.link3 || iter.link4 || iter.link5 || iter.link6 || iter.link7 || iter.link8){
+              video = 'Yes';
             }
-              else{
-                if(iter.primary == primary || iter.secondary == secondary){
-                $('#myTable tr:last').after('<tr><td>'+iter.id+'</td><td>'+iter.skill+'</td><td>'+iter.primary+'</td><td>'+iter.secondary+'</td><td>'+
-                              +iter.tertiary+'</td><td>'+iter.quaternary+'</td></tr>');
-                  }
+            else {
+              video = 'No';
+            }
+            if(iter.skill == skill && (iter.primary == primary && (iter.secondary == secondary )
+            && (iter.tertiary == tertiary))){
+            $('#myTable tr:last').after('<tr><td>'+iter.id+'</td><td>'+iter.skill+'</td><td>'+iter.primary+'</td><td>'+iter.secondary+'</td><td>'+iter.tertiary+'</td><td>'+iter.quaternary+'</td><td>'
+            +video+'</td></tr>');
               }
 
           })

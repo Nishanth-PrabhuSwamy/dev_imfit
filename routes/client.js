@@ -7,7 +7,6 @@ exports.selectWorkout = function(req,res){
 
 exports.workoutDetails = function(req,res){
   var date = req.body.date;
-  console.log(req.session.ClientEmail);
   objectControl.workoutDetails(function(err,results)
   {
     if(err || results === null)
@@ -85,6 +84,8 @@ exports.submitFeedback = function(req,res){
     else
     {
       console.log('Inserted successfully');
+
     }
   },feedback);
+res.status(200).json({status:"ok"});
 };

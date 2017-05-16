@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+  <style type="text/css">
+  #bootstrapSelectForm .selectContainer .form-control-feedback {
+      /* Adjust feedback icon position */
+      right: -15px;
+  }
+  </style>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Enter Client Workout Routine</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+      <div class="header">
+           <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
+      </div>
+
+      <nav class="navbar navbar-default navbar-static-top" style="margin:0px" id="navbar">
+        <div class="container-fluid">
+                 <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+          </div>
+
+           <div class="collapse navbar-collapse navbar-right" id="example-navbar">
+            <ul class="nav navbar-nav">
+                        <li><a href="/"> <span class="glyphicon glyphicon-home"> </span>  TeamIMFIT </a></li>
+              <li><a href="/"> <span class="glyphicon glyphicon-star"> </span>  About Us </a></li>
+                        <li><a href="/subscription"> <span class="glyphicon glyphicon-list"> </span>  Subscription </a></li>
+                          <li><a href="/logout"> <span class="glyphicon glyphicon-log-out"> </span> Logout </a></li>
+      </nav>
+   </br></br>
+
+<br/>
+ <p> Template Number:
+<input type="number" id="template_id" min="1" max="500" style:"width=15px">
+  </br></p>
+
+   <button type="button" class="btn btn-danger" aria-label="Left Align" id="getWorkout">
+     <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Load Template
+   </button>
+
+ <div class="workouts" id="workouts">
+ </div>
+
+ <br/>
+ <div class="amrWorkout">
+ <button type="button" class="btn btn-danger" aria-label="Left Align" name="addWorkout">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Workout
+ </button>
+
+ <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout">
+   <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout
+ </div>
+ </button> <br/>
+ <div class="end" id="end">
+ </div>
+
+ </div>
+ <br/>
+
+ <script>
+ $(".amrWorkout").hide();
+
+ $(document).ready(function(){
+   var total_workout =0;
+   var setLen = 0;
+   var myObject = {};
+   var workout_number ;
+   var temp=[];
+ $("#getWorkout").click(function(){
+   $(".amrWorkout").show();
+   var week,day,id;
+   $(".end").empty();
+   $(".workouts").empty();
+   id = $("#template_id").val();
+   week = $("#week").val();
+   day = $("#day").val();
+
+   $.ajax({
+        url: '/getTemplate',
+        type: 'POST',
+        data: { id:id} ,
+        success: function (response) {
+          console.log(response);
+          //myObject = response;
+
+          $("#workouts").append('<div class="list-group">'+
+          '<br/><a class="list-group-item"> Workout Skill Level: '+
+          '<select class="form-control" id="skill" name="skill" required>'+
+             '<option value="Beginner">Beginner</option>'+
+             '<option value="Intermediate">Intermediate</option>'+
+             '<option value="Advanced">Advanced</option>'+
+         '</select></br>'+
+
+          '<a class="list-group-item"> Primary Muscle: '+
+          '<select class="form-control" id="primary" name="primary" required>'+
+          '<option value="Quads">Quads</option>'+
+             '<option value="Glutes">Glutes</option>'+
+             '<option value="Hamstrings">Hamstrings</option>'+
+             '<option value="Chest">Chest</option>'+
+             '<option value="Lats">Lats</option>'+
+             '<option value="Back">Back</option>'+
+             '<option value="Traps">Traps</option>'+
+             '<option value="Deltoids">Deltoids</option>'+
+             '<option value="Core">Core</option>'+
+             '<option value="Forearms">Forearms</option>'+
+             '<option value="Biceps">Biceps</option>'+
+             '<option value="Triceps">Triceps</option>'+
+              '<option value="Calves">Calves</option>'+
+              '<option value="Core">Core</option>'+
+         '</select></br>'+
+
+          '<a class="list-group-item"> Secondary Muscle: '+
+          '<select class="form-control" id="secondary" name="secondary" required>'+
+             '<option value="None">None</option>'+
+             '<option value="Quads">Quads</option>'+
+             '<option value="Glutes">Glutes</option>'+
+             '<option value="Hamstrings">Hamstrings</option>'+
+             '<option value="Chest">Chest</option>'+
+             '<option value="Lats">Lats</option>'+
+             '<option value="Back">Back</option>'+
+             '<option value="Traps">Traps</option>'+
+             '<option value="Deltoids">Deltoids</option>'+
+             '<option value="Core">Core</option>'+
+             '<option value="Forearms">Forearms</option>'+
+             '<option value="Biceps">Biceps</option>'+
+             '<option value="Triceps">Triceps</option>'+
+             '<option value="Calves">Calves</option>'+
+             '<option value="Core">Core</option>'+
+         '</select></br>'+
+
+          '<a class="list-group-item"> Tertiary Muscle: '+
+          '<select class="form-control" id="tertiary" name="tertiary" required>'+
+             '<option value="None">None</option>'+
+             '<option value="Quads">Quads</option>'+
+             '<option value="Glutes">Glutes</option>'+
+             '<option value="Hamstrings">Hamstrings</option>'+
+             '<option value="Chest">Chest</option>'+
+             '<option value="Lats">Lats</option>'+
+             '<option value="Back">Back</option>'+
+             '<option value="Traps">Traps</option>'+
+             '<option value="Deltoids">Deltoids</option>'+
+             '<option value="Core">Core</option>'+
+             '<option value="Forearms">Forearms</option>'+
+             '<option value="Biceps">Biceps</option>'+
+             '<option value="Triceps">Triceps</option>'+
+             '<option value="Calves">Calves</option>'+
+             '<option value="Core">Core</option>'+
+         '</select></br>'+
+          '<a class="list-group-item"> Quaternary Muscle: '+
+          '<select class="form-control" id="quaternary" name="quaternary" required>'+
+          '<option value="None">None</option>'+
+          '<option value="Quads">Quads</option>'+
+          '<option value="Glutes">Glutes</option>'+
+          '<option value="Hamstrings">Hamstrings</option>'+
+          '<option value="Chest">Chest</option>'+
+          '<option value="Lats">Lats</option>'+
+          '<option value="Back">Back</option>'+
+          '<option value="Traps">Traps</option>'+
+          '<option value="Deltoids">Deltoids</option>'+
+          '<option value="Core">Core</option>'+
+          '<option value="Forearms">Forearms</option>'+
+          '<option value="Biceps">Biceps</option>'+
+          '<option value="Triceps">Triceps</option>'+
+          '<option value="Calves">Calves</option>'+
+          '<option value="Core">Core</option>'+
+         '</select></br>'
+        );
+        $("#skill").val(response['skill']);
+        $("#primary").val(response['primary']);
+        $("#secondary").val(response['secondary']);
+        $("#tertiary").val(response['tertiary']);
+        $("#quaternary").val(response['quaternary']);
+
+        total_workout = response.total_workout;
+        myObject['id'] = response['id'];
+        var l = 0;
+        var has_wk = [];
+        for(var i =1;i<9;i++)
+        {
+          has_wk[i]=0;
+        }
+          for(var i=1;i<=response.total_workout;i++){
+
+            setLen = 'setLen'+i;
+
+             workout = 'workout'+i;
+             workout_number = i;
+            var notes='notes'+i;
+            var set1 = 'set'+i+1;
+            var set2 = 'set'+i+2;
+
+            var set_incr = response[set2] - response[set1];
+            var setLen1,setLen2,setLen3,setLen4,setLen5,setLen6,setLen7,setLen8 = 0;
+
+            if(response['setLen1']>=0){
+                myObject['setLen1'] = response['setLen1'];
+                myObject['equipment1'] = response['equipment1'];
+                myObject['target_muscle1'] = response['target_muscle1'];
+                has_wk[1] = 1;
+            }
+            if(response['setLen2']>=0){
+                myObject['setLen2'] = response['setLen2'];
+                myObject['equipment2'] = response['equipment2'];
+                myObject['target_muscle2'] = response['target_muscle'];
+                has_wk[2] = 1;
+            }
+            if(response['setLen3']>=0){
+               myObject['setLen3'] = response['setLen3'];
+               myObject['equipment3'] = response['equipment3'];
+               myObject['target_muscle3'] = response['target_muscle3'];
+               has_wk[3] = 1;
+            }
+            if(response['setLen4']>=0){
+                myObject['setLen4']=  response['setLen4'];
+                myObject['equipment4'] = response['equipment4'];
+                myObject['target_muscle4'] = response['target_muscle4'];
+                has_wk[4] = 1;
+              }
+            if(response['setLen5']>=0){
+                myObject['setLen5']=  response['setLen5'];
+                myObject['equipment5'] = response['equipment5'];
+                myObject['target_muscle5'] = response['target_muscle5'];
+                has_wk[5] = 1;
+            }
+            if(response['setLen6']>=0){
+                myObject['setLen6']=  response['setLen6'];
+                myObject['equipment6'] = response['equipment6'];
+                myObject['target_muscle6'] = response['target_muscle6'];
+                has_wk[6] = 1;
+            }
+            if(response['setLen7']>=0){
+                myObject['setLen7']=  response['setLen7'];
+                myObject['equipment7'] = response['equipment7'];
+                myObject['target_muscle7'] = response['target_muscle7'];
+                has_wk[7] = 1;
+            }
+            if(response['setLen8']>=0){
+                myObject['setLen8']=  response['setLen8'];
+                myObject['equipment8'] = response['equipment8'];
+                myObject['target_muscle'] = response['target_muscle8'];
+                has_wk[8] = 1;
+            }
+
+
+            var rep1 = 'rep'+i+1;
+            var rep2 = 'rep'+i+2;
+            var rep_decr = response[rep1] - response[rep2];
+            var maxset = '';
+            var maxrep ='';
+            var max_rep = 0;
+            var max_val = 0;
+            var wk_type = "wk_type"+i;
+            for(var m=1;m<=response[setLen]+1;m++)
+            {
+                maxrep = 'rep'+i+''+m;
+                maxset = 'set'+i+''+m;
+                if(parseInt(response[maxrep]) > parseInt(max_rep))
+                {
+
+                  console.log("maxrep: ",response[maxrep])
+                  console.log("max_rep: ",max_rep)
+                  max_rep = response[maxrep];
+                  console.log("updated max_rep: ",max_rep)
+
+                }
+                if(parseInt(response[maxset]) > parseInt(max_val))
+                {
+
+                  console.log("maxset: ",response[maxset])
+                  console.log("max_val: ",max_val)
+                  max_val = response[maxset];
+                  console.log("updated max_val: ",max_val)
+                }
+            }
+
+            var link = 'link'+i;
+            var target_muscle = 'target_muscle'+i;
+            var equipment = 'equipment'+i;
+
+            if(response[workout]){
+          $(".workouts").append('<br/><div class="workout'+i+'"></div> ');
+          $("."+workout).append('<div class="list-group">'+
+          '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px"  value="'+ response[workout]+'" id="'+workout+'"></a>');
+
+          if(response.hasOwnProperty(link)){
+            if(response[link]!== '' ){
+            myObject[link]=response[link];
+            $("."+workout).append('<iframe width="275" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe>');
+            }
+          }
+
+          for(var j=1;j<=response[setLen];j++){
+              var type = 'type'+i+j;
+              var type_val = response[type]
+          }
+          $("."+workout).append('<a class="list-group-item"> Workout Notes: <textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
+          '<p style="color:red;"> </br>Video Link : </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
+          '<p> Target Muscle:'+
+            '<select class="form-control" id="target_muscle'+i+'" required>'+
+               '<option value="Quads">Quads</option>'+
+               '<option value="Glutes">Glutes</option>'+
+               '<option value="Hamstrings">Hamstrings</option>'+
+               '<option value="Chest">Chest</option>'+
+               '<option value="Lats">Lats</option>'+
+               '<option value="Back">Back</option>'+
+               '<option value="Traps">Traps</option>'+
+               '<option value="Deltoids">Deltoids</option>'+
+               '<option value="Core">Core</option>'+
+               '<option value="Forearms">Forearms</option>'+
+               '<option value="Biceps">Biceps</option>'+
+               '<option value="Triceps">Triceps</option>'+
+                '<option value="Calves">Calves</option>'+
+                '<option value="Core">Core</option>'+
+           '</select></p>'+
+           '<p>Workout Equipment: <select id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
+           '<p>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+          '<p>Max Weight : <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
+          '<select id="type'+i+'" name="type'+i+'" required>'+
+             '<option value="Pin">Pin</option>'+
+             '<option value="Dumbbell">Dumbbell</option>'+
+             '<option value="Plates">Plates</option>'+
+             '<option value="Plates Per Side">Plates Per Side</option>'+
+             '<option value="Preset ez bar">Preset Ez Bar</option>'+
+             '<option value="Preset straight bar">Preset Straight Bar</option>'+
+          '</select>'+type_val+'</p>'+
+          '<p> Unit of Weight: <select id= "unit'+i+'" name="unit'+i+'" required>'+
+                '<option value="Lbs">Lbs</option>'+
+                '<option value="Kgs">Kgs</option>'+
+             '</select></p>'+
+          '<p>Max Reps : <input type="number" id= "max_reps'+i+'" min="1" max="50" required>&nbsp;&nbsp;'+ max_rep +'</p>'+
+          '<div>');
+          $("#"+notes).val(response[notes]);
+          $("#"+target_muscle).val(response[target_muscle]);
+          $("#"+equipment).val(response[equipment]);
+          $("#"+wk_type).val(response[wk_type]);
+
+          $("."+workout).append('<br/> '+
+          '<p> Workout Position:'+
+            '<select id="position'+i+'" required>'+
+            '<option value="1">1</option>'+
+             '<option value="2">2</option>'+
+             '<option value="3">3</option>'+
+             '<option value="4">4</option>'+
+             '<option value="5">5</option>'+
+             '<option value="6">6</option>'+
+             '<option value="7">7</option>'+
+             '<option value="8">8</option>'+
+            '</select>'+
+          '</p>'+
+          '<p> <br/>Weight Increase :'+
+           '<select id="increment'+i+'" name="increment'+i+'" required>'+
+           '<option value="0">0</option>'+
+              '<option value="2.5">2.5</option>'+
+              '<option value="5">5</option>'+
+              '<option value="7.5">7.5</option>'+
+              '<option value="10">10</option>'+
+              '<option value="12.5">12.5</option>'+
+              '<option value="15">15</option>'+
+              '<option value="17.5">17.5</option>'+
+              '<option value="20">20</option>'+
+              '<option value="22.5">22.5</option>'+
+              '<option value="25">25</option>'+
+              '<option value="27.5">27.5</option>'+
+              '<option value="30">30</option>'+
+              '<option value="32.5">32.5</option>'+
+              '<option value="35">35</option>'+
+              '<option value="37.5">37.5</option>'+
+              '<option value="40">40</option>'+
+              '<option value="42.5">42.5</option>'+
+              '<option value="45">45</option>'+
+              '<option value="47.5">47.5</option>'+
+              '<option value="50">50</option>'+
+              '<option value="52.5">52.5</option>'+
+              '<option value="55">55</option>'+
+              '<option value="57.5">57.5</option>'+
+              '<option value="60">60</option>'+
+              '<option value="62.5">62.5</option>'+
+              '<option value="65">65</option>'+
+              '<option value="67.5">67.5</option>'+
+              '<option value="70">70</option>'+
+              '<option value="72.5">22.5</option>'+
+              '<option value="75">25</option>'+
+              '<option value="77.5">27.5</option>'+
+              '<option value="80">30</option>'+
+              '<option value="82.5">32.5</option>'+
+              '<option value="85">35</option>'+
+              '<option value="87.5">37.5</option>'+
+              '<option value="90">90</option>'+
+           '</select>&nbsp;&nbsp;'+ Math.abs(set_incr) +
+         '</p>'+
+
+         '<p> Reps Decrease :'+
+           '<select id="decrement'+i+'" name="decrement'+i+'" required>'+
+           '<option value="0">0</option>'+
+            '<option value="1">1</option>'+
+            '<option value="2">2</option>'+
+            '<option value="3">3</option>'+
+            '<option value="4">4</option>'+
+            '<option value="5">5</option>'+
+           '</select>&nbsp;&nbsp;'+ Math.abs(rep_decr) +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+         '</p>'+
+            'Type of weight: </br></br>'+
+         '<button type="button" class="btn btn-danger" aria-label="Left Align" name="addSet'+i+'">'+
+            '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Set'+
+         '</button>&nbsp;&nbsp;'+
+         '<button type="button" class="btn btn-danger" aria-label="Left Align" name="removeSet'+i+'">'+
+           '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Set'+
+         '</button> <br/><br/>'+
+         ' <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout'+i+'">'+
+            '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout</div>');
+            var pos = 'position'+i;
+            $("#"+pos).val(i);
+
+            for(var j=1;j<=response[setLen];j++){
+              var rep = 'rep'+i+j;
+              l = j;
+              myObject[setLen]=response[setLen];
+
+            var set = 'set'+i+j;
+            var type = 'type'+i+j;
+            var unit = 'unit'+i+j;
+            var rep = 'rep'+i+j;
+            var bk1 = 'bk'+i+j+'1';
+            var bk2 = 'bk'+i+j+'2';
+            var bk3 = 'bk'+i+j+'3';
+            var bk4 = 'bk'+i+j+'4';
+            var comm = 'comment'+i+j;
+            var difficulty = 'difficulty'+i+j;
+
+            $("."+workout).append('<div class="set'+i+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
+          );
+        }
+      }
+        $("#update1").click(function(){
+          var init_weight_1 = $("#max_val1").val();
+          var init_reps_1=$("#max_reps1").val();
+          var init_type=$("#type1").val();
+          var init_unit=$("#unit1").val();
+          var incr = $("#increment1").val();
+          var decr = $("#decrement1").val();
+          var wk_type=$("#wk_type1").val();
+          setLen1 = myObject['setLen1'];
+          var count = setLen1-1;
+
+          for(l=1;l<=setLen1;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set1"+l).val(parseFloat(init_weight_1)-(parseFloat(incr)*count));
+               $("#rep1"+l).val(parseFloat(init_reps_1)-(parseFloat(decr)*(l-1)));
+               $("#type1"+l).val(init_type);
+               $("#unit1"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set1"+(setLen1-l+1)).val(parseFloat(init_weight_1) - (parseFloat(incr)*count));
+               $("#rep1"+(setLen1-l+1)).val(parseFloat(init_reps_1) - (parseFloat(decr)*(l-1)));
+               $("#type1"+l).val(init_type);
+               $("#unit1"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update2").click(function(){
+          var init_weight_2 = $("#max_val2").val();
+          var init_reps_2=$("#max_reps2").val();
+          var init_type=$("#type2").val();
+          var init_unit=$("#unit2").val();
+          var incr = $("#increment2").val();
+          var decr = $("#decrement2").val();
+          var wk_type=$("#wk_type2").val();
+          setLen2 = myObject['setLen2'];
+          var count = setLen2-1;
+          for(l=1;l<=setLen2;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set2"+l).val(parseFloat(init_weight_2)-(parseFloat(incr)*count));
+               $("#rep2"+l).val(parseFloat(init_reps_2)-(parseFloat(decr)*(l-1)));
+               $("#type2"+l).val(init_type);
+               $("#unit2"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set2"+(setLen2-l+1)).val(parseFloat(init_weight_2) - (parseFloat(incr)*count));
+               $("#rep2"+(setLen2-l+1)).val(parseFloat(init_reps_2) - (parseFloat(decr)*(l-1)));
+               $("#type2"+l).val(init_type);
+               $("#unit2"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update3").click(function(){
+          var init_weight_3 = $("#max_val3").val();
+          var init_reps_3=$("#max_reps3").val();
+          var init_type=$("#type3").val();
+          var init_unit=$("#unit3").val();
+          var incr = $("#increment3").val();
+          var decr = $("#decrement3").val();
+          setLen3 = myObject['setLen3'];
+          var count = setLen3-1;
+          var wk_type=$("#wk_type3").val();
+          for(l=1;l<=setLen3;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set3"+l).val(parseFloat(init_weight_3)-(parseFloat(incr)*count));
+               $("#rep3"+l).val(parseFloat(init_reps_3)-(parseFloat(decr)*(l-1)));
+               $("#type3"+l).val(init_type);
+               $("#unit3"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set3"+(setLen3-l+1)).val(parseFloat(init_weight_3) - (parseFloat(incr)*count));
+               $("#rep3"+(setLen3-l+1)).val(parseFloat(init_reps_3) - (parseFloat(decr)*(l-1)));
+               $("#type3"+l).val(init_type);
+               $("#unit3"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update4").click(function(){
+          var init_weight_4 = $("#max_val4").val();
+          var init_reps_4=$("#max_reps4").val();
+          var init_type=$("#type4").val();
+          var init_unit=$("#unit4").val();
+          var incr = $("#increment4").val();
+          var decr = $("#decrement4").val();
+          setLen4 = myObject['setLen4'];
+          var count = setLen4-1;
+          var wk_type=$("#wk_type4").val();
+          for(l=1;l<=setLen4;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set4"+l).val(parseFloat(init_weight_4)-(parseFloat(incr)*count));
+               $("#rep4"+l).val(parseFloat(init_reps_4)-(parseFloat(decr)*(l-1)));
+               $("#type4"+l).val(init_type);
+               $("#unit4"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set4"+(setLen4-l+1)).val(parseFloat(init_weight_4) - (parseFloat(incr)*count));
+               $("#rep4"+(setLen4-l+1)).val(parseFloat(init_reps_4) - (parseFloat(decr)*(l-1)));
+               $("#type4"+l).val(init_type);
+               $("#unit4"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update5").click(function(){
+          var init_weight_5 = $("#max_val5").val();
+          var init_reps_5=$("#max_reps5").val();
+          var init_type=$("#type5").val();
+          var init_unit=$("#unit5").val();
+          var incr = $("#increment5").val();
+          var wk_type=$("#wk_type5").val();
+          var decr = $("#decrement5").val();
+          setLen5 = myObject['setLen5'];
+          var count = setLen5-1;;
+          for(l=1;l<=setLen5;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set5"+l).val(parseFloat(init_weight_5)-(parseFloat(incr)*count));
+               $("#rep5"+l).val(parseFloat(init_reps_5)-(parseFloat(decr)*(l-1)));
+               $("#type5"+l).val(init_type);
+               $("#unit5"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set5"+(setLen5-l+1)).val(parseFloat(init_weight_5) - (parseFloat(incr)*count));
+               $("#rep5"+(setLen5-l+1)).val(parseFloat(init_reps_5) - (parseFloat(decr)*(l-1)));
+               $("#type5"+l).val(init_type);
+               $("#unit5"+l).val(init_unit);
+             }
+             count=count-1;
+
+          }
+        })
+
+        $("#update6").click(function(){
+          var init_weight_6 = $("#max_val6").val();
+          var init_reps_6=$("#max_reps6").val();
+          var init_type=$("#type6").val();
+          var init_unit=$("#unit6").val();
+          var incr = $("#increment6").val();
+          var wk_type=$("#wk_type6").val();
+          var decr = $("#decrement6").val();
+          setLen6 = myObject['setLen6'];
+          var count = setLen6-1;;
+          for(l=1;l<=setLen6;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set6"+l).val(parseFloat(init_weight_6)-(parseFloat(incr)*count));
+               $("#rep6"+l).val(parseFloat(init_reps_6)-(parseFloat(decr)*(l-1)));
+               $("#type6"+l).val(init_type);
+               $("#unit6"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#set6"+(setLen6-l+1)).val(parseFloat(init_weight_6) - (parseFloat(incr)*count));
+               $("#rep6"+(setLen6-l+1)).val(parseFloat(init_reps_6) - (parseFloat(decr)*(l-1)));
+               $("#type6"+l).val(init_type);
+               $("#unit6"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update7").click(function(){
+          var init_weight_7 = $("#max_val7").val();
+          var init_reps_7=$("#max_reps7").val();
+          var init_type=$("#type7").val();
+          var init_unit=$("#unit7").val();
+          var incr = $("#increment7").val();
+          var wk_type=$("#wk_type7").val();
+          var decr = $("#decrement7").val();
+          setLen7 = myObject['setLen7'];
+          var count = setLen7-1;;
+          for(l=1;l<=setLen7;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set7"+l).val(parseFloat(init_weight_7)-(parseFloat(incr)*count));
+               $("#rep7"+l).val(parseFloat(init_reps_7)-(parseFloat(decr)*(l-1)));
+               $("#type7"+l).val(init_type);
+               $("#unit7"+l).val(init_unit);
+
+             }
+             else if (wk_type=="dropset") {
+               $("#weight7"+(setLen7-l+1)).val(parseFloat(init_weight_7) - (parseFloat(incr)*count));
+               $("#rep7"+(setLen7-l+1)).val(parseFloat(init_reps_7) - (parseFloat(decr)*(l-1)));
+               $("#type7"+l).val(init_type);
+               $("#unit7"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+        $("#update8").click(function(){
+          var init_weight_8 = $("#max_val8").val();
+          var init_reps_8=$("#max_reps8").val();
+          var init_type=$("#type8").val();
+          var init_unit=$("#unit8").val();
+          var incr = $("#increment8").val();
+          var decr = $("#decrement8").val();
+          var wk_type=$("#wk_type8").val();
+          setLen8 = myObject['setLen8'];
+          var count = setLen8-1;
+          for(l=1;l<=setLen8;l++){
+
+            if(wk_type=="maxout")
+            {
+               $("#set8"+l).val(parseFloat(init_weight_8)-(parseFloat(incr)*count));
+               $("#rep8"+l).val(parseFloat(init_reps_8)-(parseFloat(decr)*(l-1)));
+               $("#type8"+l).val(init_type);
+               $("#unit8"+l).val(init_unit);
+             }
+
+
+             else if (wk_type=="dropset") {
+               $("#set8"+(setLen8-l+1)).val(parseFloat(init_weight_8) - (parseFloat(incr)*count));
+               $("#rep8"+(setLen8-l+1)).val(parseFloat(init_reps_8) - (parseFloat(decr)*(l-1)));
+               $("#type8"+l).val(init_type);
+               $("#unit8"+l).val(init_unit);
+             }
+             count=count-1;
+          }
+        })
+
+    }
+
+              $("button[name=addWorkout]").click(function(){
+
+                var temp = parseInt(workout_number)+1;
+                if(temp>8){
+                  temp=8;
+                }
+                var i =9;
+                for(var j = 1;j<9;j++){
+                  if(has_wk[j]==0)
+                  {
+                    i = j;
+                    has_wk[i] = 1;
+                    break;
+                  }
+
+
+                }
+
+                setLen = 'setLen'+i;
+                workout_number = temp;
+
+                if(i==1){
+                    setLen1 = 4;
+                    myObject['has_wk1'] = 1;
+                }
+                else if(i==2){
+                    setLen2 = 4;
+                    myObject['has_wk2'] = 1;
+                }
+                else if(i==3){
+                    setLen3 = 4;
+                }
+                else if(i==4){
+                    setLen4=4;
+                    myObject['has_wk4'] = 1;
+                }
+                else if(i==5){
+                    setLen5 = 4;
+                    myObject['has_wk5'] = 1;
+                }
+                else if(i==6){
+                    setLen6 = 4;
+                    myObject['has_wk6'] = 1;
+                }
+                else if(i==7){
+                    setLen7 = 4;
+                    myObject['has_wk7'] = 1;
+                }
+                else if(i==8){
+                    setLen8=4;
+                    myObject['has_wk8'] = 1;
+                }
+                else if(i=>9){
+                  alert("Only 8 workouts allowed!");
+                  i=8
+                  return;
+                }
+
+                var workout = 'workout'+i;
+                var notes='notes'+i;
+                var set1 = 'set'+i+1;
+                var set2 = 'set'+i+2;
+
+                var rep1 = 'rep'+i+1;
+                var rep2 = 'rep'+i+2;
+                var rep_decr = response[rep1] - response[rep2];
+                var maxset = '';
+                var maxrep ='';
+                var max_rep = 0;
+                var max_val = 0;
+                var wk_type = "wk_type"+i;
+                for(var m=1;m<=response[setLen]+1;m++)
+                {
+                    maxrep = 'rep'+i+''+m;
+                    maxset = 'set'+i+''+m;
+                    if(parseInt(response[maxrep]) > parseInt(max_rep))
+                    {
+
+                      console.log("maxrep: ",response[maxrep])
+                      console.log("max_rep: ",max_rep)
+                      max_rep = response[maxrep];
+                      console.log("updated max_rep: ",max_rep)
+
+                    }
+                    if(parseInt(response[maxset]) > parseInt(max_val))
+                    {
+
+                      console.log("maxset: ",response[maxset])
+                      console.log("max_val: ",max_val)
+                      max_val = response[maxset];
+                      console.log("updated max_val: ",max_val)
+                    }
+                }
+
+                var link = 'link'+i;
+
+
+            $(".workouts").append('<br/><div class="workout'+i+'"></div> ');
+            $("."+workout).append('<div class="list-group">'+
+              '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px" id="'+workout+'"></a>');
+
+
+              $("."+workout).append('<a class="list-group-item"> Workout Notes: <textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
+              '<p style="color:red;"> </br>Video Link : </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" required> </p>'+
+              '<p> Target Muscle: '+
+                '<select class="form-control" id="target_muscle'+i+'" required>'+
+                   '<option value="Quads">Quads</option>'+
+                   '<option value="Glutes">Glutes</option>'+
+                   '<option value="Hamstrings">Hamstrings</option>'+
+                   '<option value="Chest">Chest</option>'+
+                   '<option value="Lats">Lats</option>'+
+                   '<option value="Back">Back</option>'+
+                   '<option value="Traps">Traps</option>'+
+                   '<option value="Deltoids">Deltoids</option>'+
+                   '<option value="Core">Core</option>'+
+                   '<option value="Forearms">Forearms</option>'+
+                   '<option value="Biceps">Biceps</option>'+
+                   '<option value="Triceps">Triceps</option>'+
+                    '<option value="Calves">Calves</option>'+
+                    '<option value="Core">Core</option>'+
+               '</select></p>'+
+             '<p><br/>Workout Equipment: <select id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
+             '<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+             '<p><br/>Max Weight : <input type="number" id= "max_val'+i+'" min="1" max="800" required>'+
+             '&nbsp;<select id="type'+i+'" name="type'+i+'" required>'+
+                '<option value="Pin">Pin</option>'+
+                '<option value="Dumbbell">Dumbbell</option>'+
+                '<option value="Plates">Plates</option>'+
+                '<option value="Plates Per Side">Plates Per Side</option>'+
+                '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                '<option value="Preset straight bar">Preset Straight Bar</option>'+
+             '</select></p>'+
+             ' Unit of weight: <select id= "unit'+i+'" name="unit'+i+'" required>'+
+                   '<option value="Lbs">Lbs</option>'+
+                   '<option value="Kgs">Kgs</option>'+
+                '</select></br></br>'+
+              '<p><br/>Max Reps : <input type="number" id= "max_reps'+i+'" min="1" max="50" required></p>'+
+              '<div>');
+
+
+              $("."+workout).append('<br/> '+
+              '<p> Workout Position:'+
+                '<select id="position'+i+'" required>'+
+                '<option value="1">1</option>'+
+                 '<option value="2">2</option>'+
+                 '<option value="3">3</option>'+
+                 '<option value="4">4</option>'+
+                 '<option value="5">5</option>'+
+                 '<option value="6">6</option>'+
+                 '<option value="7">7</option>'+
+                 '<option value="8">8</option>'+
+                '</select>'+
+              '</p>'+
+              '<p> <br/>Weight Increase :'+
+               '<select id="increment'+i+'" name="increment'+i+'" required>'+
+               '<option value="0">0</option>'+
+                  '<option value="2.5">2.5</option>'+
+                  '<option value="5">5</option>'+
+                  '<option value="7.5">7.5</option>'+
+                  '<option value="10">10</option>'+
+                  '<option value="12.5">12.5</option>'+
+                  '<option value="15">15</option>'+
+                  '<option value="17.5">17.5</option>'+
+                  '<option value="20">20</option>'+
+                  '<option value="22.5">22.5</option>'+
+                  '<option value="25">25</option>'+
+                  '<option value="27.5">27.5</option>'+
+                  '<option value="30">30</option>'+
+                  '<option value="32.5">32.5</option>'+
+                  '<option value="35">35</option>'+
+                  '<option value="37.5">37.5</option>'+
+                  '<option value="40">40</option>'+
+                  '<option value="42.5">42.5</option>'+
+                  '<option value="45">45</option>'+
+                  '<option value="47.5">47.5</option>'+
+                  '<option value="50">50</option>'+
+                  '<option value="52.5">52.5</option>'+
+                  '<option value="55">55</option>'+
+                  '<option value="57.5">57.5</option>'+
+                  '<option value="60">60</option>'+
+                  '<option value="62.5">62.5</option>'+
+                  '<option value="65">65</option>'+
+                  '<option value="67.5">67.5</option>'+
+                  '<option value="70">70</option>'+
+                  '<option value="72.5">22.5</option>'+
+                  '<option value="75">25</option>'+
+                  '<option value="77.5">27.5</option>'+
+                  '<option value="80">30</option>'+
+                  '<option value="82.5">32.5</option>'+
+                  '<option value="85">35</option>'+
+                  '<option value="87.5">37.5</option>'+
+                  '<option value="90">90</option>'+
+               '</select>'+
+             '</p>'+
+
+             '<p> Reps Decrease :'+
+               '<select id="decrement'+i+'" name="decrement'+i+'" required>'+
+               '<option value="0">0</option>'+
+                '<option value="1">1</option>'+
+                '<option value="2">2</option>'+
+                '<option value="3">3</option>'+
+                '<option value="4">4</option>'+
+                '<option value="5">5</option>'+
+               '</select></br>'+
+             '</p></br>'+
+
+             '<button type="button" class="btn btn-danger" aria-label="Left Align" id="addSet'+i+'" name="addSet'+i+'">'+
+                '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Set'+
+             '</button>&nbsp;&nbsp;'+
+             '<button type="button" class="btn btn-danger" aria-label="Left Align" id="removeSet'+i+'" name="removeSet'+i+'">'+
+               '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Set'+
+             '</button> <br/><br/><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+             ' <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout'+i+'">'+
+                '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout'+
+             '</div>');
+             var pos = 'position'+i;
+             $("#"+pos).val(i);
+
+                for(var j=1;j<=4;j++){
+                  var rep = 'rep'+i+j;
+                  l = j;
+                  myObject[setLen]=j;
+
+                var set = 'set'+i+j;
+                var type = 'type'+i+j;
+                var unit = 'unit'+i+j;
+                var rep = 'rep'+i+j;
+                var bk1 = 'bk'+i+j+'1';
+                var bk2 = 'bk'+i+j+'2';
+                var bk3 = 'bk'+i+j+'3';
+                var bk4 = 'bk'+i+j+'4';
+                var comm = 'comment'+i+j;
+                var difficulty = 'difficulty'+i+j;
+
+                $("."+workout).append('<div class="set'+i+''+j+'">'+
+                '<a class="list-group-item"> Set:'+ j +' </a>'+
+                '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" id="'+rep+'" >'+'</a>'
+              );
+              $("#update1").click(function(){
+                var init_weight_1 = $("#max_val1").val();
+                var init_reps_1=$("#max_reps1").val();
+                var init_type=$("#type1").val();
+                var init_unit=$("#unit1").val();
+                var incr = $("#increment1").val();
+                var decr = $("#decrement1").val();
+                var wk_type=$("#wk_type1").val();
+                setLen1 = myObject['setLen1'];
+                var count = setLen1-1;
+
+                for(l=1;l<=setLen1;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set1"+l).val(parseFloat(init_weight_1)-(parseFloat(incr)*count));
+                     $("#rep1"+l).val(parseFloat(init_reps_1)-(parseFloat(decr)*(l-1)));
+                     $("#type1"+l).val(init_type);
+                     $("#unit1"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#set1"+(setLen1-l+1)).val(parseFloat(init_weight_1) - (parseFloat(incr)*count));
+                     $("#rep1"+(setLen1-l+1)).val(parseFloat(init_reps_1) - (parseFloat(decr)*(l-1)));
+                     $("#type1"+l).val(init_type);
+                     $("#unit1"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+              $("#update2").click(function(){
+                var init_weight_2 = $("#max_val2").val();
+                var init_reps_2=$("#max_reps2").val();
+                var init_type=$("#type2").val();
+                var init_unit=$("#unit2").val();
+                var incr = $("#increment2").val();
+                var decr = $("#decrement2").val();
+                var wk_type=$("#wk_type2").val();
+                setLen2 = myObject['setLen2'];
+                var count = setLen2-1;
+                for(l=1;l<=setLen2;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set2"+l).val(parseFloat(init_weight_2)-(parseFloat(incr)*count));
+                     $("#rep2"+l).val(parseFloat(init_reps_2)-(parseFloat(decr)*(l-1)));
+                     $("#type2"+l).val(init_type);
+                     $("#unit2"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#set2"+(setLen2-l+1)).val(parseFloat(init_weight_2) - (parseFloat(incr)*count));
+                     $("#rep2"+(setLen2-l+1)).val(parseFloat(init_reps_2) - (parseFloat(decr)*(l-1)));
+                     $("#type2"+l).val(init_type);
+                     $("#unit2"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+              $("#update3").click(function(){
+                var init_weight_3 = $("#max_val3").val();
+                var init_reps_3=$("#max_reps3").val();
+                var init_type=$("#type3").val();
+                var init_unit=$("#unit3").val();
+                var incr = $("#increment3").val();
+                var decr = $("#decrement3").val();
+                setLen3 = myObject['setLen3'];
+                var count = setLen3-1;
+                var wk_type=$("#wk_type3").val();
+                for(l=1;l<=setLen3;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set3"+l).val(parseFloat(init_weight_3)-(parseFloat(incr)*count));
+                     $("#rep3"+l).val(parseFloat(init_reps_3)-(parseFloat(decr)*(l-1)));
+                     $("#type3"+l).val(init_type);
+                     $("#unit3"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#set3"+(setLen3-l+1)).val(parseFloat(init_weight_3) - (parseFloat(incr)*count));
+                     $("#rep3"+(setLen3-l+1)).val(parseFloat(init_reps_3) - (parseFloat(decr)*(l-1)));
+                     $("#type3"+l).val(init_type);
+                     $("#unit3"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+              $("#update4").click(function(){
+                var init_weight_4 = $("#max_val4").val();
+                var init_reps_4=$("#max_reps4").val();
+                var init_type=$("#type4").val();
+                var init_unit=$("#unit4").val();
+                var incr = $("#increment4").val();
+                var decr = $("#decrement4").val();
+                var count = setLen4-1;
+                var wk_type=$("#wk_type4").val();
+
+                for(l=1;l<=setLen4;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set4"+l).val(parseFloat(init_weight_4)-(parseFloat(incr)*count));
+                     $("#rep4"+l).val(parseFloat(init_reps_4)-(parseFloat(decr)*(l-1)));
+                     $("#type4"+l).val(init_type);
+                     $("#unit4"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#set4"+(setLen4-l+1)).val(parseFloat(init_weight_4) - (parseFloat(incr)*count));
+                     $("#rep4"+(setLen4-l+1)).val(parseFloat(init_reps_4) - (parseFloat(decr)*(l-1)));
+                     $("#type4"+l).val(init_type);
+                     $("#unit4"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+              $("#update5").click(function(){
+
+                var init_weight_5 = $("#max_val5").val();
+                var init_reps_5=$("#max_reps5").val();
+                var init_type=$("#type5").val();
+                var init_unit=$("#unit5").val();
+                var incr = $("#increment5").val();
+                var wk_type=$("#wk_type5").val();
+                var decr = $("#decrement5").val();
+                setLen5 = myObject['setLen5'];
+                var count = setLen5-1;
+                for(l=1;l<=setLen5;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set5"+l).val(parseFloat(init_weight_5)-(parseFloat(incr)*count));
+                     $("#rep5"+l).val(parseFloat(init_reps_5)-(parseFloat(decr)*(l-1)));
+                     $("#type5"+l).val(init_type);
+                     $("#unit5"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#set5"+(setLen5-l+1)).val(parseFloat(init_weight_5) - (parseFloat(incr)*count));
+                     $("#rep5"+(setLen5-l+1)).val(parseFloat(init_reps_5) - (parseFloat(decr)*(l-1)));
+                     $("#type5"+l).val(init_type);
+                     $("#unit5"+l).val(init_unit);
+                   }
+                   count=count-1;
+
+                }
+              })
+
+              $("#update6").click(function(){
+                var init_weight_6 = $("#max_val6").val();
+                var init_reps_6=$("#max_reps6").val();
+                var init_type=$("#type6").val();
+                var init_unit=$("#unit6").val();
+                var incr = $("#increment6").val();
+                var wk_type=$("#wk_type6").val();
+                var decr = $("#decrement6").val();
+                setLen6 = myObject['setLen6'];
+                var count = setLen6-1;
+                for(l=1;l<=setLen6;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set6"+l).val(parseFloat(init_weight_6)-(parseFloat(incr)*count));
+                     $("#rep6"+l).val(parseFloat(init_reps_6)-(parseFloat(decr)*(l-1)));
+                     $("#type6"+l).val(init_type);
+                     $("#unit6"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#set6"+(setLen6-l+1)).val(parseFloat(init_weight_6) - (parseFloat(incr)*count));
+                     $("#rep6"+(setLen6-l+1)).val(parseFloat(init_reps_6) - (parseFloat(decr)*(l-1)));
+                     $("#type6"+l).val(init_type);
+                     $("#unit6"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+              $("#update7").click(function(){
+                var init_weight_7 = $("#max_val7").val();
+                var init_reps_7=$("#max_reps7").val();
+                var init_type=$("#type7").val();
+                var init_unit=$("#unit7").val();
+                var incr = $("#increment7").val();
+                var wk_type=$("#wk_type7").val();
+                var decr = $("#decrement7").val();
+                setLen7 = myObject['setLen7'];
+                var count = setLen7-1;
+                for(l=1;l<=setLen7;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set7"+l).val(parseFloat(init_weight_7)-(parseFloat(incr)*count));
+                     $("#rep7"+l).val(parseFloat(init_reps_7)-(parseFloat(decr)*(l-1)));
+                     $("#type7"+l).val(init_type);
+                     $("#unit7"+l).val(init_unit);
+
+                   }
+                   else if (wk_type=="dropset") {
+                     $("#weight7"+(setLen7-l+1)).val(parseFloat(init_weight_7) - (parseFloat(incr)*count));
+                     $("#rep7"+(setLen7-l+1)).val(parseFloat(init_reps_7) - (parseFloat(decr)*(l-1)));
+                     $("#type7"+l).val(init_type);
+                     $("#unit7"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+              $("#update8").click(function(){
+                var init_weight_8 = $("#max_val8").val();
+                var init_reps_8=$("#max_reps8").val();
+                var init_type=$("#type8").val();
+                var init_unit=$("#unit8").val();
+                var incr = $("#increment8").val();
+                var decr = $("#decrement8").val();
+                var wk_type=$("#wk_type8").val();
+                setLen8 = myObject['setLen8'];
+                var count = setLen8-1;
+                for(l=1;l<=setLen8;l++){
+
+                  if(wk_type=="maxout")
+                  {
+                     $("#set8"+l).val(parseFloat(init_weight_8)-(parseFloat(incr)*count));
+                     $("#rep8"+l).val(parseFloat(init_reps_8)-(parseFloat(decr)*(l-1)));
+                     $("#type8"+l).val(init_type);
+                     $("#unit8"+l).val(init_unit);
+                   }
+
+
+                   else if (wk_type=="dropset") {
+                     $("#set8"+(setLen8-l+1)).val(parseFloat(init_weight_8) - (parseFloat(incr)*count));
+                     $("#rep8"+(setLen8-l+1)).val(parseFloat(init_reps_8) - (parseFloat(decr)*(l-1)));
+                     $("#type8"+l).val(init_type);
+                     $("#unit8"+l).val(init_unit);
+                   }
+                   count=count-1;
+                }
+              })
+
+            }
+            $("button[name=addSet1]").click(function(){
+
+            var j = parseInt(myObject['setLen1']) + 1;
+            var set = 'set1'+j;
+            var rep = 'rep1'+j;
+            var unit = 'unit1'+j;
+            var type = 'type1'+j;
+            $(".workout1").append('<div class="set'+1+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+            );
+            myObject['setLen1'] = j;
+            });
+
+            $("button[name=removeSet1]").click(function(){
+            var j = parseInt(myObject['setLen1']);
+            $("div").remove(".set1"+j);
+            myObject['setLen1'] = parseInt(j) -1;
+            });
+
+            $("button[name=addSet2]").click(function(){
+
+            var j = parseInt(myObject['setLen2']) + 1;
+            var set = 'set2'+j;
+            var rep = 'rep2'+j;
+            var unit = 'unit2'+j;
+            var type = 'type2'+j;
+            $(".workout2").append('<div class="set'+2+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+            );
+            myObject['setLen2'] = j;
+            });
+
+            $("button[name=removeSet2]").click(function(){
+              var j = parseInt(myObject['setLen2']);
+              $("div").remove(".set2"+j);
+              myObject['setLen2'] = parseInt(j) -1;
+            });
+
+            $("button[name=addSet3]").click(function(){
+
+            var j = parseInt(myObject['setLen3']) + 1;
+            var set = 'set3'+j;
+            var rep = 'rep3'+j;
+            var unit = 'unit3'+j;
+            var type = 'type3'+j;
+              $(".workout3").append('<div class="set'+3+''+j+'">'+
+              '<a class="list-group-item"> Set:'+ j +' </a>'+
+              '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+              '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+              );
+              myObject['setLen3'] = j;
+            });
+
+            $("button[name=removeSet3]").click(function(){
+                var j = parseInt(myObject['setLen3']);
+                $("div").remove(".set3"+j);
+                myObject['setLen3'] = parseInt(j) -1;
+            });
+
+            $("button[name=addSet4]").click(function(){
+
+              var j = parseInt(myObject['setLen4']) + 1;
+              var set = 'set4'+j;
+              var rep = 'rep4'+j;
+              var unit = 'unit4'+j;
+              var type = 'type4'+j;
+                $(".workout4").append('<div class="set'+4+''+j+'">'+
+                '<a class="list-group-item"> Set:'+ j +' </a>'+
+                '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                );
+                myObject['setLen4'] = j;
+              });
+
+            $("button[name=removeSet4]").click(function(){
+                  var j = parseInt(myObject['setLen4']);
+                  $("div").remove(".set4"+j);
+                  myObject['setLen4'] = parseInt(j) -1;
+              });
+
+              $("button[name=addSet5]").click(function(){
+
+                var j = parseInt(myObject['setLen5']) + 1;
+                var set = 'set5'+j;
+                var rep = 'rep5'+j;
+                var unit = 'unit5'+j;
+                var type = 'type5'+j;
+                  $(".workout5").append('<div class="set'+5+''+j+'">'+
+                  '<a class="list-group-item"> Set:'+ j +' </a>'+
+                  '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                  '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                  );
+                  myObject['setLen5'] = j;
+                });
+
+              $("button[name=removeSet5]").click(function(){
+                    var j = parseInt(myObject['setLen5']);
+                    $("div").remove(".set5"+j);
+                    myObject['setLen5'] = parseInt(j) -1;
+                });
+
+                $("button[name=addSet6]").click(function(){
+
+                  var j = parseInt(myObject['setLen6']) + 1;
+                  var set = 'set6'+j;
+                  var rep = 'rep6'+j;
+                  var unit = 'unit6'+j;
+                  var type = 'type6'+j;
+                    $(".workout6").append('<div class="set'+6+''+j+'">'+
+                    '<a class="list-group-item"> Set:'+ j +' </a>'+
+                    '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                    '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                    );
+                    myObject['setLen6'] = j;
+                  });
+
+                $("button[name=removeSet6]").click(function(){
+                      var j = parseInt(myObject['setLen6']);
+                      $("div").remove(".set6"+j);
+                      myObject['setLen6'] = parseInt(j) -1;
+                  });
+
+                  $("button[name=addSet7]").click(function(){
+
+                    var j = parseInt(myObject['setLen7']) + 1;
+                    var set = 'set7'+j;
+                    var rep = 'rep7'+j;
+                    var unit = 'unit7'+j;
+                    var type = 'type7'+j;
+                      $(".workout7").append('<div class="set'+7+''+j+'">'+
+                      '<a class="list-group-item"> Set:'+ j +' </a>'+
+                      '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                      '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                      );
+                      myObject['setLen7'] = j;
+                    });
+
+                  $("button[name=removeSet7]").click(function(){
+                        var j = parseInt(myObject['setLen7']);
+                        $("div").remove(".set7"+j);
+                        myObject['setLen7'] = parseInt(j) -1;
+                    });
+
+                    $("button[name=addSet8]").click(function(){
+
+                      var j = parseInt(myObject['setLen8']) + 1;
+                      var set = 'set8'+j;
+                      var rep = 'rep8'+j;
+                      var unit = 'unit8'+j;
+                      var type = 'type8'+j;
+                        $(".workout8").append('<div class="set'+8+''+j+'">'+
+                        '<a class="list-group-item"> Set:'+ j +' </a>'+
+                        '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                        '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                        );
+                        myObject['setLen8'] = j;
+                      });
+
+                    $("button[name=removeSet8]").click(function(){
+                          var j = parseInt(myObject['setLen8']);
+                          $("div").remove(".set8"+j);
+                          myObject['setLen8'] = parseInt(j) -1;
+                      });
+
+
+                      $("button[name=removeWorkout1]").click(function(){
+
+                       $("div").remove(".workout"+1);
+                       has_wk[1] = 0;
+                       var temp = workout_number -1;
+                       workout_number = temp;
+                       var set = 'setLen'+1;
+                       myObject[set] = 0;
+                    });
+                    $("button[name=removeWorkout2]").click(function(){
+
+                     $("div").remove(".workout"+2);
+                     has_wk[2] = 0;
+                     var temp = workout_number -1;
+                     workout_number = temp;
+                     var set = 'setLen'+2;
+                     myObject[set] = 0;
+                  });
+                  $("button[name=removeWorkout3]").click(function(){
+                   $("div").remove(".workout"+3);
+                   has_wk[3] = 0;
+                   var temp = workout_number -1;
+                   workout_number = temp;
+                   var set = 'setLen'+3;
+                   myObject[set] = 0;
+                });
+                $("button[name=removeWorkout4]").click(function(){
+
+                 $("div").remove(".workout"+4);
+                 has_wk[4] = 0;
+                 var temp = workout_number -1;
+                 workout_number = temp;
+                 var set = 'setLen'+4;
+                 myObject[set] = 0;
+               });
+
+              $("button[name=removeWorkout5]").click(function(){
+
+               $("div").remove(".workout"+5);
+              has_wk[5] = 0;
+              var temp = workout_number -1;
+              workout_number = temp;
+              var set = 'setLen'+5;
+              myObject[set] = 0;
+
+              });
+              $("button[name=removeWorkout6]").click(function(){
+
+               $("div").remove(".workout"+6);
+              has_wk[6] = 0;
+              var temp = workout_number -1;
+              workout_number = temp;
+              var set = 'setLen'+6;
+              myObject[set] = 0;
+              });
+              $("button[name=removeWorkout7]").click(function(){
+
+               $("div").remove(".workout"+7);
+               has_wk[7] = 0;
+               var temp = workout_number -1;
+               workout_number = temp;
+               var set = 'setLen'+7;
+               myObject[set] = 0;
+
+              });
+              $("button[name=removeWorkout8]").click(function(){
+
+               $("div").remove(".workout"+8);
+               has_wk[8] = 0;
+               var temp = workout_number -1;
+               workout_number = temp;
+               var set = 'setLen'+8;
+               myObject[set] = 0;
+              });
+
+
+               });
+
+
+              /* $("button[name=removeWorkout]").click(function(){
+
+                $("div").remove(".workout"+workout_number);
+                  var temp = workout_number -1;
+                  workout_number = temp;
+             });*/
+
+              $("button[name=removeWorkout1]").click(function(){
+
+               $("div").remove(".workout"+1);
+               has_wk[1] = 0;
+               var temp = workout_number -1;
+               workout_number = temp;
+            });
+            $("button[name=removeWorkout2]").click(function(){
+
+             $("div").remove(".workout"+2);
+             has_wk[2] = 0;
+             var temp = workout_number -1;
+             workout_number = temp;
+          });
+          $("button[name=removeWorkout3]").click(function(){
+           $("div").remove(".workout"+3);
+           has_wk[3] = 0;
+           var temp = workout_number -1;
+           workout_number = temp;
+        });
+        $("button[name=removeWorkout4]").click(function(){
+
+         $("div").remove(".workout"+4);
+         has_wk[4] = 0;
+         var temp = workout_number -1;
+         workout_number = temp;
+       });
+
+      $("button[name=removeWorkout5]").click(function(){
+
+       $("div").remove(".workout"+5);
+      has_wk[5] = 0;
+      var temp = workout_number -1;
+      workout_number = temp;
+      });
+      $("button[name=removeWorkout6]").click(function(){
+
+       $("div").remove(".workout"+6);
+      has_wk[6] = 0;
+      var temp = workout_number -1;
+      workout_number = temp;
+      });
+      $("button[name=removeWorkout7]").click(function(){
+
+       $("div").remove(".workout"+7);
+       has_wk[7] = 0;
+       var temp = workout_number -1;
+       workout_number = temp;
+
+      });
+      $("button[name=removeWorkout8]").click(function(){
+
+       $("div").remove(".workout"+8);
+       has_wk[8] = 0;
+       var temp = workout_number -1;
+       workout_number = temp;
+      });
+
+
+
+$("button[name=addSet1]").click(function(){
+
+var j = parseInt(myObject['setLen1']) + 1;
+var set = 'set1'+j;
+var rep = 'rep1'+j;
+var unit = 'unit1'+j;
+var type = 'type1'+j;
+$(".workout1").append('<div class="set'+1+''+j+'">'+
+'<a class="list-group-item"> Set:'+ j +' </a>'+
+'<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+'<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+);
+myObject['setLen1'] = j;
+});
+
+$("button[name=removeSet1]").click(function(){
+var j = parseInt(myObject['setLen1']);
+$("div").remove(".set1"+j);
+myObject['setLen1'] = parseInt(j) -1;
+});
+
+$("button[name=addSet2]").click(function(){
+
+var j = parseInt(myObject['setLen2']) + 1;
+var set = 'set2'+j;
+var rep = 'rep2'+j;
+var unit = 'unit2'+j;
+var type = 'type2'+j;
+$(".workout2").append('<div class="set'+2+''+j+'">'+
+'<a class="list-group-item"> Set:'+ j +' </a>'+
+'<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+'<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+);
+myObject['setLen2'] = j;
+});
+
+$("button[name=removeSet2]").click(function(){
+  var j = parseInt(myObject['setLen2']);
+  $("div").remove(".set2"+j);
+  myObject['setLen2'] = parseInt(j) -1;
+});
+
+$("button[name=addSet3]").click(function(){
+
+var j = parseInt(myObject['setLen3']) + 1;
+var set = 'set3'+j;
+var rep = 'rep3'+j;
+var unit = 'unit3'+j;
+var type = 'type3'+j;
+  $(".workout3").append('<div class="set'+3+''+j+'">'+
+  '<a class="list-group-item"> Set:'+ j +' </a>'+
+  '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+  '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+  );
+  myObject['setLen3'] = j;
+});
+
+$("button[name=removeSet3]").click(function(){
+    var j = parseInt(myObject['setLen3']);
+    $("div").remove(".set3"+j);
+    myObject['setLen3'] = parseInt(j) -1;
+});
+
+$("button[name=addSet4]").click(function(){
+
+  var j = parseInt(myObject['setLen4']) + 1;
+  var set = 'set4'+j;
+  var rep = 'rep4'+j;
+  var unit = 'unit4'+j;
+  var type = 'type4'+j;
+    $(".workout4").append('<div class="set'+4+''+j+'">'+
+    '<a class="list-group-item"> Set:'+ j +' </a>'+
+    '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+    '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+    );
+    myObject['setLen4'] = j;
+  });
+
+$("button[name=removeSet4]").click(function(){
+      var j = parseInt(myObject['setLen4']);
+      $("div").remove(".set4"+j);
+      myObject['setLen4'] = parseInt(j) -1;
+  });
+
+  $("button[name=addSet5]").click(function(){
+
+    var j = parseInt(myObject['setLen5']) + 1;
+    var set = 'set5'+j;
+    var rep = 'rep5'+j;
+    var unit = 'unit5'+j;
+    var type = 'type5'+j;
+      $(".workout5").append('<div class="set'+5+''+j+'">'+
+      '<a class="list-group-item"> Set:'+ j +' </a>'+
+      '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+      '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+      );
+      myObject['setLen5'] = j;
+    });
+
+  $("button[name=removeSet5]").click(function(){
+        var j = parseInt(myObject['setLen5']);
+        $("div").remove(".set5"+j);
+        myObject['setLen5'] = parseInt(j) -1;
+    });
+
+    $("button[name=addSet6]").click(function(){
+
+      var j = parseInt(myObject['setLen6']) + 1;
+      var set = 'set6'+j;
+      var rep = 'rep6'+j;
+      var unit = 'unit6'+j;
+      var type = 'type6'+j;
+        $(".workout6").append('<div class="set'+6+''+j+'">'+
+        '<a class="list-group-item"> Set:'+ j +' </a>'+
+        '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+        '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+        );
+        myObject['setLen6'] = j;
+      });
+
+    $("button[name=removeSet6]").click(function(){
+          var j = parseInt(myObject['setLen6']);
+          $("div").remove(".set6"+j);
+          myObject['setLen6'] = parseInt(j) -1;
+      });
+
+      $("button[name=addSet7]").click(function(){
+
+        var j = parseInt(myObject['setLen7']) + 1;
+        var set = 'set7'+j;
+        var rep = 'rep7'+j;
+        var unit = 'unit7'+j;
+        var type = 'type7'+j;
+          $(".workout7").append('<div class="set'+7+''+j+'">'+
+          '<a class="list-group-item"> Set:'+ j +' </a>'+
+          '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+          '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+          );
+          myObject['setLen7'] = j;
+        });
+
+      $("button[name=removeSet7]").click(function(){
+            var j = parseInt(myObject['setLen7']);
+            $("div").remove(".set7"+j);
+            myObject['setLen7'] = parseInt(j) -1;
+        });
+
+        $("button[name=addSet8]").click(function(){
+
+          var j = parseInt(myObject['setLen8']) + 1;
+          var set = 'set8'+j;
+          var rep = 'rep8'+j;
+          var unit = 'unit8'+j;
+          var type = 'type8'+j;
+            $(".workout8").append('<div class="set'+8+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+            );
+            myObject['setLen8'] = j;
+          });
+
+        $("button[name=removeSet8]").click(function(){
+              var j = parseInt(myObject['setLen8']);
+              $("div").remove(".set8"+j);
+              myObject['setLen8'] = parseInt(j) -1;
+          });
+
+        $("#end").append('<button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:150px">Update Template</button>');
+
+        $("#submit").click(function(){
+
+
+          function guid() {
+           function s4() {
+             return Math.floor((1 + Math.random()) * 0x10000)
+               .toString(16)
+               .substring(1);
+           }
+           return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+             s4() + '-' + s4() + s4() + s4();
+          }
+
+          myObject['_id'] = guid();
+          myObject['total_workout'] = workout_number;
+          myObject['skill'] = $("#skill").val();
+          myObject['primary'] = $("#primary").val();
+          myObject['secondary'] = $("#secondary").val();
+          myObject['tertiary'] = $("#tertiary").val();
+          myObject['quaternary'] = $("quaternary").val();
+
+          for(var i=1;i<=workout_number;i++){
+            if(has_wk[i]==1){
+            var position = $('#position'+i).val();
+            var k = parseInt(position);
+
+            setLen = 'setLen'+i;
+            var setLen_up = 'setLen'+k;
+            var workout = 'workout'+k;
+            var notes='notes'+k;
+            var link = 'link'+k;
+            var equipment ='equipment'+k;
+            var target_muscle = 'target_muscle'+k;
+            var has = 'has'+k;
+            var wk_type = 'wk_type'+k;
+
+            temp[setLen_up] = myObject[setLen];
+            myObject[link]=$("#link"+i).val();
+            myObject[workout]=$("#workout"+i).val();
+            myObject[notes]=$("#notes"+i).val();
+            myObject[equipment]=$("#equipment"+i).val();
+            myObject[target_muscle]=$("#target_muscle"+i).val();
+            myObject[has] = 1;
+            myObject[wk_type] = $("#wk_type"+i).val();
+
+            for(var j=1;j<=myObject[setLen];j++){
+
+              var set = 'set'+k+""+j;
+              var rep = 'rep'+k+""+j;
+              var type = 'type'+k+""+j;
+              var unit = 'unit'+k+""+j;
+
+              myObject[set]=$("#set"+i+j).val();
+              myObject[rep]=$("#rep"+i+j).val();
+              myObject[type]=$("#type"+i+j).val();
+              myObject[unit]=$("#unit"+i+j).val();
+             }
+            }
+          }
+          for(var i=1;i<=workout_number;i++){
+            if(has_wk[i]==1){
+            setLen = 'setLen'+i;
+            myObject[setLen] = temp[setLen];
+            alert(myObject[setLen]);
+           }
+          }
+          function reset_color()
+          {
+            $("#submit").removeClass("btn-info").addClass("btn-danger");
+            $("#submit").removeClass("btn-warning").addClass("btn-danger");
+          }
+
+          console.log(JSON.stringify(myObject));
+          $.ajax({
+            type: "POST",
+            url: '/recieveTemplate',
+            data: myObject,
+            dataType: JSON,
+            success: function (response){
+
+                if(response.status==200){
+                  reset_color();
+                var property = document.getElementById("submit");
+                $("#submit").removeClass("btn-danger").addClass("btn-info");
+                }
+                else
+                {
+                  var property = document.getElementById("submit");
+                  $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+                }
+            },
+            error: function(response){
+
+								if(response.status==200){
+                  reset_color();
+                var property = document.getElementById("submit");
+                $("#submit").removeClass("btn-danger").addClass("btn-info");
+                }
+                else
+                {
+                  var property = document.getElementById("submit");
+                  $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+                }
+
+            }
+          })
+        });
+
+
+        },
+        error: function () {
+            //your error code
+        }
+    });
+
+  });
+
+ });
+
+ </script>
+
+</body>
+</html>

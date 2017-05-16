@@ -28,6 +28,10 @@ exports.viewAllResponses = function(req, res){
 res.render('viewAllResponses');
 }
 
+exports.updateTemplate = function(req, res){
+res.render('updateTemplate');
+}
+
 exports.getFeedback = function(req,res){
   var date = req.body.date;
   console.log(req.session.clientName);
@@ -89,10 +93,13 @@ exports.recieveWorkout = function(req,res){
     }
     else
     {
+
+
       console.log('Inserted successfully');
     }
   },new_workout);
-  res.send(200);
+  //res.send(200);
+  res.status(200).json({status:"ok"});
 };
 
 exports.getWorkoutDates = function(req,res){
@@ -142,7 +149,7 @@ exports.getSentDates = function(req,res){
 exports.recieveTemplate = function(req,res){
   var new_workout = req.body;
   var id = parseInt(new_workout.id);
-  console.log("id: ",typeof(id));
+  console.log("id: ",id);
   new_workout.id = id;
   objectControl.insertTemplate(function(err){
     if(err)
@@ -152,9 +159,10 @@ exports.recieveTemplate = function(req,res){
     }
     else
     {
+
       console.log('Inserted successfully');
     }
-  },new_workout);
+  },new_workout)
   res.send(200);
 };
 
@@ -227,6 +235,10 @@ exports.clientWorkoutDetails = function(req,res){
       res.json(results);
     }
   },date,client);
+};
+exports.copyTemplate = function(req,res){
+//  res.render('intermediateWorkout');
+  res.render('copyTemplate');
 };
 
 exports.sendToMultiple = function(req,res){

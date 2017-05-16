@@ -603,6 +603,13 @@ $(document).ready(function(){
      workout=workout-1;
   });
 
+  function reset_color()
+  {
+    $("#submit").removeClass("btn-info").addClass("btn-danger");
+    $("#submit").removeClass("btn-warning").addClass("btn-danger");
+  }
+
+
  $("#submit").click(function(){
   var myObject = {};
   myObject['total_workout']=workout;
@@ -672,14 +679,30 @@ $(document).ready(function(){
     dataType: JSON,
     success: function (response){
 
+      reset_color();
+      if(response.status==200){
       var property = document.getElementById("submit");
-      //property.style.backgroundColor = "#0000ff";
-      $("#submit").removeClass("btn-warning btn-block").addClass("btn-info");
+      $("#submit").removeClass("btn-danger").addClass("btn-info");
+      }
+      else
+      {
+        var property = document.getElementById("submit");
+        $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+      }
     },
     error: function(response){
+      reset_color();
+      if(response.status==200){
       var property = document.getElementById("submit");
-      //property.style.backgroundColor = "#0000a0";
-      $("#submit").removeClass("btn-warning btn-block").addClass("btn-info");
+      $("#submit").removeClass("btn-danger").addClass("btn-info");
+      }
+      else
+      {
+        var property = document.getElementById("submit");
+        $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+      }
     }
   });
   });

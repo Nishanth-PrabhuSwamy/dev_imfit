@@ -640,14 +640,28 @@ $(document).ready(function(){
     data: myObject,
     dataType: JSON,
     success: function (response){
-
+      if(response.status==200){
       var property = document.getElementById("submit");
       $("#submit").removeClass("btn-danger").addClass("btn-info");
+      }
+      else
+      {
+        var property = document.getElementById("submit");
+        $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+      }
     },
     error: function(response){
+      if(response.status==200){
       var property = document.getElementById("submit");
       $("#submit").removeClass("btn-danger").addClass("btn-info");
+      }
+      else
+      {
+        var property = document.getElementById("submit");
+        $("#submit").removeClass("btn-danger").addClass("btn-warning");
 
+      }
     }
   });
   });

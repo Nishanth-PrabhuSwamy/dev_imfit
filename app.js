@@ -1,5 +1,6 @@
 /**
- * Module dependencies.
+ *
+ Module dependencies.
  */
 
 var express = require('express')
@@ -61,7 +62,10 @@ app.get('/viewAllResponses',trainer.viewAllResponses);
 app.get('/viewProgress',client.viewProgress);
 app.post('/workoutDetails',client.workoutDetails);
 app.post('/getTemplate',trainer.getTemplate);
+app.get('/updateTemplate',trainer.updateTemplate);
+app.get('/copyTemplate',trainer.copyTemplate);
 app.get('/logout',user.logout);
+app.get('/questionnaire',user.questionnaire);
 app.get('/retrieveMaxId',trainer.retrieveMaxId);
 app.get('/viewTemplates',trainer.viewTemplates);
 app.get('/loadTemplates',trainer.loadTemplates);

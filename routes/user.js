@@ -17,6 +17,10 @@ req.session.destroy();
 res.render('logout');
 }
 
+exports.questionnaire = function(req, res){
+  res.render("questionnaire");
+};
+
 exports.validate_login = function(req, res){
   var email=req.body.email;
   var password=req.body.password;

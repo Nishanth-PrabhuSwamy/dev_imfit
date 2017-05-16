@@ -1,85 +1,96 @@
-<!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css' />
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
 
-    <link rel="stylesheet" href="/stylesheets/syle.css" type="text/css">
-    <link rel="stylesheet" href="/stylesheets/index.css" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> TeamIMFIT</title>
-
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
+  <!-- Load jQuery and the validate plugin -->
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+  <script src="/javascript/login.js"></script>
+<title>Login</title>
+<link rel="stylesheet" href="/stylesheets/login.css" type="text/css">
 </head>
-
 <body>
+  <div class="header">
+       <center><a href="/"><img src="/images/logo.jpg" style="height:250px;width:250px;"></a></center>
+  </div>
 
-    <div class="header">
-         <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
+<div class="container">
+<div class="row">
+  <div class="main">
+    <h3 style="color:#ADD8E6">Please Log In, Or <a href="#">Sign Up</a></h3>
+    <div class="login-or">
+      <hr class="hr-or" >
     </div>
 
-  <nav class="navbar navbar-default navbar-static-top" style="margin:0px">
-		<div class="container-fluid">
-             <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
+    <form id="loginForm" method="POST" action= "validate_login" role="form">
+      <div class="form-group">
+          <label for="Email-id" class="control-label">Email Id</label>
+          <input class="form-control" type="email" id="email" name="email" value="" required="true" title="Please enter you email" placeholder="example@gmail.com">
+          <span class="help-block"></span>
       </div>
+      <div class="form-group">
+          <label for="password" class="control-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" value="" required="true" title="Please enter your password">
+          <span class="help-block"></span>
+      </div>
+      <div class="form-group">
+        <label class="radio-inline">
+          <input type="radio" name="login_type" id="trainer" value="trainer">Trainer
+        <label class="radio-inline">
+          <input type="radio" name="login_type" id="client" value="client">Client
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="login_type" id="Athlete" value="athlete">Athlete
+        </label>
+      </div>
+      <br/>
+       <button type="submit" class="btn btn-success btn-block" style="width:150px">Login</button>
 
-			 <div class="collapse navbar-collapse navbar-right" id="example-navbar">
-				<ul class="nav navbar-nav">
-                    <li><a href="#main"> <span class="glyphicon glyphicon-home"> </span>  TeamIMFIT </a></li>
-                    <li><a href="#subscription"> <span class="glyphicon glyphicon-list"> </span>  Subscription </a></li>
-                    <li><a href="#aboutUs"> <span class="glyphicon glyphicon-star"> </span>  About Us </a></li>
-                    <li><a href="/login"> <span class="glyphicon glyphicon-log-in"> </span>  Login </a></li>
-			</div>
-    </nav>
+    </form>
+  </div>
+</div>
+<br/><br/>
+
 
 	  <fieldset>
     <div class="container">
 
       <ul class="list-group">
         <li class="list-group-item">
-          <div class="central">
-          <button class="central">Get Lean </button>
-        </div>
+
+          <a href="/questionnaire" class="btn btn-danger">Get Lean</a>
+
         </li>
 
 
         <li class="list-group-item">
-          <div class="central">
-          <button class="central">Get Fit</button>
-        </div>
+
+          <a href="/questionnaire" class="btn btn-danger">Get Fit</a>
+
         </li>
 
         <li class="list-group-item">
-          <div class="central">
-        <button class="central">Gain Mass</button>
-      </div>
+
+      <a href="/questionnaire" class="btn btn-danger">Gain Mass</a>
         </li>
 
         <li class="list-group-item">
-          <div class="central">
-          <button class="central">Competitors</button>
-        </div>
+
+          <a href="/questionnaire" class="btn btn-danger">Competitors</a>
+
         </li>
       </ul>
     </div>
 
   </fieldset>
+
+</div>
 </body>
 </html>

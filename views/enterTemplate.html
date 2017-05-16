@@ -140,19 +140,9 @@
  <div class="workouts">
  </div>
 
- <p> Set Per Workout: </p>
- <select class="form-control" id="setCount" name="setCount" required>
- <option value="1"> One</option>
- <option value="2"> Two</option>
- <option value="3"> Three</option>
- <option value="4"> Four</option>
- <option value="5"> Five</option>
- <option value="6"> Six</option>
- </select>
- </br>
 
  <button type="button" class="btn btn-danger" aria-label="Left Align" name="addWorkout">
-   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Workout
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Workout
  </button>
  <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout">
    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout
@@ -168,6 +158,7 @@ function main_function(){
     var workout=0;
     var set=0;
     var setLen1,setLen2,setLen3,setLen4,setLen5,setLen6,setLen7,setLen8 = 0;
+    var setCount = 4;
 
       $("button[name=addWorkout]").click(function(){
         workout=workout+1;
@@ -175,10 +166,43 @@ function main_function(){
 
           $(".workouts").append('<br/><div class="workout'+workout+'"><br/> '+
           '<a class="list-group-item active"> Enter  Workouts </a> '+
-          '<p><br/>Workout Type: <select id= "wk_type'+workout+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
-          '<p><br/>Weight For This Workout: <input type="number" id= "max_val'+workout+'" min="1" max="800" required></p>'+
-          '<p><br/>Reps For This Workout: <input type="number" id= "max_reps'+workout+'" min="1" max="50" required></p>'+
-         '<p> <br/>Weight Increase/ Decrease Per Set :'+
+          ' </br> <p style="color:red;"> Workout '+workout+': </br><input type="text" id= "workout_name'+workout+'" name= "workout_name'+workout+'" required> </p>'+
+          '<br/><div class="notes'+workout+'"></div>'+
+          '</br> <p style="color:red;"> Video Link '+workout+': </br><input type="text" id= "link'+workout+'" name= "workout_link'+workout+'" required> </p>'+
+          '<p> Target Muscle: '+
+            '<select id="target_muscle'+workout+'" required>'+
+               '<option value="Quads">Quads</option>'+
+               '<option value="Glutes">Glutes</option>'+
+               '<option value="Hamstrings">Hamstrings</option>'+
+               '<option value="Chest">Chest</option>'+
+               '<option value="Lats">Lats</option>'+
+               '<option value="Back">Back</option>'+
+               '<option value="Traps">Traps</option>'+
+               '<option value="Deltoids">Deltoids</option>'+
+               '<option value="Core">Core</option>'+
+               '<option value="Forearms">Forearms</option>'+
+               '<option value="Biceps">Biceps</option>'+
+               '<option value="Triceps">Triceps</option>'+
+                '<option value="Calves">Calves</option>'+
+                '<option value="Core">Core</option>'+
+           '</select></p>'+
+           '<p><br/>Workout Equipment: <select id= "equipment'+workout+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
+          '<p>Workout Type: <select id= "wk_type'+workout+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+          '<br/><p>Max Weight: <input type="number" id= "max_val'+workout+'" min="1" max="800" required>'+
+             ' <select id="type'+workout+'" name="type'+workout  +'" required>'+
+                '<option value="Pin">Pin</option>'+
+                '<option value="Dumbbell">Dumbbell</option>'+
+                '<option value="Plates">Plates</option>'+
+                '<option value="Plates Per Side">Plates Per Side</option>'+
+                '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                '<option value="Preset straight bar">Preset Straight Bar</option>'+
+             '</select></p>'+
+             '<p>Unit of Weight: <select id= "unit'+workout+'" name="unit'+workout+'" required>'+
+                   '<option value="Lbs">Lbs</option>'+
+                   '<option value="Kgs">Kgs</option>'+
+                '</select></p>'+
+          '<p>Max Reps: <input type="number" id= "max_reps'+workout+'" min="1" max="50" required></p>'+
+         '<p>Weight Increase/ Decrease :'+
            '<select id="increment'+workout+'" name="increment'+workout+'" required>'+
            '<option value="0">0</option>'+
               '<option value="2.5">2.5</option>'+
@@ -220,7 +244,7 @@ function main_function(){
            '</select>'+
          '</p>'+
 
-         '<p> Reps Increase/Decrease Per Set :'+
+         '<p> Reps Increase/Decrease  :'+
            '<select id="decrement'+workout+'" name="decrement'+workout+'" required>'+
              '<option value="0">0</option>'+
               '<option value="1">1</option>'+
@@ -228,21 +252,27 @@ function main_function(){
               '<option value="3">3</option>'+
               '<option value="4">4</option>'+
               '<option value="5">5</option>'+
-           '</select></br><button id="update'+workout+'" class="btn-primary">Update Values</button>'+
-         '</p>'+
-         ' </br> <p style="color:red;"> Workout '+workout+': </br><input type="text" id= "workout_name'+workout+'" name= "workout_name'+workout+'" required> </p>'+
-       '</br> <p style="color:red;"> Video Link For Workout '+workout+': </br><input type="text" id= "link'+workout+'" name= "workout_link'+workout+'" required> </p>');
+           '</select></br>'+
+           '<button id="update'+workout+'" class="btn-primary">Update Values</button></br></br>'+
+           '<button type="button" class="btn btn-danger" aria-label="Left Align" name="addSet'+workout+'" id="addSet'+workout+'">'+
+              '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Set'+
+           '</button>&nbsp;&nbsp;'+
+           '<button type="button" class="btn btn-danger" aria-label="Left Align" name="removeSet'+workout+'" id="removeSet'+workout+'">'+
+             '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Set'+
+           '</button><br/>'+
+         '</p>');
 
          if(workout == 1){
-           $(".workout1").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes1" required> <br/>'+
-           '<br/><div class="set1"></div></div>')
-            setLen1 = $("#setCount").val();
+           $(".notes1").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes1" required></textarea> <br/>');
+           $(".workout1").append('<div class="set1"></div></div>');
+            setLen1 = setCount;
            for(k = 0; k < setLen1; k++) {
              var curr = k+1;
              var p=workout;
+             var set_id = "set1"+curr;
              set = curr;
-              $(".set1").append('<div class="list-group">'+
+              $(".set1").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight1'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit1'+curr+'" name="unit1'+curr+'" required>'+
@@ -254,23 +284,25 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep1'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update1").click(function(){
               var init_weight_1 = $("#max_val1").val();
               var init_reps_1=$("#max_reps1").val();
-              var init_type=$("#type11").val();
-              var init_unit=$("#unit11").val();
+              var init_type=$("#type1").val();
+              var init_unit=$("#unit1").val();
               var wk_type=$("#wk_type1").val();
               var incr = $("#increment1").val();
               var decr = $("#decrement1").val();
               var count = setLen1-1;
 
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen1;l++){
                 if(wk_type=="maxout")
                 {
                    $("#weight1"+l).val(parseFloat(init_weight_1)-(parseFloat(incr)*count));
@@ -280,6 +312,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen1;
                    $("#weight1"+(set-l+1)).val(parseFloat(init_weight_1) - (parseFloat(incr)*count));
                    $("#rep1"+(set-l+1)).val(parseFloat(init_reps_1) - (parseFloat(decr)*(l-1)));
                    $("#type1"+l).val(init_type);
@@ -288,17 +321,52 @@ function main_function(){
                  count=count-1;
               }
             })
+            $("button[name=addSet1]").click(function(){
+            var j = parseInt(setLen1) + 1;
+            var set = 'weight1'+j;
+            var rep = 'rep1'+j;
+            var unit = 'unit1'+j;
+            var type = 'type1'+j;
+            $(".set1").append('<div class="set'+1+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen1 = j;
+            });
+
+
+           $("button[name=removeSet1]").click(function(){
+           var j = setLen1;
+           $("div").remove(".set1"+j);
+           setLen1 = parseInt(j) -1;
+           });
+
          }
          if(workout == 2){
-           $(".workout2").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes2" required> <br/>'+
-           '<div class="set2"></div></div>')
-            setLen2 = $("#setCount").val();
+           $(".notes2").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes2" required></textarea> <br/>');
+           $(".workout2").append('<div class="set2"></div></div>');
+            setLen2 = setCount;
            for(k = 0; k < setLen2; k++) {
              var curr = k+1;
              var p=workout;
+             var set_id = "set2"+curr;
              set = curr;
-              $(".set2").append('<div class="list-group">'+
+              $(".set2").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight2'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit2'+curr+'" name="unit2'+curr+'" required>'+
@@ -310,22 +378,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep2'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update2").click(function(){
               var init_weight_2 = $("#max_val2").val();
               var init_reps_2=$("#max_reps2").val();
-              var init_type=$("#type21").val();
-              var init_unit=$("#unit21").val();
+              var init_type=$("#type2").val();
+              var init_unit=$("#unit2").val();
               var incr = $("#increment2").val();
               var decr = $("#decrement2").val();
               var count = setLen2-1;
               var wk_type=$("#wk_type2").val();
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen2;l++){
                 if(wk_type=="maxout")
                 {
                    $("#weight2"+l).val(parseFloat(init_weight_2)-(parseFloat(incr)*count));
@@ -335,6 +405,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen2;
                    $("#weight2"+(set-l+1)).val(parseFloat(init_weight_2) - (parseFloat(incr)*count));
                    $("#rep2"+(set-l+1)).val(parseFloat(init_reps_2) - (parseFloat(decr)*(l-1)));
                    $("#type2"+l).val(init_type);
@@ -344,17 +415,51 @@ function main_function(){
 
               }
             })
+            $("button[name=addSet2]").click(function(){
+            var j = parseInt(setLen2) + 1;
+            var set = 'weight2'+j;
+            var rep = 'rep2'+j;
+            var unit = 'unit2'+j;
+            var type = 'type2'+j;
+            $(".set2").append('<div class="set'+2+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen2 = j;
+            });
+
+
+           $("button[name=removeSet2]").click(function(){
+           var j = setLen2;
+           $("div").remove(".set2"+j);
+           setLen2 = parseInt(j) -1;
+           });
          }
          if(workout == 3){
-           $(".workout3").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes3" required> <br/>'+
-           '<div class="set3"></div></div>')
-            setLen3 = $("#setCount").val();
+           $(".notes3").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes3" required></textarea> <br/>');
+           $(".workout3").append('<div class="set3"></div></div>');
+            setLen3 = setCount;
            for(k = 0; k < setLen3; k++) {
              var curr = k+1;
              var p=workout;
+             var set_id = "set3"+curr;
              set = curr;
-              $(".set3").append('<div class="list-group">'+
+              $(".set3").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight3'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit3'+curr+'" name="unit3'+curr+'" required>'+
@@ -366,22 +471,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep3'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update3").click(function(){
               var init_weight_3 = $("#max_val3").val();
               var init_reps_3=$("#max_reps3").val();
-              var init_type=$("#type31").val();
-              var init_unit=$("#unit31").val();
+              var init_type=$("#type3").val();
+              var init_unit=$("#unit3").val();
               var incr = $("#increment3").val();
               var decr = $("#decrement3").val();
               var count = setLen3-1;
               var wk_type=$("#wk_type3").val();
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen3;l++){
                 if(wk_type=="maxout")
                 {
                    $("#weight3"+l).val(parseFloat(init_weight_3)-(parseFloat(incr)*count));
@@ -391,6 +498,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen3;
                    $("#weight3"+(set-l+1)).val(parseFloat(init_weight_3) - (parseFloat(incr)*count));
                    $("#rep3"+(set-l+1)).val(parseFloat(init_reps_3) - (parseFloat(decr)*(l-1)));
                    $("#type3"+l).val(init_type);
@@ -399,17 +507,53 @@ function main_function(){
                  count=count-1;
               }
             })
+
+            $("button[name=addSet3]").click(function(){
+            var j = parseInt(setLen3) + 1;
+            var set = 'weight3'+j;
+            var rep = 'rep3'+j;
+            var unit = 'unit3'+j;
+            var type = 'type3'+j;
+            $(".set3").append('<div class="set'+3+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen3 = j;
+            });
+
+
+           $("button[name=removeSet3]").click(function(){
+           var j = setLen3;
+           $("div").remove(".set3"+j);
+           setLen3 = parseInt(j) -1;
+           });
          }
+
          if(workout == 4){
-           $(".workout4").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes4" required> <br/>'+
-           '<div class="set4"></div></div>')
-            setLen4 = $("#setCount").val();
+           $(".notes4").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes4" required></textarea> <br/>');
+           $(".workout4").append('<div class="set4"></div></div>');
+            setLen4 = setCount;
            for(k = 0; k < setLen4; k++) {
              var curr = k+1;
              var p=workout;
+            var set_id = "set4"+curr;
              set = curr;
-              $(".set4").append('<div class="list-group">'+
+              $(".set4").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight4'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit4'+curr+'" name="unit4'+curr+'" required>'+
@@ -421,22 +565,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep4'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update4").click(function(){
               var init_weight_4 = $("#max_val4").val();
               var init_reps_4=$("#max_reps4").val();
-              var init_type=$("#type41").val();
-              var init_unit=$("#unit41").val();
+              var init_type=$("#type4").val();
+              var init_unit=$("#unit4").val();
               var incr = $("#increment4").val();
               var decr = $("#decrement4").val();
               var count = setLen4-1;
               var wk_type=$("#wk_type4").val();
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen4;l++){
 
                 if(wk_type=="maxout")
                 {
@@ -447,6 +593,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen4;
                    $("#weight4"+(set-l+1)).val(parseFloat(init_weight_4) - (parseFloat(incr)*count));
                    $("#rep4"+(set-l+1)).val(parseFloat(init_reps_4) - (parseFloat(decr)*(l-1)));
                    $("#type4"+l).val(init_type);
@@ -455,17 +602,52 @@ function main_function(){
                  count=count-1;
               }
             })
+
+            $("button[name=addSet4]").click(function(){
+            var j = parseInt(setLen4) + 1;
+            var set = 'weight4'+j;
+            var rep = 'rep4'+j;
+            var unit = 'unit4'+j;
+            var type = 'type4'+j;
+            $(".set4").append('<div class="set'+4+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen4 = j;
+            });
+
+
+           $("button[name=removeSet4]").click(function(){
+           var j = setLen4;
+           $("div").remove(".set4"+j);
+           setLen4 = parseInt(j) -1;
+           });
          }
          if(workout == 5){
-           $(".workout5").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes5" required> <br/>'+
-           '<div class="set5"></div></div>')
-            setLen5 = $("#setCount").val();
+           $(".notes5").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes5" required></textarea> <br/>');
+          $(".workout5").append('<div class="set5"></div></div>');
+            setLen5 = setCount;
            for(k = 0; k < setLen5; k++) {
              var curr = k+1;
              var p=workout;
+              var set_id = "set5"+curr;
              set = curr;
-              $(".set5").append('<div class="list-group">'+
+              $(".set5").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight5'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit5'+curr+'" name="unit5'+curr+'" required>'+
@@ -477,22 +659,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep5'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update5").click(function(){
               var init_weight_5 = $("#max_val5").val();
               var init_reps_5=$("#max_reps5").val();
-              var init_type=$("#type51").val();
-              var init_unit=$("#unit51").val();
+              var init_type=$("#type5").val();
+              var init_unit=$("#unit5").val();
               var incr = $("#increment5").val();
               var decr = $("#decrement5").val();
               var wk_type=$("#wk_type5").val();
               var count = setLen5-1;
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen5;l++){
 
                 if(wk_type=="maxout")
                 {
@@ -503,6 +687,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen5;
                    $("#weight5"+(set-l+1)).val(parseFloat(init_weight_5) - (parseFloat(incr)*count));
                    $("#rep5"+(set-l+1)).val(parseFloat(init_reps_5) - (parseFloat(decr)*(l-1)));
                    $("#type5"+l).val(init_type);
@@ -511,17 +696,51 @@ function main_function(){
                  count=count-1;
               }
             })
+            $("button[name=addSet5]").click(function(){
+            var j = parseInt(setLen5) + 1;
+            var set = 'weight5'+j;
+            var rep = 'rep5'+j;
+            var unit = 'unit5'+j;
+            var type = 'type5'+j;
+            $(".set5").append('<div class="set'+5+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen5 = j;
+            });
+
+
+           $("button[name=removeSet5]").click(function(){
+           var j = setLen5;
+           $("div").remove(".set5"+j);
+           setLen5 = parseInt(j) -1;
+           });
          }
          if(workout == 6){
-           $(".workout6").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes6" required> <br/>'+
-           '<div class="set6"></div></div>')
-            setLen6 = $("#setCount").val();
+           $(".notes6").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes6" required> </textarea><br/>');
+           $(".workout6").append('<div class="set6"></div></div>');
+            setLen6 = setCount;
            for(k = 0; k < setLen6; k++) {
              var curr = k+1;
              var p=workout;
+              var set_id = "set6"+curr;
              set = curr;
-              $(".set6").append('<div class="list-group">'+
+              $(".set6").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight6'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit6'+curr+'" name="unit6'+curr+'" required>'+
@@ -533,22 +752,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep6'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update6").click(function(){
               var init_weight_6 = $("#max_val6").val();
               var init_reps_6=$("#max_reps6").val();
-              var init_type=$("#type61").val();
-              var init_unit=$("#unit61").val();
+              var init_type=$("#type6").val();
+              var init_unit=$("#unit6").val();
               var incr = $("#increment6").val();
               var decr = $("#decrement6").val();
               var count = setLen6-1;
               var wk_type=$("#wk_type6").val();
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen6;l++){
                 if(wk_type=="maxout")
                 {
                    $("#weight6"+l).val(parseFloat(init_weight_6)-(parseFloat(incr)*count));
@@ -558,6 +779,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen6;
                    $("#weight6"+(set-l+1)).val(parseFloat(init_weight_6) - (parseFloat(incr)*count));
                    $("#rep6"+(set-l+1)).val(parseFloat(init_reps_6) - (parseFloat(decr)*(l-1)));
                    $("#type6"+l).val(init_type);
@@ -566,17 +788,51 @@ function main_function(){
                  count=count-1;
               }
             })
+            $("button[name=addSet6]").click(function(){
+            var j = parseInt(setLen6) + 1;
+            var set = 'weight6'+j;
+            var rep = 'rep6'+j;
+            var unit = 'unit6'+j;
+            var type = 'type6'+j;
+            $(".set6").append('<div class="set'+6+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen6 = j;
+            });
+
+
+           $("button[name=removeSet6]").click(function(){
+           var j = setLen6;
+           $("div").remove(".set6"+j);
+           setLen6 = parseInt(j) -1;
+           });
          }
          if(workout == 7){
-           $(".workout7").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes7" required> <br/>'+
-           '<div class="set7"></div></div>')
-            setLen7 = $("#setCount").val();
+           $(".notes7").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes7" required></textarea> <br/>');
+           $(".workout7").append('<div class="set7"></div></div>');
+            setLen7 = setCount;
            for(k = 0; k < setLen7; k++) {
              var curr = k+1;
              var p=workout;
+              var set_id = "set7"+curr;
              set = curr;
-              $(".set7").append('<div class="list-group">'+
+              $(".set7").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight7'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit7'+curr+'" name="unit7'+curr+'" required>'+
@@ -588,22 +844,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep7'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update7").click(function(){
               var init_weight_7 = $("#max_val7").val();
               var init_reps_7=$("#max_reps7").val();
-              var init_type=$("#type71").val();
-              var init_unit=$("#unit71").val();
+              var init_type=$("#type7").val();
+              var init_unit=$("#unit7").val();
               var incr = $("#increment7").val();
               var decr = $("#decrement7").val();
               var count = setLen7-1;
               var wk_type=$("#wk_type7").val();
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen7;l++){
 
                 if(wk_type=="maxout")
                 {
@@ -614,6 +872,7 @@ function main_function(){
 
                  }
                  else if (wk_type=="dropset") {
+                   set = setLen7;
                    $("#weight7"+(set-l+1)).val(parseFloat(init_weight_7) - (parseFloat(incr)*count));
                    $("#rep7"+(set-l+1)).val(parseFloat(init_reps_7) - (parseFloat(decr)*(l-1)));
                    $("#type7"+l).val(init_type);
@@ -622,17 +881,52 @@ function main_function(){
                  count=count-1;
               }
             })
+            $("button[name=addSet7]").click(function(){
+            var j = parseInt(setLen7) + 1;
+            var set = 'weight7'+j;
+            var rep = 'rep7'+j;
+            var unit = 'unit7'+j;
+            var type = 'type7'+j;
+            $(".set7").append('<div class="set'+7+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen7 = j;
+            });
+
+
+           $("button[name=removeSet7]").click(function(){
+           var j = setLen7;
+           $("div").remove(".set7"+j);
+           setLen7 = parseInt(j) -1;
+           });
+
          }
          if(workout == 8){
-           $(".workout8").append('<p> Notes About Grip/ Variation:</p>'+
-           '<input type="text" id="notes8" required> <br/>'+
-           '<div class="set8"></div></div>')
-           setLen8 = $("#setCount").val();
+           $(".notes8").append('<p> Notes About Grip/ Variation:</p>'+
+           ' <textarea rows="4" cols="32" id="notes8" required></textarea> <br/>');
+           $(".workout8").append('<div class="set8"></div></div>');
+           setLen8 = setCount;
            for(k = 0; k < setLen8; k++) {
              var curr = k+1;
              var p=workout;
+             var set_id = "set8"+curr;
              set = curr;
-              $(".set8").append('<div class="list-group">'+
+              $(".set8").append('<div class='+set_id+'><div class="list-group">'+
                            '<a class="list-group-item"> Set: '+ curr +' </a>'+
                            '<a class="list-group-item"> Weight: </br><input type="number" id= "weight8'+curr+'" min="1" max="400" required>'+
                             ' <select id= "unit8'+curr+'" name="unit8'+curr+'" required>'+
@@ -644,22 +938,24 @@ function main_function(){
                                   '<option value="Dumbbell">Dumbbell</option>'+
                                   '<option value="Plates">Plates</option>'+
                                   '<option value="Plates Per Side">Plates Per Side</option>'+
+                                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
                                '</select>'+
                              '</a>'+
                            '<a class="list-group-item"> Reps: </br><input type="number" id="rep8'+curr+'" min="1" max="25" required >'+
                            '</a>'+
-                          ' </br>');
+                          ' </br></div></div>');
             }
             $("#update8").click(function(){
               var init_weight_8 = $("#max_val8").val();
               var init_reps_8=$("#max_reps8").val();
-              var init_type=$("#type81").val();
-              var init_unit=$("#unit81").val();
+              var init_type=$("#type8").val();
+              var init_unit=$("#unit8").val();
               var incr = $("#increment8").val();
               var decr = $("#decrement8").val();
               var count = setLen8-1;
               var wk_type=$("#wk_type8").val();
-              for(l=1;l<=set;l++){
+              for(l=1;l<=setLen8;l++){
 
                 if(wk_type=="maxout")
                 {
@@ -671,6 +967,7 @@ function main_function(){
 
 
                  else if (wk_type=="dropset") {
+                   set = setLen8;
                    $("#weight8"+(set-l+1)).val(parseFloat(init_weight_8) - (parseFloat(incr)*count));
                    $("#rep8"+(set-l+1)).val(parseFloat(init_reps_8) - (parseFloat(decr)*(l-1)));
                    $("#type8"+l).val(init_type);
@@ -679,6 +976,40 @@ function main_function(){
                  count=count-1;
               }
             })
+
+            $("button[name=addSet8]").click(function(){
+            var j = parseInt(setLen8) + 1;
+            var set = 'weight8'+j;
+            var rep = 'rep8'+j;
+            var unit = 'unit8'+j;
+            var type = 'type8'+j;
+            $(".set8").append('<div class="set'+8+''+j+'">'+
+            '<a class="list-group-item"> Set:'+ j +' </a>'+
+            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+
+            ' <select id= '+unit+' name='+unit+' required>'+
+                  '<option value="Lbs">Lbs</option>'+
+                  '<option value="Kgs">Kgs</option>'+
+               '</select>'+
+               '<select id='+type+' name='+type+' required>'+
+                  '<option value="Pin">Pin</option>'+
+                  '<option value="Dumbbell">Dumbbell</option>'+
+                  '<option value="Plates">Plates</option>'+
+                  '<option value="Plates Per Side">Plates Per Side</option>'+
+                  '<option value="Preset ez bar">Preset Ez Bar</option>'+
+                  '<option value="Preset straight bar">Preset Straight Bar</option>'+
+               '</select>'+
+            '</a>'+
+            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a></br>'
+            );
+            setLen8 = j;
+            });
+
+
+           $("button[name=removeSet8]").click(function(){
+           var j = setLen8;
+           $("div").remove(".set8"+j);
+           setLen8 = parseInt(j) -1;
+           });
          }
 
        });
@@ -688,6 +1019,13 @@ function main_function(){
        $("div").remove(".workout"+workout);
        workout=workout-1;
     });
+
+    function reset_color()
+    {
+      $("#submit").removeClass("btn-info").addClass("btn-danger");
+      $("#submit").removeClass("btn-warning").addClass("btn-danger");
+    }
+
 
    $("#submit").click(function(){
     var myObject = {};
@@ -705,6 +1043,9 @@ function main_function(){
       myObject["notes"+l]=$("#notes"+l).val();
       myObject["link"+l]=$("#link"+l).val();
       myObject["wk_type"+l]=$("#wk_type"+l).val();
+      myObject["target_muscle"+l] =  $("#target_muscle"+l).val();
+      myObject["equipment"+l] =  $("#equipment"+l).val();
+
       var setLen= 0;
 
       if(l==1){
@@ -760,14 +1101,30 @@ function main_function(){
       data: myObject,
       dataType: JSON,
       success: function (response){
-
+        reset_color();
+        if(response.status==200){
         var property = document.getElementById("submit");
         $("#submit").removeClass("btn-danger").addClass("btn-info");
+        }
+        else
+        {
+          var property = document.getElementById("submit");
+          $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+        }
       },
       error: function(response){
+        reset_color();
+        if(response.status==200){
         var property = document.getElementById("submit");
         $("#submit").removeClass("btn-danger").addClass("btn-info");
+        }
+        else
+        {
+          var property = document.getElementById("submit");
+          $("#submit").removeClass("btn-danger").addClass("btn-warning");
 
+        }
       }
     })
    });

@@ -83,7 +83,7 @@
  <div class="workouts" id="workouts">
  </div>
 
- <p><br/><br/><br/>Date:
+ <p><br/><br/><br/>Click Below for Workout Dates:
  <br/> <input type="text" id="datepicker"></p>
 
  </div>
@@ -197,6 +197,7 @@
         myObject['secondary'] = response['secondary'];
         myObject['tertiary'] = response['tertiary'];
         myObject['quaternary'] = response['quaternary'];
+
         total_workout = response.total_workout;
         var l = 0;
           for(var i=1;i<=response.total_workout;i++){
@@ -204,11 +205,23 @@
             var workout = 'workout'+i;
             var notes='notes'+i;
             var link = 'link'+i;
+            var wk_type = 'wk_type'+i;
+
+            var target_muscle = 'target_muscle'+i;
+            var equipment = 'equipment'+i;
+
+
+            myObject[target_muscle] = response[target_muscle];
+            myObject[equipment] = response[equipment];
+            myObject[wk_type] = response[wk_type];
+
             console.log(response[setLen]);
 
           $("#workouts").append('<div class="list-group">'+
           '<br/><a class="list-group-item active"> '+ response[workout]  +'</a>'+
-          '<a class="list-group-item"> Workout Notes: '+ response[notes]  +'</a><div>');
+          '<a class="list-group-item"> Workout Notes: '+ response[notes]  +'</a>'+
+          '<a class="list-group-item"> Target Muscle: '+ response[target_muscle]  +'</a>'+
+          '<a class="list-group-item"> Equipment Type: '+ response[equipment]  +'</a><div>');
 
 
           if(response.hasOwnProperty(link)){
@@ -241,6 +254,7 @@
             myObject[unit] = response[unit];
             myObject[type] = response[type];
             myObject[rep] = response[rep];
+
             $("#workouts").append('<div class="list-group">'+
             '<a class="list-group-item"> Set:'+ j +' </a>'+
             '<a class="list-group-item"> Weight: '+ response[set]  +' '+ response[unit] +' '+ response[type]  +'</a>'+
@@ -262,6 +276,12 @@
         }
         }
         $("#workouts").append('<button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:90px">Submit</button>');
+        function reset_color()
+        {
+          $("#submit").removeClass("btn-info").addClass("btn-danger");
+          $("#submit").removeClass("btn-warning").addClass("btn-danger");
+        }
+
         $("#submit").click(function(){
           myObject['date']=date;
           myObject['total_workout'] = response.total_workout;
@@ -294,16 +314,31 @@
             dataType: JSON,
             success: function (response){
 
+              if(response.status==200){
+                reset_color();
               var property = document.getElementById("submit");
-              //property.style.backgroundColor = "#0000ff";
+
               $("#submit").removeClass("btn-danger").addClass("btn-info");
+              }
+              else
+              {
+                var property = document.getElementById("submit");
+                $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+              }
             },
             error: function(response){
-
+              reset_color();
+              if(response.status==200){
               var property = document.getElementById("submit");
-              //property.style.backgroundColor = "#0000a0";
               $("#submit").removeClass("btn-danger").addClass("btn-info");
+              }
+              else
+              {
+                var property = document.getElementById("submit");
+                $("#submit").removeClass("btn-danger").addClass("btn-warning");
 
+              }
             }
           });
 

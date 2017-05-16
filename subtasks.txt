@@ -1,0 +1,6 @@
+1. add equipment type/ target muscle
+2. fix remove workout
+
+"skill": "Intermediate",
+"skill": "Beginner",
+"skill": "Advanced",

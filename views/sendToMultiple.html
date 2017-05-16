@@ -60,7 +60,7 @@
            <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
       </div>
 
-      <nav class="navbar navbar-default navbar-static-top" style="margin:0px" id="#navbar">
+      <nav class="navbar navbar-default navbar-static-top" style="margin:0px" id="navbar">
         <div class="container-fluid">
                  <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar">
@@ -120,6 +120,7 @@ var show_client = 0;
 
  function main_function(){
  function convert_date(today){
+
  $("#navbar").hide();
  var dd = today.getDate();
  var mm = today.getMonth()+1; //January is 0!
@@ -282,11 +283,86 @@ var show_client = 0;
           myObject = response;
 
           $("#workouts").append('<div class="list-group">'+
-          '<br/><a class="list-group-item"> Primary Muscle: <input id="primary" value="'+ response['primary'] +'"</a>'+
-          '<a class="list-group-item"> Secondary Muscle: <input id="secondary" value="'+ response['secondary'] +'"/a>'+
-          '<a class="list-group-item"> Tertiary Muscle: <input id="tertiary" value="'+ response['tertiary']  +'"</a>'+
-          '<a class="list-group-item"> Quaternary Muscle: <input id="quaternary" value="'+ response['quaternary']  +'"</a>'
-        );
+					'<a class="list-group-item"> Template Id: '+response['id'] +'</a>'+
+           '<a class="list-group-item"> Primary Muscle: '+
+					        '<select class="form-control" id="primary" name="primary" required>'+
+					        '<option value="Quads">Quads</option>'+
+					           '<option value="Glutes">Glutes</option>'+
+					           '<option value="Hamstrings">Hamstrings</option>'+
+					           '<option value="Chest">Chest</option>'+
+					           '<option value="Lats">Lats</option>'+
+					           '<option value="Back">Back</option>'+
+					           '<option value="Traps">Traps</option>'+
+					           '<option value="Deltoids">Deltoids</option>'+
+					           '<option value="Core">Core</option>'+
+					           '<option value="Forearms">Forearms</option>'+
+					           '<option value="Biceps">Biceps</option>'+
+					           '<option value="Triceps">Triceps</option>'+
+					            '<option value="Calves">Calves</option>'+
+					            '<option value="Core">Core</option>'+
+					       '</select></br>'+
+
+					        '<a class="list-group-item"> Secondary Muscle: '+
+					        '<select class="form-control" id="secondary" name="secondary" required>'+
+					           '<option value="None">None</option>'+
+					           '<option value="Quads">Quads</option>'+
+					           '<option value="Glutes">Glutes</option>'+
+					           '<option value="Hamstrings">Hamstrings</option>'+
+					           '<option value="Chest">Chest</option>'+
+					           '<option value="Lats">Lats</option>'+
+					           '<option value="Back">Back</option>'+
+					           '<option value="Traps">Traps</option>'+
+					           '<option value="Deltoids">Deltoids</option>'+
+					           '<option value="Core">Core</option>'+
+					           '<option value="Forearms">Forearms</option>'+
+					           '<option value="Biceps">Biceps</option>'+
+					           '<option value="Triceps">Triceps</option>'+
+					           '<option value="Calves">Calves</option>'+
+					           '<option value="Core">Core</option>'+
+					       '</select></br>'+
+
+					        '<a class="list-group-item"> Tertiary Muscle: '+
+					        '<select class="form-control" id="tertiary" name="tertiary" required>'+
+					           '<option value="None">None</option>'+
+					           '<option value="Quads">Quads</option>'+
+					           '<option value="Glutes">Glutes</option>'+
+					           '<option value="Hamstrings">Hamstrings</option>'+
+					           '<option value="Chest">Chest</option>'+
+					           '<option value="Lats">Lats</option>'+
+					           '<option value="Back">Back</option>'+
+					           '<option value="Traps">Traps</option>'+
+					           '<option value="Deltoids">Deltoids</option>'+
+					           '<option value="Core">Core</option>'+
+					           '<option value="Forearms">Forearms</option>'+
+					           '<option value="Biceps">Biceps</option>'+
+					           '<option value="Triceps">Triceps</option>'+
+					           '<option value="Calves">Calves</option>'+
+					           '<option value="Core">Core</option>'+
+					       '</select></br>'+
+					        '<a class="list-group-item"> Quaternary Muscle: '+
+					        '<select class="form-control" id="quaternary" name="quaternary" required>'+
+					        '<option value="None">None</option>'+
+					        '<option value="Quads">Quads</option>'+
+					        '<option value="Glutes">Glutes</option>'+
+					        '<option value="Hamstrings">Hamstrings</option>'+
+					        '<option value="Chest">Chest</option>'+
+					        '<option value="Lats">Lats</option>'+
+					        '<option value="Back">Back</option>'+
+					        '<option value="Traps">Traps</option>'+
+					        '<option value="Deltoids">Deltoids</option>'+
+					        '<option value="Core">Core</option>'+
+					        '<option value="Forearms">Forearms</option>'+
+					        '<option value="Biceps">Biceps</option>'+
+					        '<option value="Triceps">Triceps</option>'+
+					        '<option value="Calves">Calves</option>'+
+					        '<option value="Core">Core</option>'+
+					       '</select></br>'
+					      );
+					      $("#primary").val(response['primary']);
+					      $("#secondary").val(response['secondary']);
+					      $("#tertiary").val(response['tertiary']);
+					      $("#quaternary").val(response['quaternary']);
+
         total_workout = response.total_workout;
         var l = 0;
           for(var i=1;i<=response.total_workout;i++){
@@ -333,9 +409,13 @@ var show_client = 0;
             maxset = 'rep'+i+'1';
             var max_rep = response[maxset];
             var link = 'link'+i;
+						var wk_type='wk_type'+i;
+						var target_muscle = 'target_muscle'+i;
+						var equipment = 'equipment' + i;
             console.log(response[setLen]);
 
 
+					if(response[workout]){
           $("#workouts").append('<div class="list-group">'+
           '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px"  value="'+ response[workout]+'" id="'+workout+'"></a>');
 
@@ -345,11 +425,14 @@ var show_client = 0;
             $("#workouts").append('<iframe width="275" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe>');
             }
           }
-          $("#workouts").append('<a class="list-group-item"> Workout Notes: <input style="height:30px;width:250px"  value="'+ response[notes] +'" id="'+notes+'"></a>'+
-          '<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
-          '<p><br/>Max Weight For This Workout: <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
+          $("#workouts").append('<a class="list-group-item"> Workout Notes:<textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
+					'</br> <p style="color:red;"> Video Link : </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
+					'<p><br/>Target Muscle: <input id= "'+target_muscle+'" value="'+response[target_muscle]+'"> </p>'+
+					'<p><br/>Equipment type: <input id= "'+equipment+'" value="'+response[equipment]+'"> </p>'+
+					'<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+					'<p><br/>Max Weight For This Workout: <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
           '<p><br/>Max Reps For This Workout: <input type="number" id= "max_reps'+i+'" min="1" max="50" required>&nbsp;&nbsp;'+ max_rep +'</p>'+
-          '<div>');
+					'<div>');
 
           $(".workouts").append('<br/><div class="workout'+i+'"><br/> '+
           '<p> <br/>Weight Increase Per Set :'+
@@ -404,6 +487,9 @@ var show_client = 0;
             '<option value="5">5</option>'+
            '</select>&nbsp;&nbsp;'+ rep_decr +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
          '</p></div>');
+				 $("#"+notes).val(response[notes]);
+				 $("#"+equipment).val(response[equipment]);
+				 $("#"+wk_type).val(response[wk_type]);
             for(var j=1;j<=response[setLen];j++){
               var rep = 'rep'+i+j;
               l = j;
@@ -427,6 +513,7 @@ var show_client = 0;
             '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
           );
         }
+			}
 
         $("#update1").click(function(){
           var init_weight_1 = $("#max_val1").val();
@@ -672,10 +759,12 @@ var show_client = 0;
 			}
 
 
-				function reset_color()
-				{
-					$("#submit").removeClass("btn-info").addClass("btn-danger");
-				}
+			function reset_color()
+			{
+				$("#submit").removeClass("btn-info").addClass("btn-danger");
+				$("#submit").removeClass("btn-warning").addClass("btn-danger");
+			}
+
 
         function sendWorkout(){
             function guid() {
@@ -703,11 +792,18 @@ var show_client = 0;
               setLen = 'setLen'+i;
               var workout = 'workout'+i;
               var notes='notes'+i;
-
+	            var link = 'link'+i;
+							var target_muscle = 'target_muscle'+i;
+							var equipment = 'equipment'+i;
+							var wk_type = 'wk_type'+i;
+	            myObject[link]=$("#link"+i).val();
               myObject[workout]=$("#workout"+i).val();
               myObject[notes]=$("#notes"+i).val();
+	            myObject[target_muscle] =  $("#target_muscle"+i).val();
+							myObject[equipment] =  $("#equipment"+i).val();
+							myObject[wk_type] = $("#wk_type"+i).val();
 
-              for(var j=1;j<=response[setLen];j++){
+							for(var j=1;j<=response[setLen];j++){
 
               var set = 'set'+i+""+j;
               var rep = 'rep'+i+""+j;
@@ -729,14 +825,30 @@ var show_client = 0;
               dataType: JSON,
               success: function (response){
 
+								if(response.status==200){
+									reset_color();
                 var property = document.getElementById("submit");
                 $("#submit").removeClass("btn-danger").addClass("btn-info");
-								setTimeout(reset_color(), 10000);
+                }
+                else
+                {
+                  var property = document.getElementById("submit");
+                  $("#submit").removeClass("btn-danger").addClass("btn-warning");
+
+                }
               },
               error: function(response){
+								if(response.status==200){
+									reset_color();
                 var property = document.getElementById("submit");
                 $("#submit").removeClass("btn-danger").addClass("btn-info");
+                }
+                else
+                {
+                  var property = document.getElementById("submit");
+                  $("#submit").removeClass("btn-danger").addClass("btn-warning");
 
+                }
 
               }
             })

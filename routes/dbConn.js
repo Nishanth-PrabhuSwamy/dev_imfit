@@ -1,6 +1,6 @@
 var mongojs = require('mongojs');
 var db = mongojs('mongodb://Nishanth_Prabhuswamy:Avenger101@ds145410-a0.mlab.com:45410/team_imfit', ['users','trainer','client','athlete','workout','client_feedback','IntermediateWorkout_Template','latest_workout','workout_dates','response_dates','sent_dates']);
-
+//var db = mongojs('mongodb://Nishanth_Prabhuswamy:Avenger101@ds025973.mlab.com:25973/team_imfit', ['users','trainer','client','athlete','workout','client_feedback','IntermediateWorkout_Template','latest_workout','workout_dates','response_dates','sent_dates']);
 function validateTrainer(callback,email,password,membership)
 {
   //var mycollection = db.collection('trainer');
@@ -54,7 +54,7 @@ function insertWorkoutDates(callback,workout_date,client){
   var dates = {};
   dates['date'] = workout_date;
   dates['client'] = client;
-  db.workout_dates.insert(dates, function(err, result) {
+  db.workout_dates.insert(dates,{continueOnError: true, safe: true}, function(err, result) {
     console.log("Inside insert!!");
 
    if(err) { console.log(err); }
@@ -83,7 +83,7 @@ function insertResponseDates(callback,feedback){
   var dates = {};
   dates['date'] = feedback['date'];
   dates['client'] = feedback['client'];
-  db.response_dates.insert(dates, function(err, result) {
+  db.response_dates.insert(dates,{continueOnError: true, safe: true}, function(err, result) {
     console.log("Inside insert!!");
 
    if(err) { console.log(err); }
@@ -101,7 +101,7 @@ function insertSentDates(callback,date,client){
   var dates = {};
   dates['date'] = date;
   dates['client'] = client;
-  db.sent_dates.insert(dates, function(err, result) {
+  db.sent_dates.insert(dates,{continueOnError: true, safe: true}, function(err, result) {
     console.log("Inside insert!!");
 
    if(err) { console.log(err); }
@@ -160,7 +160,7 @@ function insertWorkouts(callback,new_workout){
     "date":new_workout['date'],
     "client" :new_workout['client']
   });
-  db.latest_workout.insert(new_workout, function(err, result) {
+  db.latest_workout.insert(new_workout,{continueOnError: true, safe: true}, function(err, result) {
     console.log("Inside insert!!");
 
    if(err) { console.log(err); }
@@ -173,7 +173,7 @@ function insertTemplate(callback,new_workout){
   db.IntermediateWorkout_Template.remove({
     "id":new_workout['id']
   });
-  db.IntermediateWorkout_Template.insert(new_workout, function(err, result) {
+  db.IntermediateWorkout_Template.insert(new_workout,{continueOnError: true, safe: true}, function(err, result) {
    if(err) {
     console.log(err);
      callback(err); }
@@ -188,7 +188,7 @@ function insertFeedback(callback,feedback){
     "date":feedback['date'],
     "client" :feedback['client']
   });
-  db.client_feedback.insert(feedback, function(err, result) {
+  db.client_feedback.insert(feedback,{continueOnError: true, safe: true}, function(err, result) {
    if(err) { callback(err); }
   });
 }
