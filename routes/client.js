@@ -25,7 +25,9 @@ exports.viewProgress = function(req, res){
 res.render('viewAllResponses');
 }
 
-
+exports.clientDiet = function(req, res){
+  res.render("clientDiet");
+};
 
 exports.getWorkoutDates = function(req,res){
   objectControl.getWorkoutDates(function(err,results)
@@ -33,6 +35,21 @@ exports.getWorkoutDates = function(req,res){
     if(err || results === null)
     {
       res.render('error');
+    }
+    else
+    {
+      console.log(results);
+      res.json(results);
+    }
+  },req.session.ClientEmail)
+}
+
+exports.getDiet = function(req,res){
+  objectControl.getDiet(function(err,results)
+  {
+    if(err || results === null)
+    {
+      res.send(err);
     }
     else
     {
@@ -88,4 +105,66 @@ exports.submitFeedback = function(req,res){
     }
   },feedback);
 res.status(200).json({status:"ok"});
+};
+
+exports.paypal = function(req, res){
+res.render('paypal');
+}
+
+exports.viewPayment = function(req, res){
+res.render('viewPayment');
+}
+
+exports.viewYourResponse = function(req, res){
+res.render('viewYourResponse');
+}
+
+exports.resetPassword = function(req, res){
+res.render('reset_password');
+}
+
+exports.getPayment = function(req,res){
+  objectControl.getPayment(function(err,results)
+  {
+    if(err || results === null)
+    {
+      res.render('error');
+    }
+    else
+    {
+      console.log(results);
+      res.json(results);
+    }
+  },req.session.ClientEmail);
+}
+exports.getClientResponse = function(req,res){
+  var date = req.body.date;
+  objectControl.getFeedback(function(err,results)
+  {
+    if(err || results === null)
+    {
+      res.render('error');
+    }
+    else
+    {
+      console.log(results);
+      res.json(results);
+    }
+  },date,req.session.ClientEmail);
+};
+exports.submitPassword = function(req,res){
+  var password = req.body.password;
+  objectControl.submitPassword(function(err,results)
+  {
+    if(err || results === null)
+    {
+      res.render('error');
+    }
+    else
+    {
+      console.log(results);
+      res.json(results);
+    }
+  },password,req.session.ClientEmail);
+  res.render('client_landingPage');
 };

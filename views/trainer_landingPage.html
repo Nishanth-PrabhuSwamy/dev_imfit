@@ -22,19 +22,28 @@
   <script>
   $(document).ready(function(){
 
-      $("#listClients").click(function(){
+    $("#listClients").click(function(){
 
           $.post("/listClients",
           function(data,status){
+
             $(".trainerFunctions").hide();
+             $("#clients").show();
+            $( "#clients" ).append('<br/> <button id="hideClients" class="btn btn-primary" role="button">Hide Clients</button><br/><br/>');
             console.log(JSON.stringify(data));
             $.each(data, function(i, obj) {
             $( "#clients" ).append('<li class="list-group-item"><a href="/selectClientId/'+obj.email+'" id="listClients" class="btn btn-danger" role="button">'+ obj.firstname + ' ' + obj.lastname+'</a> </li> '
            );
           });
 
+          $("#hideClients").click(function(){
+             $("#clients").hide();
+              $(".trainerFunctions").show();
+          });
+
           });
       });
+
   });
   </script>
 
@@ -87,6 +96,10 @@
 
         <li class="list-group-item">
           <a href="/viewTemplates" class="btn btn-danger" role="button">Search Existing Templates</a>
+        </li>
+
+        <li class="list-group-item">
+          <a href="/addClient" class="btn btn-danger" role="button">Add Client</a>
         </li>
 
 

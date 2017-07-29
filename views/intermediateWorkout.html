@@ -307,6 +307,7 @@ $(document).ready(function(){
                         ' </br>');
           }
           $("#update2").click(function(){
+
             var init_weight_2 = $("#weight21").val();
             var init_reps_2=$("#rep21").val();
             var init_type=$("#type21").val();
@@ -315,6 +316,7 @@ $(document).ready(function(){
             var decr = $("#decrement"+workout).val();
             var count = 1;
             for(l=2;l<=set;l++){
+              alert(l);
 
                $("#weight2"+l).val(parseFloat(init_weight_2)+(parseFloat(incr)*count));
                $("#rep2"+l).val(parseFloat(init_reps_2)-(parseFloat(decr)*count));

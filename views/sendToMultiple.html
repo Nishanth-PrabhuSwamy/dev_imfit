@@ -6,6 +6,8 @@
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+	<link rel="stylesheet" href="/stylesheets/sendWorkout.css" type="text/css">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
@@ -92,7 +94,7 @@
  <div class="workouts" id="workouts">
  </div></br>
 
- <button type="button" class="btn btn-danger" aria-label="Left Align" id="listClients">
+ <button type="button" class="update" aria-label="Left Align" id="listClients">
 	 <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Send To Clients
  </button>
 
@@ -283,9 +285,9 @@ var show_client = 0;
           myObject = response;
 
           $("#workouts").append('<div class="list-group">'+
-					'<a class="list-group-item"> Template Id: '+response['id'] +'</a>'+
-           '<a class="list-group-item"> Primary Muscle: '+
-					        '<select class="form-control" id="primary" name="primary" required>'+
+					'<a class="list-group-item"><b> Template Id: </b>'+response['id'] +'</a>'+
+           '<a class="list-group-item"><b> Primary Muscle: </b>'+
+					        '<select class="right" class="form-control" id="primary" name="primary" required>'+
 					        '<option value="Quads">Quads</option>'+
 					           '<option value="Glutes">Glutes</option>'+
 					           '<option value="Hamstrings">Hamstrings</option>'+
@@ -302,8 +304,8 @@ var show_client = 0;
 					            '<option value="Core">Core</option>'+
 					       '</select></br>'+
 
-					        '<a class="list-group-item"> Secondary Muscle: '+
-					        '<select class="form-control" id="secondary" name="secondary" required>'+
+					        '<a class="list-group-item"><b> Secondary Muscle: </b>'+
+					        '<select class="right" class="form-control" id="secondary" name="secondary" required>'+
 					           '<option value="None">None</option>'+
 					           '<option value="Quads">Quads</option>'+
 					           '<option value="Glutes">Glutes</option>'+
@@ -321,8 +323,8 @@ var show_client = 0;
 					           '<option value="Core">Core</option>'+
 					       '</select></br>'+
 
-					        '<a class="list-group-item"> Tertiary Muscle: '+
-					        '<select class="form-control" id="tertiary" name="tertiary" required>'+
+					        '<a class="list-group-item"><b> Tertiary Muscle: </b>'+
+					        '<select class="right" class="form-control" id="tertiary" name="tertiary" required>'+
 					           '<option value="None">None</option>'+
 					           '<option value="Quads">Quads</option>'+
 					           '<option value="Glutes">Glutes</option>'+
@@ -339,8 +341,8 @@ var show_client = 0;
 					           '<option value="Calves">Calves</option>'+
 					           '<option value="Core">Core</option>'+
 					       '</select></br>'+
-					        '<a class="list-group-item"> Quaternary Muscle: '+
-					        '<select class="form-control" id="quaternary" name="quaternary" required>'+
+					        '<a class="list-group-item"><b> Quaternary Muscle: </b>'+
+					        '<select class="right" class="form-control" id="quaternary" name="quaternary" required>'+
 					        '<option value="None">None</option>'+
 					        '<option value="Quads">Quads</option>'+
 					        '<option value="Glutes">Glutes</option>'+
@@ -417,7 +419,7 @@ var show_client = 0;
 
 					if(response[workout]){
           $("#workouts").append('<div class="list-group">'+
-          '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px"  value="'+ response[workout]+'" id="'+workout+'"></a>');
+          '<br/><a class="list-group-item custom-grey"><b> Workout: <input style="height:30px;width:250px;color:black;"  value="'+ response[workout]+'" id="'+workout+'"></b></a>');
 
           if(response.hasOwnProperty(link)){
             if(response[link]!== '' ){
@@ -425,13 +427,13 @@ var show_client = 0;
             $("#workouts").append('<iframe width="275" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe>');
             }
           }
-          $("#workouts").append('<a class="list-group-item"> Workout Notes:<textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
-					'</br> <p style="color:red;"> Video Link : </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
-					'<p><br/>Target Muscle: <input id= "'+target_muscle+'" value="'+response[target_muscle]+'"> </p>'+
-					'<p><br/>Equipment type: <input id= "'+equipment+'" value="'+response[equipment]+'"> </p>'+
-					'<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
-					'<p><br/>Max Weight For This Workout: <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
-          '<p><br/>Max Reps For This Workout: <input type="number" id= "max_reps'+i+'" min="1" max="50" required>&nbsp;&nbsp;'+ max_rep +'</p>'+
+          $("#workouts").append('<a class="list-group-item"><b> Workout Notes:</b><textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
+					'</br> <p style="color:red;"><b> Video Link :</b></br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
+					'<p><br/><b>Target Muscle: </b><input id= "'+target_muscle+'" value="'+response[target_muscle]+'"> </p>'+
+					'<p><br/><b>Equipment type: </b><input id= "'+equipment+'" value="'+response[equipment]+'"> </p>'+
+					'<p><br/><b>Workout Type: </b><select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+					'<p><br/><b>Max Weight For This Workout:</b> <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +'</p>'+
+          '<p><br/><b>Max Reps For This Workout: </b><input type="number" id= "max_reps'+i+'" min="1" max="50" required>&nbsp;&nbsp;'+ max_rep +'</p>'+
 					'<div>');
 
           $(".workouts").append('<br/><div class="workout'+i+'"><br/> '+
@@ -485,7 +487,7 @@ var show_client = 0;
             '<option value="3">3</option>'+
             '<option value="4">4</option>'+
             '<option value="5">5</option>'+
-           '</select>&nbsp;&nbsp;'+ rep_decr +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+           '</select>&nbsp;&nbsp;'+ rep_decr +'</br><button id="update'+i+'" class="update">Update Values</button>'+
          '</p></div>');
 				 $("#"+notes).val(response[notes]);
 				 $("#"+equipment).val(response[equipment]);
@@ -508,9 +510,9 @@ var show_client = 0;
             var difficulty = 'difficulty'+i+j;
 
             $("#workouts").append('<div class="list-group">'+
-            '<a class="list-group-item"> Set:'+ j +' </a>'+
-            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
-            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
+            '<a class="list-group-item custom"><b> Set:'+ j +' </b></a>'+
+            '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
+            '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
           );
         }
 			}
@@ -786,7 +788,7 @@ var show_client = 0;
             myObject['primary'] = $("#primary").val();
             myObject['secondary'] = $("#secondary").val();
             myObject['tertiary'] = $("#tertiary").val();
-            myObject['quaternary'] = $("quaternary").val();
+            myObject['quaternary'] = $("#quaternary").val();
 
             for(var i=1;i<=response.total_workout;i++){
               setLen = 'setLen'+i;

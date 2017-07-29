@@ -3,6 +3,7 @@
 <head>
 
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/copyTemplate.css" type="text/css">
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -58,7 +59,7 @@
    </br></br>
 
 <br/>
- <p> Template Number:
+ <p><b> Template Number:</b>
 <input type="number" id="temp_id" min="1" max="500" style:"width=15px">
   </br></p>
 
@@ -109,15 +110,15 @@
         //myObject = response;
 
         $("#workouts").append('<div class="list-group">'+
-        '<br/><a class="list-group-item"> Workout Skill Level:'+
-        '<select class="form-control" id="skill" name="skill" required>'+
+        '<br/><a class="list-group-item"><b> Workout Skill Level:</b>'+
+        '<select class="right" class="form-control" id="skill" name="skill" required>'+
            '<option value="Beginner">Beginner</option>'+
            '<option value="Intermediate">Intermediate</option>'+
            '<option value="Advanced">Advanced</option>'+
        '</select></br>'+
 
-        '<a class="list-group-item"> Primary Muscle: '+
-        '<select class="form-control" id="primary" name="primary" required>'+
+        '<a class="list-group-item"><b>Primary Muscle: </b>'+
+        '<select class="right" class="form-control" id="primary" name="primary" required>'+
         '<option value="Quads">Quads</option>'+
            '<option value="Glutes">Glutes</option>'+
            '<option value="Hamstrings">Hamstrings</option>'+
@@ -134,8 +135,8 @@
             '<option value="Core">Core</option>'+
        '</select></br>'+
 
-        '<a class="list-group-item"> Secondary Muscle: '+
-        '<select class="form-control" id="secondary" name="secondary" required>'+
+        '<a  class="list-group-item"> <b>Secondary Muscle: </b>'+
+        '<select class="right" class="form-control" id="secondary" name="secondary" required>'+
            '<option value="None">None</option>'+
            '<option value="Quads">Quads</option>'+
            '<option value="Glutes">Glutes</option>'+
@@ -153,8 +154,8 @@
            '<option value="Core">Core</option>'+
        '</select></br>'+
 
-        '<a class="list-group-item"> Tertiary Muscle: '+
-        '<select class="form-control" id="tertiary" name="tertiary" required>'+
+        '<a  class="list-group-item"><b> Tertiary Muscle:</b>'+
+        '<select class="right" class="form-control" id="tertiary" name="tertiary" required>'+
            '<option value="None">None</option>'+
            '<option value="Quads">Quads</option>'+
            '<option value="Glutes">Glutes</option>'+
@@ -171,8 +172,8 @@
            '<option value="Calves">Calves</option>'+
            '<option value="Core">Core</option>'+
        '</select></br>'+
-        '<a class="list-group-item"> Quaternary Muscle: '+
-        '<select class="form-control" id="quaternary" name="quaternary" required>'+
+        '<a  class="list-group-item"><b> Quaternary Muscle: </b>'+
+        '<select class="right" class="form-control" id="quaternary" name="quaternary" required>'+
         '<option value="None">None</option>'+
         '<option value="Quads">Quads</option>'+
         '<option value="Glutes">Glutes</option>'+
@@ -227,7 +228,7 @@
           if(response['setLen2']>=0){
               myObject['setLen2'] = response['setLen2'];
               myObject['equipment2'] = response['equipment2'];
-              myObject['target_muscle2'] = response['target_muscle'];
+              myObject['target_muscle2'] = response['target_muscle2'];
               has_wk[2] = 1;
           }
           if(response['setLen3']>=0){
@@ -305,7 +306,7 @@
         if(response[workout]){
         $(".workouts").append('<br/><div class="workout'+i+'"></div> ');
         $("."+workout).append('<div class="list-group">'+
-        '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px"  value="'+ response[workout]+'" id="'+workout+'"></a>');
+        '<br/><a class="list-group-item custom"> <p style="color:white"><b>Workout: </b><input style="height:30px;width:250px;color:black;"  value="'+ response[workout]+'" id="'+workout+'"></p></a>');
 
         if(response.hasOwnProperty(link)){
           if(response[link]!== '' ){
@@ -318,10 +319,10 @@
             var type_val = response[type]
         }
 
-        $("."+workout).append('<a class="list-group-item"> Workout Notes: <textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
-        '<p style="color:red;"> </br>Video Link : </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
-        '<p> Target Muscle: </p>'+
-          '<select class="form-control" id="target_muscle'+i+'" required>'+
+        $("."+workout).append('<a class="list-group-item"><b> Workout Notes: </b><textarea rows="4" cols="30"  id="'+notes+'"> </textarea></a>'+
+        '<p style="color:red;"> </br><b>Video Link : </b></br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
+        '<p><b> Target Muscle: </b></p>'+
+          '<select class="right" class="form-control" id="target_muscle'+i+'" required>'+
              '<option value="Quads">Quads</option>'+
              '<option value="Glutes">Glutes</option>'+
              '<option value="Hamstrings">Hamstrings</option>'+
@@ -337,18 +338,19 @@
               '<option value="Calves">Calves</option>'+
               '<option value="Core">Core</option>'+
          '</select></p>'+
-         '<p>Workout Equipment: <select id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
-         '<p>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
-        '<p>Max Weight : <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +
-        '&nbsp;<select id="type'+i+'" name="type'+i+'" required>'+
+         '<p><b>Workout Equipment: </b><select class="right" id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
+         '<p><b>Workout Type: </b><select class="right" id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+        '<p><b>Max Weight : </b><input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;&nbsp;'+ max_val +
+        '&nbsp;<select class="right" id="type'+i+'" name="type'+i+'" required>'+
            '<option value="Pin">Pin</option>'+
+           '<option value="Pin Per Side">Pin Per Side</option>'+
            '<option value="Dumbbell">Dumbbell</option>'+
            '<option value="Plates">Plates</option>'+
            '<option value="Plates Per Side">Plates Per Side</option>'+
            '<option value="Preset ez bar">Preset Ez Bar</option>'+
            '<option value="Preset straight bar">Preset Straight Bar</option>'+
         '</select>&nbsp;'+type_val+'</p>'+
-        '<p>Unit of weight: <select id= "unit'+i+'" name="unit'+i+'" required>'+
+        '<p><b>Unit of weight: </b><select class="right" id= "unit'+i+'" name="unit'+i+'" required>'+
               '<option value="Lbs">Lbs</option>'+
               '<option value="Kgs">Kgs</option>'+
            '</select></p>'+
@@ -360,8 +362,8 @@
         $("#"+wk_type).val(response[wk_type]);
 
         $("."+workout).append('<br/> '+
-        '<p> Workout Position:'+
-          '<select id="position'+i+'" required>'+
+        '<p> <b>Workout Position:</b>'+
+          '<select class="right" id="position'+i+'" required>'+
           '<option value="1">1</option>'+
            '<option value="2">2</option>'+
            '<option value="3">3</option>'+
@@ -372,8 +374,8 @@
            '<option value="8">8</option>'+
           '</select>'+
         '</p>'+
-        '<p>Weight Increase Per Set :'+
-         '<select id="increment'+i+'" name="increment'+i+'" required>'+
+        '<p><b>Weight Increase Per Set :</b>'+
+         '<select class="right" id="increment'+i+'" name="increment'+i+'" required>'+
          '<option value="0">0</option>'+
             '<option value="2.5">2.5</option>'+
             '<option value="5">5</option>'+
@@ -414,23 +416,23 @@
          '</select>&nbsp;&nbsp;'+ Math.abs(set_incr) +
        '</p>'+
 
-       '<p> Reps Decrease Per Set :'+
-         '<select id="decrement'+i+'" name="decrement'+i+'" required>'+
+       '<p><b> Reps Decrease Per Set :</b>'+
+         '<select class="right" id="decrement'+i+'" name="decrement'+i+'" required>'+
          '<option value="0">0</option>'+
           '<option value="1">1</option>'+
           '<option value="2">2</option>'+
           '<option value="3">3</option>'+
           '<option value="4">4</option>'+
           '<option value="5">5</option>'+
-         '</select>&nbsp;&nbsp;'+ Math.abs(rep_decr) +'</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+         '</select>&nbsp;&nbsp;'+ Math.abs(rep_decr) +'</br><button id="update'+i+'" class="update">Update Values</button>'+
        '</p>'+
-       '<button type="button" class="btn btn-danger" aria-label="Left Align" name="addSet'+i+'">'+
+       '<button type="button" class="btn set" aria-label="Left Align" name="addSet'+i+'">'+
           '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Set'+
        '</button>&nbsp;&nbsp;'+
-       '<button type="button" class="btn btn-danger" aria-label="Left Align" name="removeSet'+i+'">'+
+       '<button type="button" class="btn set" aria-label="Left Align" name="removeSet'+i+'">'+
          '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Set'+
        '</button> <br/><br/>'+
-       ' <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout'+i+'">'+
+       ' <button type="button" class="custom-workout" aria-label="Left Align" name="removeWorkout'+i+'">'+
           '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout</div>');
           var pos = 'position'+i;
           $("#"+pos).val(i);
@@ -452,9 +454,9 @@
           var difficulty = 'difficulty'+i+j;
 
           $("."+workout).append('<div class="set'+i+''+j+'">'+
-          '<a class="list-group-item"> Set:'+ j +' </a>'+
-          '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
-          '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
+          '<a class="list-group-item custom-grey"><b> Set:'+ j +'</b> </a>'+
+          '<a class="list-group-item"><b>Weight:</b> </br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
+          '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'
         );
       }
     }
@@ -499,6 +501,7 @@
         var decr = $("#decrement2").val();
         var wk_type=$("#wk_type2").val();
         setLen2 = myObject['setLen2'];
+
         var count = setLen2-1;
         for(l=1;l<=setLen2;l++){
 
@@ -804,13 +807,13 @@
 
           $(".workouts").append('<br/><div class="workout'+i+'"></div> ');
           $("."+workout).append('<div class="list-group">'+
-            '<br/><a class="list-group-item"> Workout: <input style="height:30px;width:250px" id="'+workout+'"></a>');
+            '<br/><a class="list-group-item custom"> <b>Workout:</b> <input style="height:30px;width:250px" id="'+workout+'"></a>');
 
 
-            $("."+workout).append('<a class="list-group-item"> Workout Notes: <textarea rows="4" cols="32"  id="'+notes+'"> </textarea></a>'+
-            '<p style="color:red;"> </br>Video Link : </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" required> </p>'+
-            '<p> Target Muscle: '+
-              '<select class="form-control" id="target_muscle'+i+'" required>'+
+            $("."+workout).append('<a class="list-group-item"><b> Workout Notes:</b><textarea rows="4" cols="30"  id="'+notes+'"> </textarea></a>'+
+            '<p style="color:red;"> </br><b>Video Link :</b> </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" required> </p>'+
+            '<p><b> Target Muscle:</b> '+
+              '<select class="right" class="form-control" id="target_muscle'+i+'" required>'+
                  '<option value="Quads">Quads</option>'+
                  '<option value="Glutes">Glutes</option>'+
                  '<option value="Hamstrings">Hamstrings</option>'+
@@ -826,22 +829,23 @@
                   '<option value="Calves">Calves</option>'+
                   '<option value="Core">Core</option>'+
              '</select></p>'+
-             '<p>Workout Equipment: <select id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
-              '<p>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
-            '<p>Max Weight : <input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;<select id="type'+i+'" name="type'+i+'" required>'+
+             '<p><b>Workout Equipment: </b><select class="right" id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
+              '<p><b>Workout Type: </b><select class="right" id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+            '<p><b>Max Weight : </b><input type="number" id= "max_val'+i+'" min="1" max="800" required>&nbsp;<select class="right" id="type'+i+'" name="type'+i+'" required>'+
                '<option value="Pin">Pin</option>'+
+               '<option value="Pin Per Side">Pin Per Side</option>'+
                '<option value="Dumbbell">Dumbbell</option>'+
                '<option value="Plates">Plates</option>'+
                '<option value="Plates Per Side">Plates Per Side</option>'+
                '<option value="Preset ez bar">Preset Ez Bar</option>'+
                '<option value="Preset straight bar">Preset Straight Bar</option>'+
             '</select></p>'+
-            '<p>Max Reps: <input type="number" id= "max_reps'+i+'" min="1" max="50" required></p>'+
+            '<p><b>Max Reps: </b><input type="number" id= "max_reps'+i+'" min="1" max="50" required></p>'+
             '<div>');
 
             $("."+workout).append('<br/> '+
-            '<p> Workout Position:'+
-              '<select id="position'+i+'" required>'+
+            '<p><b> Workout Position:</b>'+
+              '<select class="right" id="position'+i+'" required>'+
               '<option value="1">1</option>'+
                '<option value="2">2</option>'+
                '<option value="3">3</option>'+
@@ -852,8 +856,8 @@
                '<option value="8">8</option>'+
               '</select>'+
             '</p>'+
-            '<p> Weight Increase Per Set :'+
-             '<select id="increment'+i+'" name="increment'+i+'" required>'+
+            '<p><b>Weight Increase Per Set :</b>'+
+             '<select class="right"id="increment'+i+'" name="increment'+i+'" required>'+
              '<option value="0">0</option>'+
                 '<option value="2.5">2.5</option>'+
                 '<option value="5">5</option>'+
@@ -894,8 +898,8 @@
              '</select>'+
            '</p>'+
 
-           '<p> Reps Decrease Per Set :'+
-             '<select id="decrement'+i+'" name="decrement'+i+'" required>'+
+           '<p><b> Reps Decrease Per Set :</b>'+
+             '<select class="right" id="decrement'+i+'" name="decrement'+i+'" required>'+
              '<option value="0">0</option>'+
               '<option value="1">1</option>'+
               '<option value="2">2</option>'+
@@ -904,17 +908,17 @@
               '<option value="5">5</option>'+
              '</select></br>'+
            '</p>'+
-           ' Unit of weight: <select id= "unit'+i+'" name="unit'+i+'" required>'+
+           '<b> Unit of weight: </b><select class="right" id= "unit'+i+'" name="unit'+i+'" required>'+
                  '<option value="Lbs">Lbs</option>'+
                  '<option value="Kgs">Kgs</option>'+
               '</select></br></br>'+
-           '<button type="button" class="btn btn-danger" aria-label="Left Align" name="addSet'+i+'" name="addSet'+i+'">'+
+           '<button type="button" class="btn set" aria-label="Left Align" name="addSet'+i+'" name="addSet'+i+'">'+
               '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Set'+
            '</button>&nbsp;&nbsp;'+
-           '<button type="button" class="btn btn-danger" aria-label="Left Align" name="removeSet'+i+'" name="removeSet'+i+'">'+
+           '<button type="button" class="btn set" aria-label="Left Align" name="removeSet'+i+'" name="removeSet'+i+'">'+
              '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Set'+
-           '</button> <br/><br/><button id="update'+i+'" class="btn-primary">Update Values</button>'+
-           ' <button type="button" class="btn btn-danger" aria-label="Left Align" name="removeWorkout'+i+'">'+
+           '</button> <br/><br/><button id="update'+i+'" class="update">Update Values</button>'+
+           ' <button type="button" class="custom-workout" aria-label="Left Align" name="removeWorkout'+i+'">'+
               '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Workout</div>');
               var pos = 'position'+i;
               $("#"+pos).val(i);
@@ -936,9 +940,9 @@
               var difficulty = 'difficulty'+i+j;
 
               $("."+workout).append('<div class="set'+i+''+j+'">'+
-              '<a class="list-group-item"> Set:'+ j +' </a>'+
-              '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-              '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" id="'+rep+'" >'+'</a>'
+              '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+              '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+              '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px" id="'+rep+'" >'+'</a>'
             );
             $("#update1").click(function(){
               var init_weight_1 = $("#max_val1").val();
@@ -1193,9 +1197,9 @@
           var unit = 'unit1'+j;
           var type = 'type1'+j;
           $(".workout1").append('<div class="set'+1+''+j+'">'+
-          '<a class="list-group-item"> Set:'+ j +' </a>'+
-          '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-          '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+          '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+          '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+          '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
           );
           myObject['setLen1'] = j;
           });
@@ -1214,9 +1218,9 @@
           var unit = 'unit2'+j;
           var type = 'type2'+j;
           $(".workout2").append('<div class="set'+2+''+j+'">'+
-          '<a class="list-group-item"> Set:'+ j +' </a>'+
-          '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-          '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+          '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+          '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+          '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
           );
           myObject['setLen2'] = j;
           });
@@ -1236,9 +1240,9 @@
           var unit = 'unit3'+j;
           var type = 'type3'+j;
             $(".workout3").append('<div class="set'+3+''+j+'">'+
-            '<a class="list-group-item"> Set:'+ j +' </a>'+
-            '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-            '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+            '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+            '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+            '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
             );
             myObject['setLen3'] = j;
           });
@@ -1257,9 +1261,9 @@
             var unit = 'unit4'+j;
             var type = 'type4'+j;
               $(".workout4").append('<div class="set'+4+''+j+'">'+
-              '<a class="list-group-item"> Set:'+ j +' </a>'+
-              '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-              '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+              '<a class="list-group-item custom-grey"><b> Set:'+ j +'</b> </a>'+
+              '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+              '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
               );
               myObject['setLen4'] = j;
             });
@@ -1278,9 +1282,9 @@
               var unit = 'unit5'+j;
               var type = 'type5'+j;
                 $(".workout5").append('<div class="set'+5+''+j+'">'+
-                '<a class="list-group-item"> Set:'+ j +' </a>'+
-                '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-                '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                '<a class="list-group-item custom-grey"><b> Set:'+ j +'</b> </a>'+
+                '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                '<a class="list-group-item"><b> Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
                 );
                 myObject['setLen5'] = j;
               });
@@ -1299,9 +1303,9 @@
                 var unit = 'unit6'+j;
                 var type = 'type6'+j;
                   $(".workout6").append('<div class="set'+6+''+j+'">'+
-                  '<a class="list-group-item"> Set:'+ j +' </a>'+
-                  '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-                  '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                  '<a class="list-group-item custom-grey"></b> Set:'+ j +' </a>'+
+                  '<a class="list-group-item"><b> Weight:</b> </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                  '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
                   );
                   myObject['setLen6'] = j;
                 });
@@ -1320,9 +1324,9 @@
                   var unit = 'unit7'+j;
                   var type = 'type7'+j;
                     $(".workout7").append('<div class="set'+7+''+j+'">'+
-                    '<a class="list-group-item"> Set:'+ j +' </a>'+
-                    '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-                    '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                    '<a class="list-group-item custom-grey"> <b>Set:'+ j +' </b></a>'+
+                    '<a class="list-group-item"> <b>Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                    '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
                     );
                     myObject['setLen7'] = j;
                   });
@@ -1341,9 +1345,9 @@
                     var unit = 'unit8'+j;
                     var type = 'type8'+j;
                       $(".workout8").append('<div class="set'+8+''+j+'">'+
-                      '<a class="list-group-item"> Set:'+ j +' </a>'+
-                      '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-                      '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+                      '<a class="list-group-item custom-grey"><b> Set:'+ j +'</b> </a>'+
+                      '<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+                      '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
                       );
                       myObject['setLen8'] = j;
                     });
@@ -1533,9 +1537,9 @@ var rep = 'rep1'+j;
 var unit = 'unit1'+j;
 var type = 'type1'+j;
 $(".workout1").append('<div class="set'+1+''+j+'">'+
-'<a class="list-group-item"> Set:'+ j +' </a>'+
-'<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-'<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+'<a class="list-group-item custom-grey"><b> Set:'+ j +'</b> </a>'+
+'<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+'<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
 );
 myObject['setLen1'] = j;
 });
@@ -1554,9 +1558,9 @@ var rep = 'rep2'+j;
 var unit = 'unit2'+j;
 var type = 'type2'+j;
 $(".workout2").append('<div class="set'+2+''+j+'">'+
-'<a class="list-group-item"> Set:'+ j +' </a>'+
-'<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-'<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+'<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+'<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+'<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
 );
 myObject['setLen2'] = j;
 });
@@ -1575,9 +1579,9 @@ var rep = 'rep3'+j;
 var unit = 'unit3'+j;
 var type = 'type3'+j;
 $(".workout3").append('<div class="set'+3+''+j+'">'+
-'<a class="list-group-item"> Set:'+ j +' </a>'+
-'<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-'<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+'<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+'<a class="list-group-item"><b> Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+'<a class="list-group-item"><b> Reps:</b> </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
 );
 myObject['setLen3'] = j;
 });
@@ -1596,9 +1600,9 @@ var rep = 'rep4'+j;
 var unit = 'unit4'+j;
 var type = 'type4'+j;
   $(".workout4").append('<div class="set'+4+''+j+'">'+
-  '<a class="list-group-item"> Set:'+ j +' </a>'+
-  '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-  '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+  '<a class="list-group-item custom-grey"> <b>Set:'+ j +'</b> </a>'+
+  '<a class="list-group-item"> <b>Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+  '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
   );
   myObject['setLen4'] = j;
 });
@@ -1617,9 +1621,9 @@ $("button[name=addSet5]").click(function(){
   var unit = 'unit5'+j;
   var type = 'type5'+j;
     $(".workout5").append('<div class="set'+5+''+j+'">'+
-    '<a class="list-group-item"> Set:'+ j +' </a>'+
-    '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-    '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+    '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+    '<a class="list-group-item"><b> Weight:</b> </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+    '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
     );
     myObject['setLen5'] = j;
   });
@@ -1638,9 +1642,9 @@ $("button[name=removeSet5]").click(function(){
     var unit = 'unit6'+j;
     var type = 'type6'+j;
       $(".workout6").append('<div class="set'+6+''+j+'">'+
-      '<a class="list-group-item"> Set:'+ j +' </a>'+
-      '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-      '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+      '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+      '<a class="list-group-item"> <b>Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+      '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
       );
       myObject['setLen6'] = j;
     });
@@ -1659,9 +1663,9 @@ $("button[name=removeSet5]").click(function(){
       var unit = 'unit7'+j;
       var type = 'type7'+j;
         $(".workout7").append('<div class="set'+7+''+j+'">'+
-        '<a class="list-group-item"> Set:'+ j +' </a>'+
-        '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-        '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+        '<a class="list-group-item custom-grey"><b> Set:'+ j +' </b></a>'+
+        '<a class="list-group-item"> <b>Weight:</b> </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+        '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
         );
         myObject['setLen7'] = j;
       });
@@ -1680,9 +1684,9 @@ $("button[name=removeSet5]").click(function(){
         var unit = 'unit8'+j;
         var type = 'type8'+j;
           $(".workout8").append('<div class="set'+8+''+j+'">'+
-          '<a class="list-group-item"> Set:'+ j +' </a>'+
-          '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
-          '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
+          '<a class="list-group-item custom-grey"><b> Set:'+ j +'</b> </a>'+
+          '<a class="list-group-item"> <b>Weight: </b></br><input style="height:30px;width:60px"  id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" required><input style="height:30px;width:60px" id="'+type+'" required></a>'+
+          '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px"  id="'+rep+'" >'+'</a>'
           );
           myObject['setLen8'] = j;
         });
@@ -1720,7 +1724,7 @@ $("button[name=removeSet5]").click(function(){
         myObject['primary'] = $("#primary").val();
         myObject['secondary'] = $("#secondary").val();
         myObject['tertiary'] = $("#tertiary").val();
-        myObject['quaternary'] = $("quaternary").val();
+        myObject['quaternary'] = $("#quaternary").val();
         myObject['total_workout'] = workout_number;
 
         for(var i=1;i<=workout_number;i++){

@@ -4,3 +4,6 @@
 "skill": "Intermediate",
 "skill": "Beginner",
 "skill": "Advanced",
+
+
+'&#x1F601 &nbsp; &#x1F642 &nbsp; &#x1F610 &nbsp; &#x1F615 &nbsp; &#x1F622 <br/>'+

@@ -1,0 +1,70 @@
+select.right {
+  float: right;
+  margin: 0 0 10px 10px;
+  width: 100px;
+}
+input.right {
+  float: right;
+  width: 100px;
+}
+select.right-set {
+  margin: 0 0 10px 10px;
+  width: 120px;
+}
+select.right_sm {
+  float: right;
+  margin: 0 0 10px 10px;
+  width: 50px;
+}
+button.update
+{
+  background-color: #336699; color: white;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  height: 30px;
+}
+a.custom{
+  background-color: #C80000;
+  color: white!important;
+  border: 1px solid #a1a1a1;
+  border-radius: 9px;
+}
+
+a.custom-grey{
+  background-color: #696969;
+  color: white  !important;
+  border-radius: 5px;
+}
+.custom-grey input{
+  color:black;
+}
+button.custom-workout{
+  background-color: #202020;
+  color: white  !important;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  height: 30px;
+  width: 120px;
+
+}
+button.set
+{
+  background-color: #c80000; color: white;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  height: 30px;
+}
+button.custom-silver{
+  background-color: #202020;
+  color: white  !important;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 70px;
+  height: 25px;
+}
+
+label { display: table-cell; }
+input { display: table-cell; }
+input.number{
+  width: 40px;
+}

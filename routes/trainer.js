@@ -23,11 +23,19 @@ exports.selectClient = function(req,res){
 exports.workoutEntered = function(req, res){
 res.render('workoutEntered');
 }
+exports.viewSentWorkout = function(req, res){
+res.render('viewSentWorkout');
+}
+exports.mealPlanResponse = function(req, res){
+res.render('mealPlanResponse');
+}
 
 exports.viewAllResponses = function(req, res){
 res.render('viewAllResponses');
 }
-
+exports.addClient = function(req, res){
+res.render('addClient');
+}
 exports.updateTemplate = function(req, res){
 res.render('updateTemplate');
 }
@@ -262,3 +270,208 @@ exports.MonitorFeedback = function(req,res){
 exports.EnterWorkout = function(req,res){
   res.render('EnterWorkout');
 };
+exports.dietLink = function(req,res){
+  res.render('dietLink');
+};
+exports.lowCarb = function(req,res){
+  res.render('lowCarb');
+};
+
+exports.mediumCarb = function(req,res){
+  res.render('medCarb');
+};
+exports.highCarb = function(req,res){
+  res.render('highCarb');
+};
+exports.refeed = function(req,res){
+  res.render('refeed');
+};
+exports.dietOptions = function(req,res){
+  res.render('dietOptions');
+};
+exports.addPaymentLink = function(req,res){
+  res.render('addPaymentLink');
+};
+exports.addDietForm = function(req, res){
+  var diet_link=req.body.diet_link;
+  var client = req.session.clientName;
+
+  objectControl.insertDiet(function(err){
+    if(err)
+    {
+       console.log(err);
+      res.render('error');
+    }
+    else
+    {
+      alert("Inserted successfully");
+      console.log('Inserted successfully');
+    }
+  },diet_link,client);
+  res.render('trainer_landingPage');
+ };
+
+ exports.addLowCarb = function(req, res){
+   var diet_link=req.body.diet_link;
+   var client = req.session.clientName;
+
+   objectControl.insertLowDiet(function(err){
+     if(err)
+     {
+        console.log(err);
+       res.render('error');
+     }
+     else
+     {
+       alert("Inserted successfully");
+       console.log('Inserted successfully');
+     }
+   },diet_link,client);
+   res.render('trainer_landingPage');
+  };
+
+  exports.addMidCarb = function(req, res){
+    var diet_link=req.body.diet_link;
+    var client = req.session.clientName;
+
+    objectControl.insertMidDiet(function(err){
+      if(err)
+      {
+         console.log(err);
+        res.render('error');
+      }
+      else
+      {
+        alert("Inserted successfully");
+        console.log('Inserted successfully');
+      }
+    },diet_link,client);
+    res.render('trainer_landingPage');
+   };
+
+   exports.addHighCarb = function(req, res){
+     var diet_link=req.body.diet_link;
+     var client = req.session.clientName;
+
+     objectControl.insertHighDiet(function(err){
+       if(err)
+       {
+          console.log(err);
+         res.render('error');
+       }
+       else
+       {
+         alert("Inserted successfully");
+         console.log('Inserted successfully');
+       }
+     },diet_link,client);
+     res.render('trainer_landingPage');
+    };
+
+
+    exports.refeedDiet = function(req, res){
+      var diet_link=req.body.diet_link;
+      var client = req.session.clientName;
+
+      objectControl.insertRefeedDiet(function(err){
+        if(err)
+        {
+           console.log(err);
+          res.render('error');
+        }
+        else
+        {
+          alert("Inserted successfully");
+          console.log('Inserted successfully');
+        }
+      },diet_link,client);
+      res.render('trainer_landingPage');
+     };
+
+     exports.clientPayment = function(req, res){
+       var paymentLink=req.body.paymentLink;
+       var client = req.session.clientName;
+
+       objectControl.addClientPayment(function(err){
+         if(err)
+         {
+            console.log(err);
+           res.render('error');
+         }
+         else
+         {
+           alert("Inserted successfully");
+           console.log('Inserted successfully');
+         }
+       },paymentLink,client);
+       res.render('trainer_landingPage');
+      };
+
+exports.addClient_data = function(req, res){
+  var firstname=req.body.firstname;
+  var lastname=req.body.lastname;
+  var email=req.body.email;
+  var password=req.body.password;
+  var trainer= req.session.TrainerEmail;
+
+  objectControl.insertClient(function(err){
+    if(err)
+    {
+       console.log(err);
+      res.render('error');
+    }
+    else
+    {
+      alert("Inserted successfully");
+      console.log('Inserted successfully');
+
+    }
+  },firstname,lastname,email,password,trainer);
+  res.render('trainer_landingPage');
+ };
+
+ exports.getClientDiet = function(req,res){
+   var client = req.session.clientName;
+   objectControl.getDiet(function(err,results)
+   {
+     if(err || results === null)
+     {
+       res.render('error');
+     }
+     else
+     {
+       console.log(results);
+       res.json(results);
+     }
+   },client);
+ };
+
+ exports.deleteWorkout = function(req,res){
+  var date = req.body.date;
+   var client = req.session.clientName;
+   console.log(date, client);
+     objectControl.deleteWorkoutDates(function(err){
+       if(err)
+       {
+           res.render('error');
+       }
+       else
+       {
+         console.log('Deleted Date successfully');
+       }
+     },date,client);
+
+
+   objectControl.deleteWorkout(function(err){
+     if(err)
+     {
+         res.render('error');
+     }
+     else
+     {
+       console.log('Deleted successfully');
+     }
+   },date,client);
+
+   res.status(200).json({status:"ok"});
+ };

@@ -3,6 +3,7 @@
 <head>
 
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/monitorFeedback.css" type="text/css">
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -20,13 +21,13 @@
   <style>
 
   .highlight{
-   background-color : #330000 !important;
+   background-color : #ff0000 !important;
    background-image :none !important;
    font-weight:bold !important;
 
   }
   .highlight_resp{
-   background-color : #FF0000 !important;
+   background-color : #337DFF !important;
    background-image :none !important;
    font-weight:bold !important;
 
@@ -55,7 +56,7 @@
            <center><a href="/"><img src="/images/logo.jpg" style="height:150px;width:150px;"></a></center>
       </div>
 
-<p><br/><br/><br/><br/>Response Date: <br/><input type="text" id="datepicker"></p>
+<p><br/><br/><br/><br/><b>Response Date: </b><br/><input type="text" id="datepicker"></p>
    <button type="button" class="btn btn-danger" aria-label="Left Align" id="getWorkout">
      <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get Feedback
    </button>
@@ -63,7 +64,7 @@
  <div class="workouts" id="workouts">
  </div>
 
- <p><br/><br/>Resend Date: <br/><input type="text" id="rs_datepicker"></p>
+ <p><br/><br/><b>Resend Date: </b><br/><input type="text" id="rs_datepicker"></p>
 
  <br/>
  <script>
@@ -195,8 +196,8 @@
           total_workout = response.total_workout;
 
           $("#workouts").append('<div class="list-group">'+
-          '<a class="list-group-item"> Primary Muscle: '+
-                 '<select class="form-control" id="primary" name="primary" required>'+
+          '<a class="list-group-item"><b> Primary Muscle: </b>'+
+                 '<select class="right" class="form-control" id="primary" name="primary" required>'+
                  '<option value="Quads">Quads</option>'+
                     '<option value="Glutes">Glutes</option>'+
                     '<option value="Hamstrings">Hamstrings</option>'+
@@ -213,8 +214,8 @@
                      '<option value="Core">Core</option>'+
                 '</select></br>'+
 
-                 '<a class="list-group-item"> Secondary Muscle: '+
-                 '<select class="form-control" id="secondary" name="secondary" required>'+
+                 '<a class="list-group-item"><b> Secondary Muscle: </b>'+
+                 '<select class="right" class="form-control" id="secondary" name="secondary" required>'+
                     '<option value="None">None</option>'+
                     '<option value="Quads">Quads</option>'+
                     '<option value="Glutes">Glutes</option>'+
@@ -232,8 +233,8 @@
                     '<option value="Core">Core</option>'+
                 '</select></br>'+
 
-                 '<a class="list-group-item"> Tertiary Muscle: '+
-                 '<select class="form-control" id="tertiary" name="tertiary" required>'+
+                 '<a class="list-group-item"><b> Tertiary Muscle: </b>'+
+                 '<select class="right" class="form-control" id="tertiary" name="tertiary" required>'+
                     '<option value="None">None</option>'+
                     '<option value="Quads">Quads</option>'+
                     '<option value="Glutes">Glutes</option>'+
@@ -250,8 +251,8 @@
                     '<option value="Calves">Calves</option>'+
                     '<option value="Core">Core</option>'+
                 '</select></br>'+
-                 '<a class="list-group-item"> Quaternary Muscle: '+
-                 '<select class="form-control" id="quaternary" name="quaternary" required>'+
+                 '<a class="list-group-item"><b> Quaternary Muscle: </b>'+
+                 '<select class="right" class="form-control" id="quaternary" name="quaternary" required>'+
                  '<option value="None">None</option>'+
                  '<option value="Quads">Quads</option>'+
                  '<option value="Glutes">Glutes</option>'+
@@ -268,7 +269,7 @@
                  '<option value="Calves">Calves</option>'+
                  '<option value="Core">Core</option>'+
                 '</select></br>'+
-                '<a class="list-group-item"> Template Id: '+response['id'] +'</a>'
+                '<a class="list-group-item"><b> Template Id: </b>'+response['id'] +'</a>'
                );
                $("#primary").val(response['primary']);
                $("#secondary").val(response['secondary']);
@@ -338,11 +339,11 @@
             }
 
             $("#workouts").append('<br/><div class="list-group">'+
-            '<p style="color:red;"> Video Link For Workout '+i+': </br><input type="text" id= "link'+i+'" name= "workout_link'+i+'" value="'+response[link]+'" required> </p>'+
-  					'<a class="list-group-item list-group-item-danger">Workout: <input style="height:30px;width:250px"  value="'+ response[workout]+'" id="'+workout+'">'+
-            '<a class="list-group-item  list-group-item-success"> Workout Notes: <input style="height:30px;width:250px"  value="'+ response[notes] +'" id="'+notes+'"></a>'+
-            '<p> Target Muscle:'+
-              '<select class="form-control" id="target_muscle'+i+'" required>'+
+  					'<a class="list-group-item custom"><p><b>Workout: </b><input  class="right" style="height:30px;width:250px;color:black"  value="'+ response[workout]+'" id="'+workout+'"></p><br/></a><br/>'+
+            '<p style="color:red;"><b> Video Link For Workout '+i+': </b></br><textarea rows="2" cols="32" id= "'+link+'" name= "'+link+'" required></textarea> </p>'+
+            '<a class="list-group-item  list-group-item-success"><b> Workout Notes: </b><textarea rows="4" cols="30"  id="'+notes+'"> </textarea></a>'+
+            '<p><b> Target Muscle:</b>'+
+              '<select  class="right" class="form-control" id="target_muscle'+i+'" required>'+
                  '<option value="Quads">Quads</option>'+
                  '<option value="Glutes">Glutes</option>'+
                  '<option value="Hamstrings">Hamstrings</option>'+
@@ -358,18 +359,20 @@
                   '<option value="Calves">Calves</option>'+
                   '<option value="Core">Core</option>'+
              '</select></p>'+
-            '<p>Workout Equipment: <select id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
-            '<p><br/>Workout Type: <select id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
-            '<p><br/>Max Weight For This Workout: <input type="number" id= "max_val'+i+'" min="1" max="800" required>  &nbsp;&nbsp;'+ max_val +'</p>'+
-            '<p><br/>Max Reps For This Workout: <input type="number" id= "max_reps'+i+'" min="1" max="50" required> &nbsp;&nbsp;'+ max_rep +'</p>'+
+            '<p><b>Workout Equipment: </b><select  class="right" id= "equipment'+i+'"><option value="free_weight">Free Weight</option><option value="smith_machine">Smith Machine</option><option value="iso_plate">iso plate</option><option value="iso_pin">iso pin</option><option value="machine">machine</option></select></p>'+
+            '<p><br/><b>Workout Type: </b><select  class="right" id= "wk_type'+i+'"> <option value="maxout">Maxout</option><option value="dropset">Dropset</option></select></p>'+
+            '<p><br/><b>Max Weight For This Workout: </b></br><input  class="right" type="number" id= "max_val'+i+'" min="1" max="800" required>  &nbsp;&nbsp;'+ max_val +'</p>'+
+            '<p><br/><b>Max Reps For This Workout: </b></br><input  class="right" type="number" id= "max_reps'+i+'" min="1" max="50" required> &nbsp;&nbsp;'+ max_rep +'</p>'+
             '<div>');
             $("#"+target_muscle).val(response[target_muscle]);
             $("#"+equipment).val(response[equipment]);
             $("#"+wk_type).val(response[wk_type]);
+            $("#"+notes).val(response[notes]);
+            $("#"+link).val(response[link]);
 
             $(".workouts").append('<div class="workout'+i+'"> '+
-           '<p> <br/>Weight Increase Per Set :'+
-             '<select id="increment'+i+'" name="increment'+i+'" required>'+
+           '<p> <br/><b>Weight Increase Per Set :</b></br>'+
+             '<select class="right" id="increment'+i+'" name="increment'+i+'" required>'+
              '<option value="0">0</option>'+
                 '<option value="2.5">2.5</option>'+
                 '<option value="5">5</option>'+
@@ -410,8 +413,8 @@
              '</select>&nbsp;&nbsp;'+ Math.abs(set_incr) +
            '</p>'+
 
-           '<p> Reps Decrease Per Set :'+
-             '<select id="decrement'+i+'" name="decrement'+i+'" required>'+
+           '<p><b> Reps Decrease Per Set :</b></br>'+
+             '<select  class="right" id="decrement'+i+'" name="decrement'+i+'" required>'+
              '<option value="0">0</option>'+
               '<option value="1">1</option>'+
               '<option value="2">2</option>'+
@@ -419,7 +422,7 @@
               '<option value="4">4</option>'+
               '<option value="5">5</option>'+
              '</select>&nbsp;&nbsp;'+ Math.abs(rep_decr) +
-             '</br><button id="update'+i+'" class="btn-primary">Update Values</button>'+
+             '</br><button id="update'+i+'" class="btn-primary"><b>Update Values</b></button>'+
            '</p></div>');
 
             for(var j=1;j<=response[setLen];j++){
@@ -431,10 +434,10 @@
               var rep = 'rep'+i+j;
 
               $("#workouts").append('<div class="list-group">'+
-              '<a class="list-group-item"> Weight: </br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
-              '<a class="list-group-item"> Set:'+ j +' </a><div>'+
-              '<a class="list-group-item"> Reps: </br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'+
-              '<a class="list-group-item"> Rep Breakdown :'
+              '<a class="list-group-item custom-grey"><b> Weight: </b></br><input style="height:30px;width:60px" value="'+response[set]+'" id="'+set+'" required >'+'<input style="height:30px;width:60px" id="'+unit+'" value= "'+ response[unit] +'" required><input style="height:30px;width:60px" id="'+type+'"  value="'+ response[type]  +'" required></a>'+
+              '<a class="list-group-item"> <b>Set: '+ j +' </b></a><div>'+
+              '<a class="list-group-item"> <b>Reps: </b></br><input style="height:30px;width:60px" value="'+response[rep]+'" id="'+rep+'" >'+'</a>'+
+              '<a class="list-group-item"> <b>Rep Breakdown :</b>'
             );
               for(var k=1;k<=4;k++){
                 var bk = 'bk'+i+j+k;
@@ -445,8 +448,8 @@
               );
               }
               $("#workouts").append('</a><div><div class="list-group">'+
-              '<br/><a class="list-group-item list-group-item-warning"> Feedback/ Weights Used : '+ response[comm] +'</a><div>'+
-              '<br/><a class="list-group-item list-group-item-info"> Difficulty : '+ response[difficulty] +'</a><div>'+
+              '<br/><a class="list-group-item list-group-item-warning"><b> Feedback/ Weights Used : '+ response[comm] +'</b></a><div>'+
+              '<br/><a class="list-group-item list-group-item-info"><b> Difficulty : '+ response[difficulty] +'</b></a><div>'+
               '</div>');
             }
             $("#update1").click(function(){
@@ -463,6 +466,7 @@
 
                 if(wk_type=="maxout")
                 {
+
                    $("#set1"+l).val(parseFloat(init_weight_1)-(parseFloat(incr)*count));
                    $("#rep1"+l).val(parseFloat(init_reps_1)-(parseFloat(decr)*(l-1)));
                    $("#type1"+l).val(init_type);

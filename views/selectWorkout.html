@@ -3,6 +3,7 @@
 <head>
 
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/selectworkout.css" type="text/css">
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -18,6 +19,9 @@
   </style>
 
   <style>
+  div.r_timer{
+    width: 200px;
+  }
 
   .highlight{
    background-color : #FF0000 !important;
@@ -26,10 +30,16 @@
 
   }
   .highlight_resp{
-   background-color : #0000FF !important;
+   background-color : #337DFF !important;
    background-image :none !important;
    font-weight:bold !important;
 
+  }
+
+  input.timer_value{
+    width: 65px;
+    padding-left: 15px;
+    color: #ff0000;
   }
 
   </style>
@@ -176,6 +186,7 @@
    getWorkoutDates();
    var total_workout =0;
    var setLen = 0;
+   var rest_global = 0;
    var myObject = {};
    var primary, secondary, tertiary = '';
  $("#getWorkout").click(function(){
@@ -187,11 +198,12 @@
         data: { date: date} ,
         success: function (response) {
           console.log(response);
-          $("#workouts").append('<div class="list-group">'+
-          '<br/><a class="list-group-item"> Primary Muscle: '+ response['primary'] +'</a>'+
-          '<a class="list-group-item"> Secondary Muscle: '+ response['secondary'] +'</a>'+
-          '<a class="list-group-item"> Tertiary Muscle: '+ response['tertiary']  +'</a>'+
-          '<a class="list-group-item"> Quaternary Muscle: '+ response['quaternary']  +'</a>'
+          $("#workouts").append('<div class="list-group"><br/>'+
+          '<a class="list-group-item muscle"> <b>Primary Muscle: '+ response['primary'] +'</b></a><br/>'+
+          '<a class="list-group-item muscle"> <b>Secondary Muscle: '+ response['secondary'] +'</b></a><br/>'+
+          '<a class="list-group-item muscle"> <b>Tertiary Muscle: '+ response['tertiary']  +'</b></a><br/>'+
+          '<a class="list-group-item muscle"> <b>Quaternary Muscle: '+ response['quaternary']  +'</b></a><br/>'+
+          '<div class="r_timer" id="r_timer"><input class="timer_value" type="number" id="timer_value" disabled></div></div>'
         );
         myObject['primary'] = response['primary'];
         myObject['secondary'] = response['secondary'];
@@ -217,19 +229,23 @@
 
             console.log(response[setLen]);
 
-          $("#workouts").append('<div class="list-group">'+
-          '<br/><a class="list-group-item active"> '+ response[workout]  +'</a>'+
-          '<a class="list-group-item"> Workout Notes: '+ response[notes]  +'</a>'+
-          '<a class="list-group-item"> Target Muscle: '+ response[target_muscle]  +'</a>'+
-          '<a class="list-group-item"> Equipment Type: '+ response[equipment]  +'</a><div>');
+          $("#workouts").append('<a class="list-group-item custom" ><span class="glyphicon glyphicon-minus"   name="collapse" id="collapse'+i+'"  data-selector="'+i+'"></span><span class="glyphicon glyphicon-plus"   name="expand" id="expand'+i+'" data-selector="'+i+'"></span>&nbsp;&nbsp;'+
+        '<b>'+ response[workout]  +
+        '</b></a>'+
+        '<div class="list-group" id="workout'+i+'">');
 
 
           if(response.hasOwnProperty(link)){
             if(response[link]!== ''){
             myObject[link]=response[link];
-            $("#workouts").append('<iframe width="275" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe>');
+            $("#workout"+i).append('<a class="list-group-item"><iframe width="255" height="315" src='+response[link]+' frameborder="0" allowfullscreen></iframe></a>');
             }
           }
+        $("#expand"+i).hide();
+
+        $("#workout"+i).append('<a class="list-group-item"> <b>Workout Notes: </b>'+ response[notes]  +'</a>'+
+        '<a class="list-group-item"> <b>Target Muscle: </b>'+ response[target_muscle]  +'</a>'+
+        '<a class="list-group-item"> <b>Equipment Type: </b>'+ response[equipment]  +'</a><br/>');
 
           myObject[workout] = response[workout];
           myObject[notes] = response[notes];
@@ -243,6 +259,7 @@
             var type = 'type'+i+j;
             var unit = 'unit'+i+j;
             var rep = 'rep'+i+j;
+            var rest = 'rest'+i+j;
             var bk1 = 'bk'+i+j+'1';
             var bk2 = 'bk'+i+j+'2';
             var bk3 = 'bk'+i+j+'3';
@@ -254,33 +271,92 @@
             myObject[unit] = response[unit];
             myObject[type] = response[type];
             myObject[rep] = response[rep];
+            myObject[rest] = response[rest];
 
-            $("#workouts").append('<div class="list-group">'+
-            '<a class="list-group-item"> Set:'+ j +' </a>'+
-            '<a class="list-group-item"> Weight: '+ response[set]  +' '+ response[unit] +' '+ response[type]  +'</a>'+
-            '<a class="list-group-item"> Reps: '+ response[rep]  +'</a>'+
-            '<a class="list-group-item"> Rep Breakdown: '+'&nbsp;&nbsp;&nbsp;<input type="number" id="'+bk1+'" style="width: 30px;"  required >'+
-            '&nbsp;&nbsp;<input type="number" id="'+bk2+'" style="width: 30px;"  required >'+
-            '&nbsp;&nbsp;<input type="number" id="'+bk3+'" style="width: 30px;"  required >'+
-            '&nbsp;&nbsp;<input type="number" id="'+bk4+'" style="width: 30px;"  required ><br/><br/>'+
-            'Workout Difficulty:<br/><br/> <select class="form-control" id="'+difficulty+'" required>'+
-               '<option value="Very easy">Very Easy</option>'+
-              ' <option value="Easy">Easy</option>'+
-              ' <option value="Perfect">Perfect</option>'+
-              ' <option value="Difficult">Difficult</option>'+
-              ' <option value="Very Difficult">Very Difficult</option>'+
-              ' <option value="Impossible">Impossible</option>'+
-           '</select><br/>'+
-            'Feedback/ Weight Used:<input type="text" id="'+comm+'" required ></a><div>'
+
+            if(!myObject[rest]){
+              myObject[rest] = 45;
+              response[rest] = 45;
+            }
+            rest_global = myObject[rest];
+
+            $("#workout"+i).append('<div class="list-group">'+
+            '<a class="list-group-item custom-grey"> <b>Set: '+ j +' </b></a>'+
+            '<a class="list-group-item"> <b>Weight: </b>'+ response[set]  +' '+ response[unit] +' '+ response[type]  +'</a>'+
+            '<a class="list-group-item"> <b>Reps: </b>'+ response[rep]  +'</a>'+
+            '<a class="list-group-item"> <b>Rest Time: </b>'+ response[rest]  +'&nbsp;<button type="button" class="start">Start Timer !!</button></a>'+
+            '<a class="list-group-item"> '+
+            '<b>Workout Difficulty:</b> <select class="right" id="'+difficulty+'" required>'+
+               '<option value="Very easy"> &#x1F601</option>'+
+              ' <option value="Easy">&#x1F642</option>'+
+              ' <option value="Perfect"> &#x1F610</option>'+
+              ' <option value="Difficult">&#x1F615</option>'+
+              ' <option value="Very Difficult">&#x1F622</option>'+
+           '</select><br/><br/>'+
+            '<b>Feedback/ Weight Used:</b><textarea rows="2" cols="30" id="'+comm+'" required ></textarea></a>'
           );
         }
+        $("#workout"+i).append('<button class="btn btn-info"><span class="glyphicon glyphicon-minus"   name="collapse" data-selector="'+i+'">Done</span></button></div>')
+        $("#workouts").append('<br/>');
         }
-        $("#workouts").append('<button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:90px">Submit</button>');
+
+        for(var k=0;k<i;k++){
+             $("#expand"+k).show();
+             $("#collapse"+k).hide();
+             $("#workout"+k).hide();
+        }
+
+        $("span[name = 'expand']").click(function(){
+
+           var wkt = $(this).data('selector');
+
+           for(var k=0;k<i;k++){
+
+                $("#expand"+k).show();
+                $("#collapse"+k).hide();
+                $("#workout"+k).hide();
+
+           }
+
+           $("#expand"+wkt).hide();
+           $("#collapse"+wkt).show();
+           $("#workout"+wkt).show();
+
+         })
+         $("span[name = 'collapse']").click(function(){
+
+            var wkt = $(this).data('selector');
+
+            $("#expand"+wkt).show();
+            $("#collapse"+wkt).hide();
+            $("#workout"+wkt).hide();
+
+          })
+
+        $("#workouts").append('<button type="submit" id="submit" class="btn btn-danger btn-block" style="height:30px;width:90px"><b>Submit</b></button>');
         function reset_color()
         {
           $("#submit").removeClass("btn-info").addClass("btn-danger");
           $("#submit").removeClass("btn-warning").addClass("btn-danger");
         }
+        $( ".start" ).click(function() {
+          var counter = rest_global;
+             $("#timer_value").val(counter);
+             $("#r_timer").dialog();
+
+              var timer = setInterval(function(){
+                   console.log(counter);
+                   $("#timer_value").val(counter);
+                   $("#r_timer").dialog();
+                   counter = counter -1;
+                   if(counter<=-1){
+                     clearInterval(timer);
+                     $("r_timer").hide();
+                   }
+                   return false;
+               }, 1000);
+
+        });
 
         $("#submit").click(function(){
           myObject['date']=date;
@@ -292,14 +368,12 @@
             var bk1 = 'bk'+i+j+'1';
             var bk2 = 'bk'+i+j+'2';
             var bk3 = 'bk'+i+j+'3';
-            var bk4 = 'bk'+i+j+'4';
             var comm = 'comment'+i+j;
             var difficulty = 'difficulty'+i+j;
 
             myObject[bk1]=$("#bk"+i+j+'1').val();
             myObject[bk2]=$("#bk"+i+j+'2').val();
             myObject[bk3]=$("#bk"+i+j+'3').val();
-            myObject[bk4]=$("#bk"+i+j+'4').val();
             myObject[comm]=$("#comment"+i+j).val();
             myObject[difficulty]=$("#difficulty"+i+j).val();
             }

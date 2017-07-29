@@ -13,7 +13,7 @@
   <script src="//code.jquery.com/jquery-1.9.1.js"></script>
   <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
   <script src="/javascript/login.js"></script>
-<title>Login</title>
+<title>Add Client</title>
 <link rel="stylesheet" href="/stylesheets/login.css" type="text/css">
 </head>
 <body>
@@ -24,54 +24,39 @@
 <div class="container">
 <div class="row">
   <div class="main">
-    <h3 style="color:#ADD8E6">Please Log In, Or <a href="#">Sign Up</a></h3>
+    <h3 style="color:#ADD8E6">Add your Client information</h3>
     <div class="login-or">
       <hr class="hr-or" >
     </div>
 
-    <form id="loginForm" method="POST" action= "validate_login" role="form">
+    <form id="loginForm" method="POST" action= "addClient_data" role="form">
       <div class="form-group">
-          <label for="Email-id" class="control-label">Email Id</label>
-          <input class="form-control" type="email" id="email" name="email" value="" required="true" title="Please enter you email" placeholder="example@gmail.com">
+          <label for="firstname" class="control-label">Client Firstname</label>
+          <input class="form-control" type="text" id="firstname" name="firstname" value="" required="true" title="Please enter client Firstname" placeholder="John">
+          <span class="help-block"></span>
+      </div>
+      <div class="form-group">
+        <label for="lastname" class="control-label">Client Lastname</label>
+        <input class="form-control" type="text" id="lastname" name="lastname" value="" required="true" title="Please enter client lastname" placeholder="Doe">
+        <span class="help-block"></span>
+      </div>
+      <div class="form-group">
+          <label for="Email-id" class="control-label">Client Email Id</label>
+          <input class="form-control" type="email" id="email" name="email" value="" required="true" title="Please enter client email" placeholder="example@gmail.com">
           <span class="help-block"></span>
       </div>
       <div class="form-group">
           <label for="password" class="control-label">Password</label>
-          <input type="password" class="form-control" id="password" name="password" value="" required="true" title="Please enter your password">
+          <input type="password" class="form-control" id="password" name="password" value="" required="true" title="Please enter client password">
           <span class="help-block"></span>
       </div>
-      <div class="form-group">
-        <label class="radio-inline">
-          <input type="radio" name="login_type" id="trainer" value="trainer">Trainer
-        <label class="radio-inline">
-          <input type="radio" name="login_type" id="client" value="client">Client
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="login_type" id="Athlete" value="athlete">Athlete
-        </label>
-      </div>
-      <br/>
-       <button type="submit" class="btn btn-success btn-block" style="width:150px">Login</button>
+
+       <button type="submit" class="btn btn-success btn-block" style="width:150px">Add Client</button>
 
     </form>
   </div>
 </div>
 <br/><br/>
-
-
-	  <fieldset>
-    <div class="container">
-
-      <ul class="list-group">
-        <li class="list-group-item">
-
-          <a href="/questionnaire" class="btn btn-danger">Get Started</a>
-
-        </li>
-      </ul>
-    </div>
-
-  </fieldset>
 
 </div>
 </body>
